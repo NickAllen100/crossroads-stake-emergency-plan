@@ -1115,7 +1115,19 @@
       opacity: 0.75;
     }
     code .form-ref-link { color: var(--navy); text-decoration-style: dotted; padding: 0; }
-    [id^="form-"] { scroll-margin-top: 86px; }
+    [id^="form-"], #sn-codes-key { scroll-margin-top: 86px; }
+    .sn-key-box {
+      background: var(--slate-50);
+      border: 1.5px solid #cbd5e1;
+      border-left: 4px solid var(--teal);
+      border-radius: 6px;
+      padding: 7px 10px;
+      margin: 6px 0 8px;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--slate-900);
+    }
+    .sn-key-box strong.sn-code { color: var(--navy); }
     @keyframes formSpotlight {
       0% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.75); }
       70% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.45); }
@@ -2056,6 +2068,7 @@
         <h3 id="form-w0b" style="margin-top:0;">Form W-0B (Back of Sheet 1): Self-Contained Ward Field Reference</h3>
         <div class="grid-2" style="font-size:0.83rem;">
           <div>
+            <div id="sn-codes-key">
             <strong>Extra-Care Codes (SN-1 to SN-8 — Zero Diagnoses):</strong>
             <ul>
               <li><strong>SN-1 (Medical Power):</strong> O2/CPAP/dialysis. <em>RMP Medical Cert is NOT backup power; O2 &lt;2h reserve = call 911 immediately.</em></li>
@@ -2067,6 +2080,7 @@
               <li><strong>SN-7 (Infants / Expectant / Postpartum / Solo Parents):</strong> Formula, safe water, diapers, extra check-in if spouse is east of river.</li>
               <li><strong>SN-8 (Language, Deaf/HoH &amp; Low-Vision):</strong> Bilingual interpreter <strong>+ in-person door knock, large-print paper flyers &amp; landline voice Everbridge alerts</strong>.</li>
             </ul>
+            </div>
             <strong>Key Ward Lifelines:</strong> ER <a class="phone-link" href="tel:+18017633500">801-763-3500</a> &middot; Primary Children's <a class="phone-link" href="tel:+13855311200">385-531-1200</a> &middot; Poison <a class="phone-link" href="tel:+18002221222">1-800-222-1222</a> &middot; Crisis <a class="phone-link" href="tel:988">988</a> &middot; <strong>Utah DV Link <a class="phone-link" href="tel:+18008975465">1-800-897-5465</a></strong> &middot; LDS Family Services (via Bishop) &middot; <strong>Abuse Help Line (Bishops/SPs only, <code>GH 38.6.2</code>): <a class="phone-link" href="tel:+18004533860">1-800-453-3860</a></strong>.
           </div>
           <div>
@@ -2240,7 +2254,18 @@
           <strong>PRIVACY &amp; SAFETY BOUNDARY (<code>GH 22.4.5 &amp; 38.6.2</code>):</strong>
           (1) Record <strong>functional support needs only</strong> (never medical diagnoses); (2) <strong>NEVER record abuse or domestic safety concerns on Form W-1</strong>—handle exclusively in private Bishopric pastoral confidence (911 if immediate danger; Bishops call Abuse Help Line <a class="phone-link" href="tel:+18004533860">1-800-453-3860</a>; Utah DV Link <a class="phone-link" href="tel:+18008975465">1-800-897-5465</a>); (3) Never email/text this sheet; shred superseded copies &amp; upon calling release.
         </div>
-        <p style="font-size:0.82rem; margin:0 0 6px;"><em>Easily Missed:</em> Oxygen/CPAP, insulin, expectant/postpartum moms, solo parents w/ commuting spouse, widows, <strong>solo young adults</strong>, <strong>car-less renters</strong>, deaf/HoH, low-vision, landline-only, non-night/snow drivers.</p>
+        <div class="sn-key-box" aria-label="Extra-Care Code Lookup Key SN-1 to SN-8">
+          <strong>Extra-Care Code Key (Zero Medical Diagnoses):</strong>
+          <strong class="sn-code">SN-1</strong> Medical Power (O2/CPAP; &lt;2h = 911) &middot;
+          <strong class="sn-code">SN-2</strong> Refrigerated Meds (Insulin 36–46&deg;F, no direct ice) &middot;
+          <strong class="sn-code">SN-3</strong> Mobility / Car-Less / No-Night-Drive &middot;
+          <strong class="sn-code">SN-4</strong> Dialysis / Chronic (priority water/road) &middot;
+          <strong class="sn-code">SN-5</strong> Solo / Widow / Isolated (incl. solo YSAs) &middot;
+          <strong class="sn-code">SN-6</strong> Sensory / Cognitive &middot;
+          <strong class="sn-code">SN-7</strong> Infants / Expectant / Postpartum / Solo Parent &middot;
+          <strong class="sn-code">SN-8</strong> Language / Deaf / HoH / Low-Vision / Landline-Only.
+          <span class="screen-only"><em>(Full field protocols: <a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();">Form W-0B SN-1–8 Table</a>)</em></span>
+        </div>
         <div class="table-wrap">
           <table class="write-table" style="font-size:0.8rem;">
             <thead>
@@ -2435,7 +2460,7 @@
           </table>
         </div>
 
-        <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (Matches Tab 4 Register 1:1)</h3>
+        <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (<a href="#form-stake-register" class="form-ref-link" onclick="event.preventDefault(); jumpToForm('STAKE-REG');" title="Jump to Tab 4 Unified Stake Readiness Register">Matches Tab 4 Register 1:1</a> &middot; <a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();" title="Jump to Full SN-1–8 Extra-Care Lookup Table on Form W-0B">SN-1–8 Lookup Table</a>)</h3>
         <div class="table-wrap">
           <table class="write-table" style="font-size:0.8rem;">
             <thead>
@@ -2644,7 +2669,7 @@
       </div>
 
       <!-- UNIFIED STAKE READINESS REGISTER (MERGED TABS 4 & 5 — 1:1 W-5 PARITY) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-3">
+      <div id="form-stake-register" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-3">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag teal">Unified Stake Readiness Register (1:1 Form W-5 Parity • Zero Names)</span>
@@ -2685,6 +2710,20 @@
               <tr style="font-weight:800;"><td>STAKE TOTAL</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
             </tbody>
           </table>
+        </div>
+        <div class="sn-key-box" style="margin-top:8px; margin-bottom:2px;" aria-label="Stake Register Code Key">
+          <strong>Extra-Care Codes (<code>SN-1–SN-8</code>, Zero Diagnoses):</strong>
+          <strong class="sn-code">SN-1</strong> Medical Power (O2/CPAP) &middot;
+          <strong class="sn-code">SN-2</strong> Refrigerated Meds (Insulin) &middot;
+          <strong class="sn-code">SN-3</strong> Mobility / Car-Less / Ride &middot;
+          <strong class="sn-code">SN-4</strong> Dialysis / Chronic &middot;
+          <strong class="sn-code">SN-5</strong> Solo / Widow / Isolated &middot;
+          <strong class="sn-code">SN-6</strong> Sensory / Cognitive &middot;
+          <strong class="sn-code">SN-7</strong> Infant / Expectant / Postpartum / Solo Parent &middot;
+          <strong class="sn-code">SN-8</strong> Language / Deaf / HoH / Low-Vision.<br>
+          <strong>Resource Pools 1–8 (Matches Form W-5 Part B):</strong>
+          <strong>1</strong> Power/Gen &middot; <strong>2</strong> Chainsaws/PPE Crews &middot; <strong>3</strong> Plumbers/Elec/HVAC &middot; <strong>4</strong> Plows/4x4/Rides &middot; <strong>5</strong> Gravity Water Filters &middot; <strong>6</strong> Willing Host Homes &middot; <strong>7</strong> Medical/Bilingual/ASL &middot; <strong>8</strong> Coolers/Mental Health.
+          <span class="screen-only"><em>(<a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();">Full SN-1–8 Field Protocols on Form W-0B</a>)</em></span>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Unified Stake Readiness Register • Zero Member Names (GH 22.4.5)</div>
       </div>
@@ -3426,6 +3465,16 @@
             <span class="fi-desc"><strong>Stake Relief Society Card &amp; Matchmaking (Back of S-B)</strong><small>Cross-ward host homes, insulin cooler hubs &amp; need-to-resource matching</small></span>
             <span class="fi-go">Open &rarr;</span>
           </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('STAKE-REG')">
+            <span class="fi-code">Stake Register</span>
+            <span class="fi-desc"><strong>Unified Stake Readiness Register (1:1 Form W-5 Parity)</strong><small>All 7 Wards + Riverview anonymized SN-1–8 tallies &amp; Pools 1–8</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToSN()">
+            <span class="fi-code">SN-1 to SN-8</span>
+            <span class="fi-desc"><strong>Extra-Care Codes Master Lookup Table (Form W-0B)</strong><small>Functional support categories SN-1..8 (Medical Power through Language/HoH)</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
         </div>
       </div>
     </div>
@@ -3753,8 +3802,41 @@
         'S-0':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Form S-0',  desc: 'Stake Presidency First-Hour & Priesthood Keys (Sheet S-A Front)' },
         'S-3':    { tab: 'stake',  subtab: null, targetId: 'form-s3',  label: 'Form S-3',  desc: 'Stake Net Control & De-Conflicted FRS/HAM Channel Plan (Sheet S-A Back)' },
         'S-B':    { tab: 'stake',  subtab: null, targetId: 'form-sb',  label: 'Sheet S-B', desc: 'High Councilor 4-Track Card, 10-Pt Building Check & Stake RS' },
-        'S-1':    { tab: 'stake',  subtab: null, targetId: 'form-sb',  label: 'Form S-1',  desc: 'High Councilor 4-Track Card & 10-Pt Building Check (Sheet S-B Front)' },
-        'S-2':    { tab: 'stake',  subtab: null, targetId: 'form-s2',  label: 'Form S-2',  desc: 'Stake Relief Society First-Hour Card & Matchmaking (Sheet S-B Back)' }
+        'S-1':       { tab: 'stake',  subtab: null, targetId: 'form-sb',             label: 'Form S-1',       desc: 'High Councilor 4-Track Card & 10-Pt Building Check (Sheet S-B Front)' },
+        'S-2':       { tab: 'stake',  subtab: null, targetId: 'form-s2',             label: 'Form S-2',       desc: 'Stake Relief Society First-Hour Card & Matchmaking (Sheet S-B Back)' },
+        'STAKE-REG': { tab: 'stake',  subtab: null, targetId: 'form-stake-register', label: 'Stake Register', desc: 'Unified Stake Readiness Register (1:1 Form W-5 Parity, Zero Names)' }
+      };
+
+      const SN_CODE_DESC = {
+        'SN-1':    'Medical Power — O2/CPAP/dialysis (O2 <2h reserve = call 911 immediately)',
+        'SN-2':    'Refrigerated Meds — Insulin/biologics (36–46°F towel-wrapped; never direct ice)',
+        'SN-3':    'Mobility / Car-Less — Walkers, wheelchairs, non-night drivers, evac rides',
+        'SN-4':    'Dialysis / Chronic — Priority culinary water & road access',
+        'SN-5':    'Solo / Isolated — Widows, seniors & solo young adults living alone',
+        'SN-6':    'Sensory / Cognitive — Quiet room option & calm buddy check',
+        'SN-7':    'Infants / Expectant / Postpartum / Solo Parents — Formula, water, diapers',
+        'SN-8':    'Language / Deaf / HoH / Low-Vision / Landline-Only — Interpreter, door knock, large print',
+        'SN-4–6':  'SN-4 Dialysis · SN-5 Solo/Widow · SN-6 Sensory/Cognitive',
+        'SN-1–8':  'Extra-Care Codes SN-1 to SN-8 (Voluntary functional support — zero diagnoses)',
+        'SN-1..8': 'Extra-Care Codes SN-1 to SN-8 (Voluntary functional support — zero diagnoses)'
+      };
+
+      function highlightTarget(target) {
+        if (!target) return;
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.classList.remove('form-jump-highlight');
+          void target.offsetWidth;
+          target.classList.add('form-jump-highlight');
+          setTimeout(() => target.classList.remove('form-jump-highlight'), 2300);
+        });
+      }
+
+      window.jumpToSN = function () {
+        document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+        switchTab('ward', false);
+        if (window.setWardSubtab) setWardSubtab('3a');
+        highlightTarget(document.getElementById('sn-codes-key'));
       };
 
       window.jumpToForm = function (key) {
@@ -3768,19 +3850,11 @@
         if (entry.tab === 'ward' && entry.subtab && window.setWardSubtab) {
           setWardSubtab(entry.subtab);
         }
-        const target = document.getElementById(entry.targetId);
-        if (!target) return;
-        requestAnimationFrame(() => {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          target.classList.remove('form-jump-highlight');
-          void target.offsetWidth;
-          target.classList.add('form-jump-highlight');
-          setTimeout(() => target.classList.remove('form-jump-highlight'), 2300);
-        });
+        highlightTarget(document.getElementById(entry.targetId));
       };
 
       function enhanceFormLinks() {
-        const FORM_RE = /\b((?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)\b/g;
+        const REF_RE = /\b((?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3|SN-1\.\.8|SN-1[–\-]8|SN-4[–\-]6|SN-[1-8])\b/g;
         const SKIP_TAGS = new Set(['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'SUMMARY', 'SCRIPT', 'STYLE']);
         const roots = [document.querySelector('main'), document.querySelector('.offline-banner'), document.getElementById('glossary-modal')].filter(Boolean);
         roots.forEach(root => {
@@ -3788,24 +3862,44 @@
           const nodes = [];
           let n;
           while ((n = walker.nextNode())) {
-            if (!n.nodeValue || !FORM_RE.test(n.nodeValue)) continue;
-            FORM_RE.lastIndex = 0;
+            if (!n.nodeValue || !REF_RE.test(n.nodeValue)) continue;
+            REF_RE.lastIndex = 0;
             const parent = n.parentElement;
             if (!parent) continue;
             if (SKIP_TAGS.has(parent.tagName)) continue;
-            if (parent.closest('a, button, summary, .sheet-header, .print-footer-stamp, .gyr-strip')) continue;
+            if (parent.closest('a, button, summary, .sheet-header, .print-footer-stamp, .gyr-strip, .sn-key-box')) continue;
             if (parent.closest('.sheet-box') && parent.closest('h2, h3')) continue;
             nodes.push(n);
           }
           nodes.forEach(textNode => {
             const text = textNode.nodeValue;
-            FORM_RE.lastIndex = 0;
+            REF_RE.lastIndex = 0;
             let lastIdx = 0;
             let changed = false;
             const frag = document.createDocumentFragment();
             let m;
-            while ((m = FORM_RE.exec(text)) !== null) {
+            while ((m = REF_RE.exec(text)) !== null) {
               const full = m[0];
+              if (full.startsWith('SN-')) {
+                const insideSN = textNode.parentElement && textNode.parentElement.closest('#sn-codes-key');
+                if (insideSN) continue;
+                const normKey = full.replace('-', '-').replace(/SN-1-8/, 'SN-1–8').replace(/SN-4-6/, 'SN-4–6');
+                const desc = SN_CODE_DESC[normKey] || SN_CODE_DESC['SN-1–8'];
+                if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+                const a = document.createElement('a');
+                a.href = '#sn-codes-key';
+                a.className = 'form-ref-link';
+                a.title = full + ' — ' + desc + ' (Click for full SN-1–8 table)';
+                a.textContent = full;
+                a.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  jumpToSN();
+                });
+                frag.appendChild(a);
+                lastIdx = m.index + full.length;
+                changed = true;
+                continue;
+              }
               const codeMatch = full.match(/(M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)$/);
               const key = codeMatch ? codeMatch[1] : null;
               const entry = key ? FORM_REGISTRY[key] : null;
@@ -3857,7 +3951,9 @@
         if (params.get('mode') === 'crisis' || localStorage.getItem('crossroads_v3_crisis') === '1') {
           setCrisisMode(true);
         }
-        if (location.hash && location.hash.startsWith('#form-')) {
+        if (location.hash === '#sn-codes-key') {
+          jumpToSN();
+        } else if (location.hash && location.hash.startsWith('#form-')) {
           const hashTarget = location.hash.slice(1);
           const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
           if (matchKey) jumpToForm(matchKey);
