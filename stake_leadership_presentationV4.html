@@ -740,7 +740,8 @@
       body.print-profile-m1-large h2,
       body.print-profile-m1-large h3 { font-size: 17pt !important; color: #000000 !important; }
       body.print-profile-m1-large .grid-2,
-      body.print-profile-m1-large .fill-grid { grid-template-columns: 1fr !important; }
+      body.print-profile-m1-large .fill-grid,
+      body.print-profile-m1-large .gyr-strip { grid-template-columns: 1fr !important; }
       body.print-profile-m1-large .sheet-box { border-width: 2.5pt !important; }
 
       /* Profile 3: Self-Contained Ward Binder (5 Sheets) */
@@ -1063,9 +1064,117 @@
     .hz-lane ul { margin: 0; padding-left: 16px; }
     .hz-lane li { margin-bottom: 3px; }
 
+    /* V4.2 Green/Yellow/Red Status Strip on Form M-1 & Clickable Form Jump Links */
+    .gyr-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .gyr-box {
+      border-radius: 7px;
+      padding: 8px 10px;
+      border: 2px solid;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+    .gyr-box strong { display: block; font-size: 0.88rem; margin-bottom: 2px; }
+    .gyr-green { background: #ecfdf5; border-color: #15803d; color: #14532d; }
+    .gyr-yellow { background: #fefce8; border-color: #ca8a04; color: #713f12; }
+    .gyr-red { background: #fef2f2; border-color: #b91c1c; color: #7f1d1d; }
+    .gyr-pill {
+      display: inline-block;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid;
+    }
+    .gyr-pill.g { background: #dcfce7; color: #166534; border-color: #15803d; }
+    .gyr-pill.y { background: #fef9c3; color: #854d0e; border-color: #ca8a04; }
+    .gyr-pill.r { background: #fee2e2; color: #991b1b; border-color: #b91c1c; }
+
+    .form-ref-link {
+      color: var(--navy-mid);
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      border-radius: 3px;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+    .form-ref-link:hover, .form-ref-link:focus-visible {
+      background: #dbeafe;
+      color: var(--navy);
+      text-decoration-style: solid;
+    }
+    .form-ref-link::after {
+      content: " ↗";
+      font-size: 0.72em;
+      opacity: 0.75;
+    }
+    code .form-ref-link { color: var(--navy); text-decoration-style: dotted; padding: 0; }
+    [id^="form-"] { scroll-margin-top: 86px; }
+    @keyframes formSpotlight {
+      0% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.75); }
+      70% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.45); }
+      100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+    }
+    .form-jump-highlight {
+      animation: formSpotlight 2.2s ease-out;
+      border-radius: 8px;
+    }
+    .forms-index-group { margin-bottom: 12px; }
+    .forms-index-group h3 {
+      margin: 0 0 6px;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy-mid);
+    }
+    .forms-index-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .forms-index-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      padding: 8px 12px;
+      border-radius: 7px;
+      border: 1.5px solid var(--slate-200);
+      background: var(--slate-50);
+      cursor: pointer;
+      color: var(--slate-900);
+      font-size: 0.85rem;
+    }
+    .forms-index-item:hover, .forms-index-item:focus-visible {
+      background: var(--navy-light);
+      border-color: var(--navy-mid);
+    }
+    .forms-index-item .fi-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 800;
+      color: var(--navy);
+      white-space: nowrap;
+      min-width: 82px;
+    }
+    .forms-index-item .fi-desc { flex: 1; }
+    .forms-index-item .fi-desc small { display: block; color: var(--slate-600); font-size: 0.76rem; }
+    .forms-index-item .fi-go { font-weight: 800; color: var(--navy-mid); white-space: nowrap; font-size: 0.8rem; }
+    @media print {
+      .form-ref-link { color: inherit !important; text-decoration: none !important; background: none !important; padding: 0 !important; }
+      .form-ref-link::after { content: "" !important; }
+    }
+
     @media (max-width: 860px) {
       .lifecycle-strip, .kit-grid, .horizon-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .role-grid-6, .hz-lanes, .ward-subtabs { grid-template-columns: 1fr; }
+      .role-grid-6, .hz-lanes, .ward-subtabs, .gyr-strip { grid-template-columns: 1fr; }
     }
     @media (max-width: 540px) {
       .lifecycle-strip, .kit-grid, .horizon-bar { grid-template-columns: 1fr; }
@@ -1108,6 +1217,7 @@
         </div>
       </details>
       <button type="button" id="btn-large-text" class="util-btn" aria-pressed="false">A+ Larger Text</button>
+      <button type="button" class="util-btn" onclick="openModal('forms-modal')">Forms Index</button>
       <button type="button" class="util-btn" onclick="openModal('glossary-modal')">Plain-English Guide</button>
       <button type="button" class="util-btn" onclick="openModal('a2hs-modal')">Save to Phone</button>
     </div>
@@ -1386,7 +1496,7 @@
     <section id="panel-member" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-member">
 
       <!-- MEMBER SHEET 1 FRONT: FORM M-1 (FIRST 60 MINUTES) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="m1-front">
+      <div id="form-m1" class="sheet-box" data-mode="crisis" data-print-item="m1-front">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag red">Member Sheet 1 (Front) • Form M-1</span>
@@ -1436,10 +1546,26 @@
               </li>
               <li><strong>Water &amp; "DO NOT FLUSH":</strong> After a quake or sewer outage, <strong>do NOT flush</strong>. Line your dry toilet bowl with <strong>two heavy trash bags</strong> + kitty litter/shavings, drop seat to hold bags.</li>
               <li><strong>Flag Your Window &amp; Check Next Door:</strong>
-                <strong>GREEN</strong> = Safe (48h water/warmth) &middot; <strong>YELLOW</strong> = Safe now, need help (low water, stranded spouse, warming insulin, no heat) &middot; <strong>RED</strong> = Urgent danger / 911.</li>
+                Post or text your household status using the <span class="gyr-pill g">GREEN</span> / <span class="gyr-pill y">YELLOW</span> / <span class="gyr-pill r">RED</span> key below, then check on immediate neighbors.</li>
               <li><strong>Don't Drive to the Church First (<code>GH 35.5.5</code>):</strong> Chapels stay closed until inspected &amp; approved by the Stake President. Wait for a Ward runner, text, or listen 5 min at the top of the hour (<code>:00</code>) on your Ward walkie-talkie channel (<strong>Wards 1–7 = FRS Ch 1–7, Tone 0</strong>).</li>
               <li><strong>SA 11th YSA / Solo Renters:</strong> If phones stay dead <strong>&gt;2 hours</strong> and no YSA companion reaches you, knock on immediate neighbors or walk (if safe, daylight, non-hazmat) to your nearest hub (<strong>368 W Aspen Hills, 270 W Harvest Hills, or Shay Park</strong>) — Stake Command will relay your safety to the SA 11th Bishop.</li>
             </ol>
+          </div>
+        </div>
+
+        <!-- HIGH-VISIBILITY GREEN / YELLOW / RED STATUS KEY ON FORM M-1 -->
+        <div class="gyr-strip" aria-label="Household Check-In Status Key: Green, Yellow, Red">
+          <div class="gyr-box gyr-green">
+            <strong>GREEN — SAFE / OK</strong>
+            Everyone accounted for; 48+ hrs water &amp; warmth. Place green paper/cloth in front window or text &ldquo;GREEN&rdquo; to your Ward buddy.
+          </div>
+          <div class="gyr-box gyr-yellow">
+            <strong>YELLOW — SAFE NOW, NEED HELP</strong>
+            No immediate danger, but need support (low water, no heat, warming insulin, stranded spouse, or ride). Post yellow in window or text &ldquo;YELLOW.&rdquo;
+          </div>
+          <div class="gyr-box gyr-red">
+            <strong>RED — URGENT DANGER / CALL 911</strong>
+            Medical emergency, oxygen &lt;2h, trapped, fire, or gas leak. <strong>Call 911 first</strong>, then post red in front window for Ward Street Captains.
           </div>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Member Sheet 1 (Front) • Keep on Fridge</div>
@@ -1880,7 +2006,7 @@
         </div>
 
         <!-- WARD SHEET 1 FRONT & BACK: FORM W-0 + FORM W-0B -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-1">
+      <div id="form-w0" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-1">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Ward Sheet 1 (Front &amp; Back) • Forms W-0 &amp; W-0B</span>
@@ -1927,7 +2053,7 @@
         <hr style="border:none; border-top:2px dashed #94a3b8; margin:12px 0;">
 
         <!-- BACK OF SHEET 1: FORM W-0B (WARD FIELD REFERENCE CARD) -->
-        <h3 style="margin-top:0;">Form W-0B (Back of Sheet 1): Self-Contained Ward Field Reference</h3>
+        <h3 id="form-w0b" style="margin-top:0;">Form W-0B (Back of Sheet 1): Self-Contained Ward Field Reference</h3>
         <div class="grid-2" style="font-size:0.83rem;">
           <div>
             <strong>Extra-Care Codes (SN-1 to SN-8 — Zero Diagnoses):</strong>
@@ -2102,7 +2228,7 @@
         </div>
 
       <!-- WARD SHEET 2: FORM W-1 (CONFIDENTIAL SPECIAL NEEDS — DOMESTIC SAFETY REMOVED!) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-2">
+      <div id="form-w1" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-2">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag red">Ward Sheet 2 • Form W-1 (Strictly Confidential — Never Leaves Ward)</span>
@@ -2152,7 +2278,7 @@
       </div>
 
       <!-- WARD SHEET 3: COMBINED FORM W-2/3 (VOLUNTARY GEAR, SKILLS & 4 RS POOLS) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-3">
+      <div id="form-w23" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-3">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Ward Sheet 3 (Front &amp; Back) • Forms W-2 &amp; W-3</span>
@@ -2211,7 +2337,7 @@
       </div>
 
       <!-- WARD SHEET 4: COMBINED FORM W-4/6 (DUAL-MODE CHECK-IN + REUSABLE WARD BOARD) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-4">
+      <div id="form-w46" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-4">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6</span>
@@ -2286,7 +2412,7 @@
       </div>
 
       <!-- WARD SHEET 5: FORM W-5 (STRICTLY 1-PAGE ANONYMIZED CARE UPDATE + 1:1 TAB 4 PARITY) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-5">
+      <div id="form-w5" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-5">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag teal">Ward Sheet 5 • Form W-5 (ZERO MEMBER NAMES — GH 22.4.5)</span>
@@ -2350,7 +2476,7 @@
       </div>
 
       <!-- STAKE SHEET 1: S-A FRONT (STAKE PRES) & BACK (PREP REP / NET CONTROL) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-1">
+      <div id="form-sa" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-1">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Stake Sheet 1 (Front &amp; Back) • Sheet S-A (Forms S-0 &amp; S-3)</span>
@@ -2395,7 +2521,7 @@
         <hr style="border:none; border-top:2px dashed #94a3b8; margin:12px 0;">
 
         <!-- BACK OF SHEET S-A: FORM S-3 (DE-CONFLICTED RF + NET CONTROL) -->
-        <h3 style="margin-top:0;">Back (Form S-3): Stake Prep Rep / Net Control &amp; De-Conflicted RF Channel Plan</h3>
+        <h3 id="form-s3" style="margin-top:0;">Back (Form S-3): Stake Prep Rep / Net Control &amp; De-Conflicted RF Channel Plan</h3>
         <div class="grid-2" style="font-size:0.83rem;">
           <div>
             <strong>De-Conflicted FRS Walkie-Talkie Channels (Tone 0 / Carrier Squelch Default):</strong>
@@ -2430,7 +2556,7 @@
       </div>
 
       <!-- STAKE SHEET 2: S-B FRONT (HC 4-TRACK + 10-PT CHECK) & BACK (STAKE RS + MATCHMAKING) -->
-      <div class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-2">
+      <div id="form-sb" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-2">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Stake Sheet 2 (Front &amp; Back) • Sheet S-B (Forms S-1 &amp; S-2)</span>
@@ -2485,7 +2611,7 @@
         <!-- BACK OF SHEET S-B: FORM S-2 (STAKE RS + NEED-TO-RESOURCE MATCHING) -->
         <div class="grid-2" style="font-size:0.83rem;">
           <div>
-            <h3 style="margin-top:0;">Back (Form S-2): Stake Relief Society First-Hour Card (<code>GH 9.6 / 22.9.3</code>)</h3>
+            <h3 id="form-s2" style="margin-top:0;">Back (Form S-2): Stake Relief Society First-Hour Card (<code>GH 9.6 / 22.9.3</code>)</h3>
             <ol>
               <li><strong>Min 0–15:</strong> Secure own household &amp; verify Stake RS counselor backups.</li>
               <li><strong>Min 15–30:</strong> Check in with Stake Presidency (text/HAM/runner) before traveling to Bldg 1 or Shay Park.</li>
@@ -3222,6 +3348,89 @@
   </main>
 
   <!-- ===== MODALS (WITH FOCUS TRAP & ESC CLOSE) ===== -->
+  <div id="forms-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="forms-title">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h2 id="forms-title" style="margin:0; font-size:1.15rem; color:var(--navy);">Quick Forms Index (Tap Any Form to Jump)</h2>
+        <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="closeModal('forms-modal')">Close</button>
+      </div>
+      <p style="font-size:0.84rem; color:var(--slate-700); margin:0 0 10px;">Every form code across this plan is also a clickable link—hover to see what it is, or tap to jump straight to it.</p>
+
+      <div class="forms-index-group">
+        <h3>Home &amp; Family (Tab 2)</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" onclick="jumpToForm('M-1')">
+            <span class="fi-code">Form M-1</span>
+            <span class="fi-desc"><strong>Household Fridge Card (Front &amp; Back)</strong><small>First 60 Min, Green/Yellow/Red Status Key, Contacts &amp; Neighbor Care Slip</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="forms-index-group">
+        <h3>Ward Offline Binder (Tab 3 — 5 Sheets)</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-0')">
+            <span class="fi-code">Form W-0</span>
+            <span class="fi-desc"><strong>Ward Command Quick Sheet &amp; First 60 Minutes</strong><small>Autonomous activation, succession, Min 0–60 checklist &amp; Storehouse protocol</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-0B')">
+            <span class="fi-code">Form W-0B</span>
+            <span class="fi-desc"><strong>Ward Field Reference Card (Back of Sheet 1)</strong><small>SN-1–8 Extra-Care codes, Ward lifelines, Host-Home &amp; PPE safety rules</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-1')">
+            <span class="fi-code">Form W-1</span>
+            <span class="fi-desc"><strong>Voluntary Extra-Care Household Register (Locked Only)</strong><small>Confidential functional needs (GH 22.4.5 — zero diagnoses, zero abuse entries)</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-2/3')">
+            <span class="fi-code">Form W-2/3</span>
+            <span class="fi-desc"><strong>Voluntary Equipment, Skills &amp; RS Care Pools</strong><small>Q1 5th-Sunday sign-up: power stations, chainsaws, medical, host homes, coolers</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-4/6')">
+            <span class="fi-code">Form W-4/6</span>
+            <span class="fi-desc"><strong>Dual-Mode Check-In Overlay &amp; Live Care Board</strong><small>10–12 street blocks (Green/Yellow/Red tally), EQ work-crew &amp; battery loan log</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('W-5')">
+            <span class="fi-code">Form W-5</span>
+            <span class="fi-desc"><strong>Ward &rarr; Stake Anonymized Care Update (Zero Names)</strong><small>1-page headcount &amp; unmet-needs slip sent at T+60m / T+4h (and Mar 31 audit)</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="forms-index-group" style="margin-bottom:0;">
+        <h3>Stake Command Kit (Tab 4 — 2 Sheets)</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" onclick="jumpToForm('S-A')">
+            <span class="fi-code">Sheet S-A / S-0</span>
+            <span class="fi-desc"><strong>Stake Presidency Command &amp; Succession</strong><small>First-hour keys, Area escalation, meetinghouse shelter approval &amp; roster</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('S-3')">
+            <span class="fi-code">Form S-3</span>
+            <span class="fi-desc"><strong>Stake Net Control &amp; RF Channel Plan (Back of S-A)</strong><small>De-conflicted Ward FRS Ch 1–7 (Tone 0) &amp; 2m HAM frequencies (145.230 / .580)</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('S-B')">
+            <span class="fi-code">Sheet S-B / S-1</span>
+            <span class="fi-desc"><strong>High Councilor 4-Track Card &amp; 10-Pt Building Check</strong><small>Facilities, Care Center, Comms/Logistics &amp; Public Safety auto-triggers</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="jumpToForm('S-2')">
+            <span class="fi-code">Form S-2</span>
+            <span class="fi-desc"><strong>Stake Relief Society Card &amp; Matchmaking (Back of S-B)</strong><small>Cross-ward host homes, insulin cooler hubs &amp; need-to-resource matching</small></span>
+            <span class="fi-go">Open &rarr;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="glossary-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="glossary-title">
     <div class="modal-dialog">
       <div class="modal-head">
@@ -3526,6 +3735,111 @@
         });
       });
 
+      // Quick Form Registry & Clickable Cross-Tab Form Jump Engine
+      const FORM_REGISTRY = {
+        'M-1':    { tab: 'member', subtab: null, targetId: 'form-m1',  label: 'Form M-1',  desc: 'Household Fridge Card (First 60 Min, Green/Yellow/Red & Contacts)' },
+        'W-0':    { tab: 'ward',   subtab: '3a', targetId: 'form-w0',  label: 'Form W-0',  desc: 'Ward Command Quick Sheet, Succession & First 60 Minutes' },
+        'W-0/0B': { tab: 'ward',   subtab: '3a', targetId: 'form-w0',  label: 'Forms W-0 & W-0B', desc: 'Ward Command Quick Sheet & Field Reference (Sheet 1)' },
+        'W-0B':   { tab: 'ward',   subtab: '3a', targetId: 'form-w0b', label: 'Form W-0B', desc: 'Ward Field Reference (SN-1–8, Lifelines, Host & PPE Rules)' },
+        'W-1':    { tab: 'ward',   subtab: '3c', targetId: 'form-w1',  label: 'Form W-1',  desc: 'Confidential Voluntary Extra-Care Household Register (Locked Only)' },
+        'W-2/3':  { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Forms W-2 & W-3', desc: 'Voluntary Equipment, Trades, Medical & RS Care Pools' },
+        'W-2':    { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Form W-2',  desc: 'Voluntary Ward Equipment List (Sheet 3 Front)' },
+        'W-3':    { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Form W-3',  desc: 'Voluntary Skills, Medical & RS Care Pools (Sheet 3 Back)' },
+        'W-4/6':  { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Forms W-4 & W-6', desc: 'Dual-Mode Check-In Overlay & Live Ward Care Board' },
+        'W-4':    { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Form W-4',  desc: 'Dual-Mode Street-Captain Check-In Overlay (Sheet 4)' },
+        'W-6':    { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Form W-6',  desc: 'Live Ward Care & Work-Crew Board (Sheet 4)' },
+        'W-5':    { tab: 'ward',   subtab: '3c', targetId: 'form-w5',  label: 'Form W-5',  desc: 'Ward → Stake Anonymized Care & Status Update (Zero Names)' },
+        'S-A':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Sheet S-A', desc: 'Stake Presidency Command, Succession & Net Control' },
+        'S-0':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Form S-0',  desc: 'Stake Presidency First-Hour & Priesthood Keys (Sheet S-A Front)' },
+        'S-3':    { tab: 'stake',  subtab: null, targetId: 'form-s3',  label: 'Form S-3',  desc: 'Stake Net Control & De-Conflicted FRS/HAM Channel Plan (Sheet S-A Back)' },
+        'S-B':    { tab: 'stake',  subtab: null, targetId: 'form-sb',  label: 'Sheet S-B', desc: 'High Councilor 4-Track Card, 10-Pt Building Check & Stake RS' },
+        'S-1':    { tab: 'stake',  subtab: null, targetId: 'form-sb',  label: 'Form S-1',  desc: 'High Councilor 4-Track Card & 10-Pt Building Check (Sheet S-B Front)' },
+        'S-2':    { tab: 'stake',  subtab: null, targetId: 'form-s2',  label: 'Form S-2',  desc: 'Stake Relief Society First-Hour Card & Matchmaking (Sheet S-B Back)' }
+      };
+
+      window.jumpToForm = function (key) {
+        const entry = FORM_REGISTRY[key];
+        if (!entry) return;
+        document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+        if (entry.subtab === '3c' && document.body.classList.contains('crisis-mode')) {
+          setCrisisMode(false);
+        }
+        switchTab(entry.tab, false);
+        if (entry.tab === 'ward' && entry.subtab && window.setWardSubtab) {
+          setWardSubtab(entry.subtab);
+        }
+        const target = document.getElementById(entry.targetId);
+        if (!target) return;
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          target.classList.remove('form-jump-highlight');
+          void target.offsetWidth;
+          target.classList.add('form-jump-highlight');
+          setTimeout(() => target.classList.remove('form-jump-highlight'), 2300);
+        });
+      };
+
+      function enhanceFormLinks() {
+        const FORM_RE = /\b((?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)\b/g;
+        const SKIP_TAGS = new Set(['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'SUMMARY', 'SCRIPT', 'STYLE']);
+        const roots = [document.querySelector('main'), document.querySelector('.offline-banner'), document.getElementById('glossary-modal')].filter(Boolean);
+        roots.forEach(root => {
+          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+          const nodes = [];
+          let n;
+          while ((n = walker.nextNode())) {
+            if (!n.nodeValue || !FORM_RE.test(n.nodeValue)) continue;
+            FORM_RE.lastIndex = 0;
+            const parent = n.parentElement;
+            if (!parent) continue;
+            if (SKIP_TAGS.has(parent.tagName)) continue;
+            if (parent.closest('a, button, summary, .sheet-header, .print-footer-stamp, .gyr-strip')) continue;
+            if (parent.closest('.sheet-box') && parent.closest('h2, h3')) continue;
+            nodes.push(n);
+          }
+          nodes.forEach(textNode => {
+            const text = textNode.nodeValue;
+            FORM_RE.lastIndex = 0;
+            let lastIdx = 0;
+            let changed = false;
+            const frag = document.createDocumentFragment();
+            let m;
+            while ((m = FORM_RE.exec(text)) !== null) {
+              const full = m[0];
+              const codeMatch = full.match(/(M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)$/);
+              const key = codeMatch ? codeMatch[1] : null;
+              const entry = key ? FORM_REGISTRY[key] : null;
+              // Do not self-link inside the exact target sheet/section
+              const insideSelf = entry && textNode.parentElement && textNode.parentElement.closest('#' + entry.targetId);
+              if (!entry || insideSelf) continue;
+              if (m.index > lastIdx) {
+                frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+              }
+              const a = document.createElement('a');
+              a.href = '#' + entry.targetId;
+              a.className = 'form-ref-link';
+              a.dataset.formKey = key;
+              a.title = entry.label + ' — ' + entry.desc + ' (Click to open)';
+              a.textContent = full;
+              a.addEventListener('click', (e) => {
+                e.preventDefault();
+                jumpToForm(key);
+              });
+              frag.appendChild(a);
+              lastIdx = m.index + full.length;
+              changed = true;
+            }
+            if (changed) {
+              if (lastIdx < text.length) {
+                frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+              }
+              textNode.parentNode.replaceChild(frag, textNode);
+            }
+          });
+        });
+      }
+      enhanceFormLinks();
+
       // Restore preferences & handle URL params (incl. legacy ?tab=8 -> member)
       const params = new URLSearchParams(location.search);
       try {
@@ -3542,6 +3856,11 @@
         switchTab(startTab, false);
         if (params.get('mode') === 'crisis' || localStorage.getItem('crossroads_v3_crisis') === '1') {
           setCrisisMode(true);
+        }
+        if (location.hash && location.hash.startsWith('#form-')) {
+          const hashTarget = location.hash.slice(1);
+          const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
+          if (matchKey) jumpToForm(matchKey);
         }
       } catch (e) {}
 
