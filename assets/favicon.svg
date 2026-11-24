@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Saratoga Springs Stake Emergency Plan Icon">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b132b"/>
+      <stop offset="60%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- Protective Shield -->
+  <path d="M256 84 L388 132 V248 C388 334 330 398 256 428 C182 398 124 334 124 248 V132 Z"
+        fill="rgba(255,255,255,0.08)" stroke="#ffffff" stroke-width="18" stroke-linejoin="round"/>
+  <!-- Gold Accent Inner Trim -->
+  <path d="M256 106 L368 147 V246 C368 320 318 376 256 404 C194 376 144 320 144 246 V147 Z"
+        fill="none" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round" opacity="0.9"/>
+  <!-- Mountain Peaks (Lake Mountain / Wasatch) -->
+  <path d="M168 308 L224 228 L264 274 L298 236 L344 308 Z"
+        fill="#bfdbfe" opacity="0.35"/>
+  <!-- Home Roof & House -->
+  <path d="M188 262 L256 204 L324 262" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M208 258 V324 H304 V258" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="241" y="282" width="30" height="42" rx="4" fill="url(#gold)"/>
+  <!-- Guiding Compass Star -->
+  <path d="M256 134 L264 156 L286 164 L264 172 L256 194 L248 172 L226 164 L248 156 Z" fill="url(#gold)"/>
+</svg>

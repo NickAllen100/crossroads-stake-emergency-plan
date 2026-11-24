@@ -1,0 +1,26 @@
+{
+  "name": "Crossroads Stake Emergency Plan",
+  "short_name": "Stake Plan",
+  "description": "Saratoga Springs Utah Crossroads Stake Emergency Operations Plan, Ward Toolkit & Member Preparedness Guide.",
+  "start_url": "./stake_leadership_presentationV4.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0b132b",
+  "theme_color": "#1e3a8a",
+  "categories": ["utilities", "lifestyle"],
+  "icons": [
+    {
+      "src": "assets/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
