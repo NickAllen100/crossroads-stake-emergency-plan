@@ -326,7 +326,11 @@
       font-weight: 700;
     }
     body.crisis-mode .crisis-active-banner { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
-    body.crisis-mode [data-mode="prep"] { display: none !important; }
+    .crisis-only { display: none; }
+    @media screen {
+      body.crisis-mode [data-mode="prep"] { display: none !important; }
+      body.crisis-mode .crisis-only { display: block; }
+    }
 
     /* Cohort highlighting */
     .cohort-card { transition: box-shadow 0.2s, border-color 0.2s; }
@@ -973,9 +977,12 @@
     .ward-subtab-btn.active small { color: #dbeafe; }
     .ward-subpane { display: none; }
     .ward-subpane.active { display: block; }
-    body.crisis-mode .ward-subtabs { display: none !important; }
-    body.crisis-mode #ward-pane-3a,
-    body.crisis-mode #ward-pane-3c { display: block !important; }
+    @media screen {
+      body.crisis-mode .ward-subtabs { display: none !important; }
+      body.crisis-mode #ward-pane-3a { display: block !important; }
+      body.crisis-mode #ward-pane-3b,
+      body.crisis-mode #ward-pane-3c { display: none !important; }
+    }
 
     .role-grid-6 {
       display: grid;
@@ -1784,8 +1791,8 @@
       <!-- ===== SUB-TAB 3A: WARD ROLES & ACTIVE RESPONSE ===== -->
       <div id="ward-pane-3a" class="ward-subpane active">
 
-        <!-- RESTORED V1 WARD ROLES AT A GLANCE (6 CLEAR LANES) -->
-        <div class="card ward-nonprint" data-mode="crisis">
+        <!-- RESTORED V1 WARD ROLES AT A GLANCE (6 CLEAR LANES — HIDDEN IN 0–60M CRISIS MODE) -->
+        <div class="card ward-nonprint" data-mode="prep">
           <h2>Ward Roles at a Glance (Who Owns What — <code>GH 22.6 &amp; 22.8</code>)</h2>
           <div class="role-grid-6">
             <div class="role-card">
@@ -1845,8 +1852,8 @@
           </div>
         </div>
 
-        <!-- LINEAR STEP-BY-STEP WARD CRISIS SEQUENCE -->
-        <div class="card card-navy ward-nonprint" data-mode="crisis">
+        <!-- LINEAR STEP-BY-STEP WARD SEQUENCE (ALL 4 HORIZONS — HIDDEN IN 0–60M CRISIS MODE) -->
+        <div class="card card-navy ward-nonprint" data-mode="prep">
           <h2>Step-by-Step Ward Sequence (Hour 1 &rarr; Recovery)</h2>
           <div class="lifecycle-strip">
             <div class="lc-step s1">
@@ -1884,7 +1891,7 @@
 
         <div class="grid-2">
           <div>
-            <h3>Form W-0: Activation, Succession &amp; First 30 Minutes</h3>
+            <h3>Form W-0: Activation, Succession &amp; First 60 Minutes</h3>
             <p style="font-size:0.86rem;"><strong>Autonomous Ward Activation:</strong> The Bishop—or <strong>EQP + Ward RSP acting jointly if the Bishopric is unreachable</strong>—may immediately launch Level 2/3 household check-ins, PPE work crews, private host homes, and offline fast-offering relief.</p>
             <p style="font-size:0.86rem;"><strong>Ward Succession Order:</strong> Bishop &rarr; 1st Counselor &rarr; 2nd Counselor &rarr; EQP &amp; Ward RSP jointly.</p>
             <p style="font-size:0.86rem;"><strong>Stake/Area Hold Fence:</strong> Never open chapels without HC 10-pt inspection + Stake Presidency authorization (<code>GH 35.5.5</code>; Area Pres+FM for overnight). Only Stake Pres cancels Sunday meetings / authorizes home sacrament (<code>GH 29.2</code>).</p>
@@ -1957,6 +1964,19 @@
           </div>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Ward Sheet 1 (W-0 / W-0B) • Locked Off-Site Ward Binder</div>
+      </div>
+
+      <div class="card crisis-only ward-nonprint screen-only" style="background:var(--slate-50); border:1.5px solid var(--slate-200);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <p style="margin:0; font-size:0.86rem; color:var(--slate-700);">
+            <strong>Showing 0–60 Minute Ward Action Card Only (<code>Form W-0 &amp; W-0B</code>).</strong>
+            Ready for blank binder forms (<code>W-1–W-5</code>) or 1–72h / 1–2w / 2+m recovery?
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="openWardSection('3c')">Open Printable Forms (W-1–W-5)</button>
+            <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="openWardSection('3b')">View 1–72h &amp; Recovery Guide</button>
+          </div>
+        </div>
       </div>
       </div><!-- end #ward-pane-3a -->
 
@@ -3422,12 +3442,17 @@
       updateCheckProgress();
 
       // Wire Tab 3 3-Sub-Tab Ward Switcher
+      window.setWardSubtab = function (sub) {
+        document.querySelectorAll('.ward-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.wardSub === sub));
+        document.querySelectorAll('.ward-subpane').forEach(p => p.classList.toggle('active', p.id === 'ward-pane-' + sub));
+      };
+      window.openWardSection = function (sub) {
+        setCrisisMode(false);
+        switchTab('ward', false);
+        setWardSubtab(sub);
+      };
       document.querySelectorAll('.ward-subtab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const sub = btn.dataset.wardSub;
-          document.querySelectorAll('.ward-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.wardSub === sub));
-          document.querySelectorAll('.ward-subpane').forEach(p => p.classList.toggle('active', p.id === 'ward-pane-' + sub));
-        });
+        btn.addEventListener('click', () => setWardSubtab(btn.dataset.wardSub));
       });
 
       // Wire Tab 5 4-Horizon Segmented Control & Hazard Horizon Filter
