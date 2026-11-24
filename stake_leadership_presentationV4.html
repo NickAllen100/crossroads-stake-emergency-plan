@@ -1114,7 +1114,28 @@
       font-size: 0.72em;
       opacity: 0.75;
     }
+    .gh-ref-link {
+      color: var(--teal);
+      font-weight: 700;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      border-radius: 3px;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+    .gh-ref-link:hover, .gh-ref-link:focus-visible {
+      background: #ccfbf1;
+      color: #115e59;
+      text-decoration-style: solid;
+    }
+    .gh-ref-link::after {
+      content: " ↗";
+      font-size: 0.72em;
+      opacity: 0.75;
+    }
     code .form-ref-link { color: var(--navy); text-decoration-style: dotted; padding: 0; }
+    code .gh-ref-link { color: #0f766e; text-decoration-style: dotted; padding: 0; }
     [id^="form-"], #sn-codes-key { scroll-margin-top: 86px; }
     .sn-key-box {
       background: var(--slate-50);
@@ -1180,8 +1201,8 @@
     .forms-index-item .fi-desc small { display: block; color: var(--slate-600); font-size: 0.76rem; }
     .forms-index-item .fi-go { font-weight: 800; color: var(--navy-mid); white-space: nowrap; font-size: 0.8rem; }
     @media print {
-      .form-ref-link { color: inherit !important; text-decoration: none !important; background: none !important; padding: 0 !important; }
-      .form-ref-link::after { content: "" !important; }
+      .form-ref-link, .gh-ref-link { color: inherit !important; text-decoration: none !important; background: none !important; padding: 0 !important; }
+      .form-ref-link::after, .gh-ref-link::after { content: "" !important; }
     }
 
     @media (max-width: 860px) {
@@ -1313,7 +1334,7 @@
       <!-- GOSPEL FOUNDATION BANNER (PEACETIME VIEW) -->
       <div class="gospel-banner" data-mode="prep">
         <blockquote>&ldquo;If ye are prepared ye shall not fear&rdquo; (Doctrine &amp; Covenants 38:30) &middot; &ldquo;See that all these things are done in wisdom and order&rdquo; (Mosiah 4:27)</blockquote>
-        <p>We prepare in peace—without debt, shame, or fear—so we can care for our own households and walk alongside our neighbors as the Savior would (<em>General Handbook</em> 22.1). Tap the red bar above anytime for <strong>Emergency Right Now (0–60 Min Only)</strong>; leave it off for full preparation, ministering, and recovery guidance.</p>
+        <p>We prepare in peace—without debt, shame, or fear—so we can care for our own households and walk alongside our neighbors as the Savior would (<a class="gh-ref-link" href="https://www.churchofjesuschrist.org/study/manual/general-handbook/22-providing-for-temporal-needs-and-building-self-reliance?lang=eng" target="_blank" rel="noopener noreferrer" title="Open General Handbook Chapter 22 — Providing for Temporal Needs and Building Self-Reliance"><em>General Handbook</em> 22.1</a>). Tap the red bar above anytime for <strong>Emergency Right Now (0–60 Min Only)</strong>; leave it off for full preparation, ministering, and recovery guidance.</p>
       </div>
 
       <div class="card card-navy" data-mode="crisis">
@@ -1434,14 +1455,14 @@
               </tr>
               <tr>
                 <td><span class="badge badge-amber">Level 2 — Partial</span><br>Outage &gt;2 hrs in &lt;32&deg;F or &gt;90&deg;F; localized wind/flood; boil-water order; Saratoga View generator/evac alert</td>
-                <td><strong>Phone/Text First;</strong><br>Targeted buddy check only if outdoor travel is safe</td>
+                <td><strong>Phone/Text First;</strong><br>Targeted Ministering Companion check only if outdoor travel is safe</td>
                 <td>Stay home unless ordered to evacuate; <strong>oxygen &lt;2 hr reserve = call 911 immediately</strong>; offer private host home (welcoming families, singles &amp; pets).</td>
                 <td><strong>Autonomous Launch:</strong> Targeted <code>W-1</code> checks; PPE work crews (<code>W-2/3</code>); send anonymized <strong>Form W-5 at T+60m</strong> to Stake Command Intake.</td>
                 <td>Stake Pres evaluates daytime warming hub (<code>GH 35.5.5</code>) after HC 10-pt building pass; Care Center HC mobilizes 2 pre-assigned adjacent wards; Stake RS matches host/cooling pools.</td>
               </tr>
               <tr>
                 <td><span class="badge badge-red">Level 3 — Auto-Activate</span><br>M5.0+ earthquake; Jordan River bridge cut; multi-hour cell/power blackout; mandatory evac; SR-68 hazmat; SP call</td>
-                <td><strong>Hard Shelter-in-Place</strong> during active hazard &rarr; <strong>Buddy Foot Sweep</strong> (<code>W-4</code> Street Captains) once civil All-Clear</td>
+                <td><strong>Hard Shelter-in-Place</strong> during active hazard &rarr; <strong>Ministering Companion Door-Knock Sweep</strong> (<code>W-4</code> Ministering Districts) once civil All-Clear</td>
                 <td><strong>Home First</strong> (homeowners: gas off only if smelled; renters: evacuate upwind; seniors: no dark stairs/valves); post window code; commuting spouse uses <strong>Stay-vs.-Walk</strong> rule; <strong>SA 11th YSA</strong> uses nearest-hub fallback if comms out &gt;2 hrs.</td>
                 <td><strong>Auto-Activate:</strong> Rally at outdoor/home Ward Command (<code>W-0</code>); sweep <code>W-4</code> onto <code>W-4/6</code> board; relay <code>W-5</code> via HAM or Ward FRS Ch 1–7 at <strong>T+60m &amp; T+4h</strong>; offline fast-offering relief.</td>
                 <td>SP (or 1st/2nd Counselor west of river) opens Bldg 1 or <strong>Shay Park mobile kit</strong>; Prep Rep runs <code>145.230 MHz</code> Net Control (single W-5 intake); SP contacts Area Seventy/FM &amp; enforces Media guardrail.</td>
@@ -1538,7 +1559,7 @@
             <div class="card card-warn" style="padding:10px 12px; margin-top:8px;">
               <h3 style="margin-top:0;">DO NOT TRY ALONE (Seniors &amp; Solo Adults)</h3>
               <ul style="margin-bottom:0;">
-                <li><strong>No dark stairs or outdoor gas/water valves</strong> (hip-fracture risk — wait for daylight or Ward buddy).</li>
+                <li><strong>No dark stairs or outdoor gas/water valves</strong> (hip-fracture risk — wait for daylight or your Ministering Companion).</li>
                 <li><strong>No night or snow driving</strong> — evacuate early before storms or wait for your Ward ride.</li>
                 <li><strong>No indoor camp stoves, charcoal, or propane heaters</strong> (carbon monoxide kills silently).</li>
               </ul>
@@ -1569,7 +1590,7 @@
         <div class="gyr-strip" aria-label="Household Check-In Status Key: Green, Yellow, Red">
           <div class="gyr-box gyr-green">
             <strong>GREEN — SAFE / OK</strong>
-            Everyone accounted for; 48+ hrs water &amp; warmth. Place green paper/cloth in front window or text &ldquo;GREEN&rdquo; to your Ward buddy.
+            Everyone accounted for; 48+ hrs water &amp; warmth. Place green paper/cloth in front window or text &ldquo;GREEN&rdquo; to your Ministering Companion.
           </div>
           <div class="gyr-box gyr-yellow">
             <strong>YELLOW — SAFE NOW, NEED HELP</strong>
@@ -1577,7 +1598,7 @@
           </div>
           <div class="gyr-box gyr-red">
             <strong>RED — URGENT DANGER / CALL 911</strong>
-            Medical emergency, oxygen &lt;2h, trapped, fire, or gas leak. <strong>Call 911 first</strong>, then post red in front window for Ward Street Captains.
+            Medical emergency, oxygen &lt;2h, trapped, fire, or gas leak. <strong>Call 911 first</strong>, then post red in front window for your Ministering Companions.
           </div>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Member Sheet 1 (Front) • Keep on Fridge</div>
@@ -1601,7 +1622,7 @@
           <div class="fill-field"><label for="m1-commuter">East-of-River Commuter Safe Contact (Stay-vs.-Walk Rule)</label><input id="m1-commuter" data-save-key="v2_m1_commuter" placeholder="Coworker/relative east of river if SR-73/2100 N bridges close"></div>
           <div class="fill-field"><label for="m1-landlord">Landlord / Property Mgmt 24/7 (or Non-Member Roommate Contact)</label><input id="m1-landlord" data-save-key="v2_m1_landlord" placeholder="24/7 maintenance + roommate emergency contact"></div>
           <div class="fill-field"><label for="m1-ins">Home / Renter's Insurance (Loss-of-Use Phone &amp; Policy #)</label><input id="m1-ins" data-save-key="v2_m1_ins" placeholder="Carrier phone + policy #"></div>
-          <div class="fill-field"><label for="m1-buddy">Ward Buddy / Ministering Companion &amp; Neighbor Rally Spot</label><input id="m1-buddy" data-save-key="v2_m1_buddy" placeholder="e.g., Mailbox / Neighbor driveway / Shay Park"></div>
+          <div class="fill-field"><label for="m1-buddy">Ministering Companion, EQ/RS District Leader &amp; Neighbor Rally Spot</label><input id="m1-buddy" data-save-key="v2_m1_buddy" placeholder="e.g., Ministering companion + EQ/RS district lead + rally spot"></div>
           <div class="fill-field"><label for="m1-dme">Doctor / Pharmacy / Oxygen-DME Supplier (24/7 Line)</label><input id="m1-dme" data-save-key="v2_m1_dme" placeholder="Oxygen cylinder supplier &amp; pharmacy"></div>
           <div class="fill-field"><label for="m1-pets">Pediatric Rescue Meds / Pets / Special Notes</label><input id="m1-pets" data-save-key="v2_m1_pets" placeholder="Inhaler/EpiPen location; dog leash/carrier; 1 gal/day pet water"></div>
         </div>
@@ -1636,7 +1657,7 @@
           <p style="font-size:0.84rem; margin:4px 0;">
             <strong>Name / Apt or Street:</strong> ____________________________ &nbsp; <strong>Phone (Landline/Cell):</strong> ____________________<br>
             <strong>Helpful Check-In Support:</strong> [ ] Medical Power (O2/CPAP) &nbsp; [ ] Refrigerated Meds &nbsp; [ ] Hard of Hearing / Low Vision &nbsp; [ ] Landline-Only &nbsp; [ ] No Night/Snow Driving or Car-Less Ride &nbsp; [ ] Infant/Solo/Postpartum &nbsp; [ ] Pet Needs Carrier<br>
-            <strong>Ways I Can Help Neighbors:</strong> [ ] Phone Check-In Buddy &nbsp; [ ] Pray / Notes &nbsp; [ ] Host Neighbor (Main-Floor / Pet-OK) &nbsp; [ ] Bilingual: __________
+            <strong>Ways I Can Help Neighbors:</strong> [ ] Phone Check-In Helper &nbsp; [ ] Pray / Notes &nbsp; [ ] Host Neighbor (Main-Floor / Pet-OK) &nbsp; [ ] Bilingual: __________
           </p>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Member Sheet 1 (Back) • Keep Privately at Home</div>
@@ -1649,7 +1670,7 @@
         </div>
         <p><strong>Name:</strong> ______________________________ &nbsp; <strong>DOB:</strong> ______________</p>
         <p><strong>Adult Child / Emergency Contact:</strong> ________________________________________</p>
-        <p><strong>Ward Buddy / Ministering Contact:</strong> ________________________________________</p>
+        <p><strong>Ministering Companion / EQ or RS District Leader:</strong> ________________________________</p>
         <p><strong>Doctor &amp; Pharmacy Phone:</strong> ________________________________________</p>
         <p><strong>Oxygen / DME Supplier 24/7 Phone:</strong> ________________________________________</p>
         <p><strong>Allergies (Meds / Food):</strong> _________________________________________________</p>
@@ -1717,7 +1738,7 @@
             <h3>Safe Lifting, Paper First &amp; Dignity</h3>
             <ul>
               <li><strong>Skip 42-lb Jugs:</strong> Use easy-lift <strong>1- to 2.5-gal spouted jugs</strong> or a $10 hand siphon pump. Never hesitate to ask EQ/RS for heavy lifting, snow shoveling, or card-only Home Storage Center runs.</li>
-              <li><strong>Non-Smartphone Friendly:</strong> Print the <strong>15pt Large-Print Fridge Card</strong>, ask a neighbor/youth to register your landline for voice Everbridge alerts, and hand in the Neighbor Care Slip (you can serve as a phone buddy too!).</li>
+              <li><strong>Non-Smartphone Friendly:</strong> Print the <strong>15pt Large-Print Fridge Card</strong>, ask a neighbor/youth to register your landline for voice Everbridge alerts, and hand in the Neighbor Care Slip (you can serve as a phone check-in helper too!).</li>
               <li><strong>Saratoga View Residents &amp; Adult Children:</strong> The licensed facility handles building generators, nursing care, and official evacuation (Harvest Hills warming fallback). Families should keep a labeled glasses/hearing-aid/comfort pouch on hand and keep emergency contacts current with the nursing desk.</li>
             </ul>
           </div>
@@ -1963,7 +1984,7 @@
             <div class="role-card support">
               <h4>Ward Clerk</h4>
               <ul>
-                <li>Prints quarterly LCR districts &amp; maintains 10–12 street blocks.</li>
+                <li>Prints quarterly LCR Ministering Districts (EQ &amp; RS) for offline <code>W-4/6</code> rollups.</li>
                 <li>Flags new move-ins promptly for <code>W-1</code> &amp; <code>W-4</code>.</li>
                 <li>Scribes live <code>W-4/6</code> household care board during crises.</li>
                 <li>Verifies <code>GH 22.4.5</code> binder handoff/shredding at releases.</li>
@@ -1997,7 +2018,7 @@
             <div class="lc-step s1">
               <span class="badge badge-red">0–60 Minutes</span>
               <h4>Account &amp; Comfort</h4>
-              <p>Secure own homes. Rally at outdoor/home Ward Command. Sweep <code>W-4</code> blocks (<code>W-1</code> homes first)—knock to love, not just count. Send <code>W-5</code> at <strong>T+60m</strong>.</p>
+              <p>Secure own homes. Rally at outdoor/home Ward Command. Check in via <code>W-4</code> Ministering Districts (<code>W-1</code> homes first) so companions roll status up through EQ/RS District Leaders—knock to love, not just count. Send <code>W-5</code> at <strong>T+60m</strong>.</p>
             </div>
             <div class="lc-step s1" style="border-top-color:var(--navy);">
               <span class="badge badge-navy">1–72 Hours</span>
@@ -2036,7 +2057,7 @@
             <ol style="font-size:0.86rem;">
               <li><strong>Min 0–10:</strong> Secure own household. Confirm Check-In Mode (Phone/Text vs. Foot Sweep vs. Hard Shelter-in-Place).</li>
               <li><strong>Min 10–20:</strong> Rally at <strong>Outdoor/Home Ward Command</strong> (below) if chapel is uninspected. Open locked binder (<code>W-1</code>, <code>W-4/6</code>).</li>
-              <li><strong>Min 20–45 (Knock to Love, Not Just to Count):</strong> Dispatch <code>W-4</code> Street Captains to care for <strong>SN-1, SN-2, SN-3, SN-5, SN-7</strong> first—pause to look neighbors in the eye, listen for unspoken fear, pray or offer a blessing as needed, and record status on our shared <code>W-4/6</code> board.</li>
+              <li><strong>Min 20–45 (Knock to Love, Not Just to Count):</strong> Activate <code>W-4</code> Ministering Districts (EQ &amp; RS Presidency district leaders + Ministering Companions) to care for <strong>SN-1, SN-2, SN-3, SN-5, SN-7</strong> first—pause to look neighbors in the eye, listen for unspoken fear, pray or offer a blessing as needed, and roll household status up onto our shared <code>W-4/6</code> board.</li>
               <li><strong>Min 45–60:</strong> Solve local needs first (EQ helping hands + RS host homes/porch drops). Share anonymized <strong>Form W-5 (Ward Care &amp; Status Update) at T+60m &amp; T+4h</strong> to our Shared Stake Listening Post (<code>145.230 MHz</code> / Ward FRS Ch).</li>
             </ol>
           </div>
@@ -2076,7 +2097,7 @@
               <li><strong>SN-3 (Mobility / Car-Less):</strong> Walkers, wheelchairs, non-night drivers, car-less renters needing wildfire evac ride.</li>
               <li><strong>SN-4 (Dialysis / Chronic):</strong> Priority culinary water &amp; road access.</li>
               <li><strong>SN-5 (Solo / Isolated):</strong> Widows, seniors, &amp; solo young adults living alone.</li>
-              <li><strong>SN-6 (Sensory / Cognitive):</strong> Quiet room option; calm buddy check.</li>
+              <li><strong>SN-6 (Sensory / Cognitive):</strong> Quiet room option; calm Ministering Companion check.</li>
               <li><strong>SN-7 (Infants / Expectant / Postpartum / Solo Parents):</strong> Formula, safe water, diapers, extra check-in if spouse is east of river.</li>
               <li><strong>SN-8 (Language, Deaf/HoH &amp; Low-Vision):</strong> Bilingual interpreter <strong>+ in-person door knock, large-print paper flyers &amp; landline voice Everbridge alerts</strong>.</li>
             </ul>
@@ -2183,7 +2204,7 @@
           <ul class="check-list" style="font-size:0.86rem;">
             <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_1"><label><strong>Step 1 (Days 1–14):</strong> Review Ward Roles at a Glance in Ward Council; call or confirm a <strong>Ward Welfare &amp; Self-Reliance Specialist (<code>GH 22.6.4</code>)</strong>.</label></li>
             <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_2"><label><strong>Step 2 (Days 15–30):</strong> Complete <strong>Form W-0</strong> (Bishopric counselors, Clerk, EQ/RS 1st Counselors, HAM lead, and pre-designated <strong>Outdoor/Home Ward Rally Point</strong>).</label></li>
-            <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_3"><label><strong>Step 3 (Days 31–45):</strong> Ward Clerk prints LCR districts and maps <strong>10–12 Geographic Street-Captain Blocks</strong> on <code>Form W-4</code> (SA 11th YSA: apartment-complex/zip clusters).</label></li>
+            <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_3"><label><strong>Step 3 (Days 31–45):</strong> Ward Clerk prints quarterly LCR <strong>Ministering Districts (EQ Presidency &amp; RS Presidency leads)</strong> onto <code>Form W-4</code> so every companionship rolls status cleanly to leadership (SA 11th YSA: districts grouped by apartment complex/zip).</label></li>
             <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_4"><label><strong>Step 4 (Days 46–60):</strong> Begin gentle, voluntary <strong>Form W-1</strong> discovery inside normal quarterly <code>GH 21.3</code> ministering interviews (zero diagnoses, zero domestic-abuse entries).</label></li>
             <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_5"><label><strong>Step 5 (Days 61–75):</strong> Run a <strong>2-minute Q1 5th-Sunday voluntary sign-up</strong> for <code>Form W-2/3</code> (equipment, trades, medical, and 4 RS care pools) and share Tab 2 Member Guide.</label></li>
             <li><input type="checkbox" data-check-group="ward90" data-save-key="v4_w90_6"><label><strong>Step 6 (Days 76–85):</strong> Print 5 locked off-site binders (Bishop, EQP, Ward RSP, <strong>EQ 1st Counselor, RS 1st Counselor</strong>) and confirm Ward FRS channel (<code>Ch 1–7, Tone 0</code>).</label></li>
@@ -2200,7 +2221,7 @@
               <h3 style="margin-top:0;">4-Quarter Sustainable Ward Calendar</h3>
               <ul>
                 <li><strong>Monthly (5 min in Ward Council):</strong> Rolling <code>W-1</code> refresh for new babies, postpartum moms, widows, surgeries &amp; move-ins.</li>
-                <li><strong>Q1 (Jan–Mar):</strong> 2-min 5th-Sunday <code>W-2/3</code> sign-up; Ward Clerk updates street blocks; submit anonymized <strong>W-5 by March 31</strong>.</li>
+                <li><strong>Q1 (Jan–Mar):</strong> 2-min 5th-Sunday <code>W-2/3</code> sign-up; Ward Clerk prints refreshed LCR Ministering Districts onto <code>Form W-4</code>; submit anonymized <strong>W-5 by March 31</strong>.</li>
                 <li><strong>Q2 (Apr–Jun):</strong> Share Tab 2 before wildfire season; optional Home Storage Center carpool (helping seniors with cards &amp; #10 cans).</li>
                 <li><strong>Q3 (Jul–Sep):</strong> Remind families to update Skyward pickups &amp; SN-1/SN-2 backup plans; audit 5 locked off-site binders.</li>
                 <li><strong>Q4 (Oct–Dec):</strong> DST battery/water rotation reminder, winter pipe-prep tips, and invite neighbors to Stake Emotional Resilience groups.</li>
@@ -2209,7 +2230,7 @@
               <h3>10-Min New-Leader Onboarding &amp; Calling-Release Shred Gate</h3>
               <ol>
                 <li><strong>Min 0–3:</strong> Read <code>3A (Ward Roles + W-0/0B)</code> and Tab 1's 15-Second Decision Tree.</li>
-                <li><strong>Min 3–7 (<code>GH 22.4.5</code> Mandatory Handoff):</strong> Outgoing leader hands over locked 5-sheet binder, walks <code>W-1</code> &amp; <code>W-4</code> map, and <strong>cross-cut shreds all superseded copies immediately</strong>.</li>
+                <li><strong>Min 3–7 (<code>GH 22.4.5</code> Mandatory Handoff):</strong> Outgoing leader hands over locked 5-sheet binder, walks <code>W-1</code> &amp; <code>W-4</code> Ministering Districts, and <strong>cross-cut shreds all superseded copies immediately</strong>.</li>
                 <li><strong>Min 7–10:</strong> Confirm 5 locked off-site binders &amp; Ward Clerk quarterly LCR date.</li>
               </ol>
             </div>
@@ -2274,7 +2295,7 @@
                 <th style="width:14%;">Phone (Cell/Landline)</th>
                 <th style="width:14%;">Codes (SN-1..8 / HoH / Car-Less / Solo)</th>
                 <th style="width:22%;">Practical Support Needed (Aux Power? Ride? Knock?)</th>
-                <th style="width:14%;">Assigned Buddy</th>
+                <th style="width:14%;">Ministering Companion / District</th>
                 <th style="width:8%;">Consent Date</th>
                 <th style="width:8%;">Checked?</th>
               </tr>
@@ -2361,26 +2382,26 @@
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Ward Sheet 3 (Forms W-2/3) • Voluntary Ward Pool Only</div>
       </div>
 
-      <!-- WARD SHEET 4: COMBINED FORM W-4/6 (DUAL-MODE CHECK-IN + REUSABLE WARD BOARD) -->
+      <!-- WARD SHEET 4: COMBINED FORM W-4/6 (MINISTERING DISTRICT ROLLUP + REUSABLE WARD BOARD) -->
       <div id="form-w46" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-4">
         <div class="sheet-header">
           <div>
             <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6</span>
-            <h2 class="sheet-title">Dual-Mode Check-In Overlay &amp; Ward Care / Helping Hands Board</h2>
+            <h2 class="sheet-title">Ministering District Check-In Rollup &amp; Ward Care / Helping Hands Board</h2>
           </div>
           <span><strong>Board Scribe (Clerk/Spec):</strong> ______________</span>
         </div>
         <p style="font-size:0.83rem; margin:0 0 8px;">
-          <strong>Dual-Mode Rule:</strong> When <strong>phones/texts work</strong>, check in via existing <strong>LCR Ministering Districts</strong>. During a <strong>cell blackout</strong>, switch to the <strong>10–12 Geographic Street-Captain Blocks</strong> below (maintained quarterly by the Ward Clerk; delegate block tracking to EQ/RS Counselors &amp; RS Service/Activities Coordinators per <code>GH 9.3.3</code>).
-          <strong>Shared Care Split:</strong> <em>EQP</em> = Helping Hands Crews &amp; Heavy Gear &middot; <em>Ward RSP</em> = SN-1/2/5/7 &amp; Host Homes/Porch Drops &middot; <em>Clerk/Specialist</em> = Master Care Tally &amp; <code>W-5</code> Prep.
+          <strong>Ministering District Rollup Rule (<code>GH 21.3</code>):</strong> Use existing <strong>LCR Ministering Districts (EQ Presidency &amp; RS Presidency)</strong> and <strong>Ministering Companionships</strong> for both phone/text check-ins and post-all-clear door knocks—so status rolls cleanly up to leadership: <em>Ministering Companion &rarr; EQ/RS District Leader &rarr; Ward Command Board (<code>W-4/6</code>) &rarr; Anonymized <code>W-5</code> &rarr; Stake Command</em>. Ward Clerk prints refreshed LCR districts quarterly; delegate board tracking to EQ/RS Counselors &amp; RS Service/Activities Coordinators per <code>GH 9.3.3</code>.
+          <strong>Shared Care Split:</strong> <em>EQP</em> = District Rollups, Helping Hands Crews &amp; Heavy Gear &middot; <em>Ward RSP</em> = RS District Rollups, SN-1/2/5/7 &amp; Host Homes/Porch Drops &middot; <em>Clerk/Specialist</em> = Master Care Tally &amp; <code>W-5</code> Prep.
         </p>
 
         <div class="table-wrap">
           <table class="write-table" style="font-size:0.8rem;">
             <thead>
               <tr>
-                <th style="width:16%;">Street Block / District</th>
-                <th style="width:20%;">Street Captain (EQ/RS Pair)</th>
+                <th style="width:16%;">Ministering District (EQ/RS)</th>
+                <th style="width:20%;">District Leader (EQ / RS Pres.)</th>
                 <th style="width:8%;">Homes</th>
                 <th style="width:8%;">Green</th>
                 <th style="width:8%;">Yellow</th>
@@ -2391,18 +2412,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Block 1:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 2:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 3:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 4:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 5:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 6:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 7:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 8:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 9:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 10:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 11:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>Block 12:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 1:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 2:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 3:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 4:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 5:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 6:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 7:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 8:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 9:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 10:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 11:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
+              <tr><td>District 12:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
               <tr style="font-weight:800;"><td>WARD TOTAL (&rarr; W-5 Part 0)</td><td></td><td></td><td></td><td></td><td></td><td></td><td>All [ ]</td><td></td></tr>
             </tbody>
           </table>
@@ -3050,7 +3071,7 @@
               <div class="hz-band-title">Before (Preparation &amp; Coordination)</div>
               <div class="hz-lanes">
                 <div class="hz-lane"><strong class="lane-hd">Household / Family</strong><ul><li>Strap water heater &amp; tall furniture/TVs to studs.</li><li>Tether non-sparking gas wrench at meter (homeowners).</li><li>Keep sturdy shoes &amp; flashlight beside every bed.</li><li>Add 2 local neighbors as Skyward school pickups.</li><li>Practice Drop-Cover-Hold &amp; stock Jordan River Car Kit.</li></ul></div>
-                <div class="hz-lane"><strong class="lane-hd">Ward (Bishop, EQ &amp; RS)</strong><ul><li>Help seniors &amp; widows strap heaters and tag shutoffs.</li><li>Map 10–12 geographic Street-Captain blocks (<code>W-4</code>).</li><li>Keep 5 locked off-site Ward binders &amp; Ward FRS Ch 1–7.</li><li>Pre-identify outdoor/home Ward Command rally point.</li></ul></div>
+                <div class="hz-lane"><strong class="lane-hd">Ward (Bishop, EQ &amp; RS)</strong><ul><li>Help seniors &amp; widows strap heaters and tag shutoffs.</li><li>Keep quarterly LCR Ministering Districts (EQ &amp; RS Presidency leads) printed on <code>W-4</code>.</li><li>Keep 5 locked off-site Ward binders &amp; Ward FRS Ch 1–7.</li><li>Pre-identify outdoor/home Ward Command rally point.</li></ul></div>
                 <div class="hz-lane"><strong class="lane-hd">Stake Support</strong><ul><li>Verify west-of-river ER &amp; Storehouse lifelines (no bridges).</li><li>Complete FM seismic valve &amp; building safety audit.</li><li>Maintain off-site Stake Go-Binders &amp; Shay Park 12V HAM kit.</li></ul></div>
               </div>
             </div>
@@ -3058,7 +3079,7 @@
               <div class="hz-band-title">Short-Term (0–72 Hours — Immediate Safety &amp; Comfort)</div>
               <div class="hz-lanes">
                 <div class="hz-lane"><strong class="lane-hd">Household / Family</strong><ul><li>Gas OFF <em>only</em> if smelled/hissing (renters: evacuate upwind).</li><li>Close water-heater cold inlet; observe <strong>"DO NOT FLUSH"</strong> (double-liner toilet).</li><li>Post Green/Yellow/Red window sign; check next door.</li><li>Commuters east of river follow Stay-vs.-Walk bridge rule.</li></ul></div>
-                <div class="hz-lane"><strong class="lane-hd">Ward (Bishop, EQ &amp; RS)</strong><ul><li>Launch <code>W-4</code> foot sweeps; check <code>W-1</code> homes first.</li><li>Pause to pray, offer blessings &amp; calm kids during aftershocks.</li><li>Match local host homes for damaged dwellings; deliver <code>SN-1</code> batteries.</li><li>Send anonymized <code>W-5</code> at T+60m &amp; T+4h; offline fast offerings.</li></ul></div>
+                <div class="hz-lane"><strong class="lane-hd">Ward (Bishop, EQ &amp; RS)</strong><ul><li>Activate <code>W-4</code> Ministering District check-ins (door knocks if comms fail); check <code>W-1</code> homes first.</li><li>Pause to pray, offer blessings &amp; calm kids during aftershocks.</li><li>Match local host homes for damaged dwellings; deliver <code>SN-1</code> batteries.</li><li>Send anonymized <code>W-5</code> at T+60m &amp; T+4h; offline fast offerings.</li></ul></div>
                 <div class="hz-lane"><strong class="lane-hd">Stake Support</strong><ul><li>HC Track 1 runs 10-pt check on Bldg 1 &amp; 2 (shift to <strong>Shay Park</strong> if red-tagged).</li><li>Route acute trauma west of river (Intermountain ER).</li><li>Prep Rep runs <code>145.230 MHz</code> Listening Post &amp; SA 11th YSA relays.</li></ul></div>
               </div>
             </div>
@@ -3431,7 +3452,7 @@
           </button>
           <button type="button" class="forms-index-item" onclick="jumpToForm('W-4/6')">
             <span class="fi-code">Form W-4/6</span>
-            <span class="fi-desc"><strong>Dual-Mode Check-In Overlay &amp; Live Care Board</strong><small>10–12 street blocks (Green/Yellow/Red tally), EQ work-crew &amp; battery loan log</small></span>
+            <span class="fi-desc"><strong>Ministering District Check-In Rollup &amp; Live Care Board</strong><small>EQ/RS Ministering Districts (Green/Yellow/Red rollup), work-crew &amp; battery loan log</small></span>
             <span class="fi-go">Open &rarr;</span>
           </button>
           <button type="button" class="forms-index-item" onclick="jumpToForm('W-5')">
@@ -3794,9 +3815,9 @@
         'W-2/3':  { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Forms W-2 & W-3', desc: 'Voluntary Equipment, Trades, Medical & RS Care Pools' },
         'W-2':    { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Form W-2',  desc: 'Voluntary Ward Equipment List (Sheet 3 Front)' },
         'W-3':    { tab: 'ward',   subtab: '3c', targetId: 'form-w23', label: 'Form W-3',  desc: 'Voluntary Skills, Medical & RS Care Pools (Sheet 3 Back)' },
-        'W-4/6':  { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Forms W-4 & W-6', desc: 'Dual-Mode Check-In Overlay & Live Ward Care Board' },
-        'W-4':    { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Form W-4',  desc: 'Dual-Mode Street-Captain Check-In Overlay (Sheet 4)' },
-        'W-6':    { tab: 'ward',   subtab: '3c', targetId: 'form-w46', label: 'Form W-6',  desc: 'Live Ward Care & Work-Crew Board (Sheet 4)' },
+        'W-4/6':     { tab: 'ward',   subtab: '3c', targetId: 'form-w46',            label: 'Forms W-4 & W-6', desc: 'Ministering District Check-In Rollup & Live Ward Care Board' },
+        'W-4':       { tab: 'ward',   subtab: '3c', targetId: 'form-w46',            label: 'Form W-4',        desc: 'Ministering District Check-In Rollup (EQ/RS Presidency — Sheet 4)' },
+        'W-6':       { tab: 'ward',   subtab: '3c', targetId: 'form-w46',            label: 'Form W-6',        desc: 'Live Ward Care & Work-Crew Board (Sheet 4)' },
         'W-5':    { tab: 'ward',   subtab: '3c', targetId: 'form-w5',  label: 'Form W-5',  desc: 'Ward → Stake Anonymized Care & Status Update (Zero Names)' },
         'S-A':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Sheet S-A', desc: 'Stake Presidency Command, Succession & Net Control' },
         'S-0':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Form S-0',  desc: 'Stake Presidency First-Hour & Priesthood Keys (Sheet S-A Front)' },
@@ -3813,7 +3834,7 @@
         'SN-3':    'Mobility / Car-Less — Walkers, wheelchairs, non-night drivers, evac rides',
         'SN-4':    'Dialysis / Chronic — Priority culinary water & road access',
         'SN-5':    'Solo / Isolated — Widows, seniors & solo young adults living alone',
-        'SN-6':    'Sensory / Cognitive — Quiet room option & calm buddy check',
+        'SN-6':    'Sensory / Cognitive — Quiet room option & calm Ministering Companion check',
         'SN-7':    'Infants / Expectant / Postpartum / Solo Parents — Formula, water, diapers',
         'SN-8':    'Language / Deaf / HoH / Low-Vision / Landline-Only — Interpreter, door knock, large print',
         'SN-4–6':  'SN-4 Dialysis · SN-5 Solo/Widow · SN-6 Sensory/Cognitive',
@@ -3853,8 +3874,66 @@
         highlightTarget(document.getElementById(entry.targetId));
       };
 
+      const GH_CHAPTER_URLS = {
+        '8':  'https://www.churchofjesuschrist.org/study/manual/general-handbook/8-elders-quorum?lang=eng',
+        '9':  'https://www.churchofjesuschrist.org/study/manual/general-handbook/9-relief-society?lang=eng',
+        '18': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/18-performing-priesthood-ordinances-and-blessings?lang=eng',
+        '21': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/21-ministering?lang=eng',
+        '22': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/22-providing-for-temporal-needs-and-building-self-reliance?lang=eng',
+        '29': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/29-meetings-in-the-church?lang=eng',
+        '35': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/35-care-and-use-of-meetinghouses?lang=eng',
+        '38': 'https://www.churchofjesuschrist.org/study/manual/general-handbook/38-church-policies-and-guidelines?lang=eng'
+      };
+
+      const GH_SECTION_TITLES = {
+        '8.2.1.2': 'Elders Quorum Sunday Meetings',
+        '8.2.2':   'Elders Quorum Caring for Those in Need',
+        '9.2.1.2': 'Relief Society Sunday Meetings',
+        '9.2.2':   'Relief Society Caring for Those in Need',
+        '9.3.3':   'Relief Society Service & Activities Coordinators',
+        '9.6':     'Stake Relief Society Presidency',
+        '18.14':   'Priesthood Blessings of Comfort and Counsel',
+        '21.3':    'Ministering Interviews & Ministering Districts',
+        '22.1':    'Temporal Needs & Self-Reliance Principles',
+        '22.1.4':  'Temporal Preparedness Without Debt or Fear',
+        '22.4.5':  'Confidentiality & Privacy of Welfare Information',
+        '22.6':    'Ward Leaders & Caring for Those in Need',
+        '22.6.1':  'Bishop Keys for Fast Offerings & Bishops\u2019 Storehouse',
+        '22.6.2':  'Elders Quorum & Relief Society Co-Equal Partnership',
+        '22.6.4':  'Ward Welfare and Self-Reliance Specialist',
+        '22.8':    'Ward Council & Youth Participation in Service',
+        '22.9.1':  'Stake President Welfare & Emergency Responsibilities',
+        '22.9.3':  'Stake Relief Society Presidency Welfare Support',
+        '22.9.4':  'Stake Welfare & Self-Reliance / Preparedness Specialist',
+        '22.11':   'Community & Humanitarian Service',
+        '22.12':   'Employment & Self-Reliance Resources',
+        '22.13':   'Emotional Resilience & Family Services',
+        '29.2':    'Sacrament Meeting & Ward Meetings',
+        '29.2.1.1':'Canceling or Adjusting Sunday Meetings',
+        '29.3.8':  'Stake Leadership Instruction Meetings',
+        '29.5':    'Authorizing the Sacrament in Homes',
+        '35.5':    'Policies for Using Church Meetinghouses',
+        '35.5.5':  'Using Meetinghouses During Emergencies & Shelters',
+        '38.6.2':  'Abuse Help Line & Reporting Policies'
+      };
+
+      function makeGhLink(label, secNum) {
+        const chap = secNum.split('.')[0];
+        const url = GH_CHAPTER_URLS[chap];
+        if (!url) return document.createTextNode(label);
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = 'gh-ref-link';
+        const desc = GH_SECTION_TITLES[secNum] || ('General Handbook Chapter ' + chap);
+        a.title = 'Open General Handbook ' + secNum + ' — ' + desc + ' (churchofjesuschrist.org)';
+        a.textContent = label;
+        return a;
+      }
+
       function enhanceFormLinks() {
-        const REF_RE = /\b((?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3|SN-1\.\.8|SN-1[–\-]8|SN-4[–\-]6|SN-[1-8])\b/g;
+        const REF_RE = /\b(GH\s+\d+(?:\.\d+)+(?:\s*(?:\/|&)\s*\d+(?:\.\d+)+)*|(?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3|SN-1\.\.8|SN-1[–\-]8|SN-4[–\-]6|SN-[1-8])\b/g;
         const SKIP_TAGS = new Set(['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'SUMMARY', 'SCRIPT', 'STYLE']);
         const roots = [document.querySelector('main'), document.querySelector('.offline-banner'), document.getElementById('glossary-modal')].filter(Boolean);
         roots.forEach(root => {
@@ -3867,8 +3946,7 @@
             const parent = n.parentElement;
             if (!parent) continue;
             if (SKIP_TAGS.has(parent.tagName)) continue;
-            if (parent.closest('a, button, summary, .sheet-header, .print-footer-stamp, .gyr-strip, .sn-key-box')) continue;
-            if (parent.closest('.sheet-box') && parent.closest('h2, h3')) continue;
+            if (parent.closest('a, button, summary, .print-footer-stamp, .gyr-strip')) continue;
             nodes.push(n);
           }
           nodes.forEach(textNode => {
@@ -3877,13 +3955,34 @@
             let lastIdx = 0;
             let changed = false;
             const frag = document.createDocumentFragment();
+            const parent = textNode.parentElement;
+            const inSheetHeaderOrHeading = parent && (parent.closest('.sheet-header') || (parent.closest('.sheet-box') && parent.closest('h2, h3')));
+            const inSnKeyBox = parent && parent.closest('.sn-key-box');
             let m;
             while ((m = REF_RE.exec(text)) !== null) {
               const full = m[0];
+              if (full.startsWith('GH ')) {
+                if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+                const body = full.slice(3);
+                const parts = body.split(/(\s*(?:\/|&)\s*)/);
+                parts.forEach((part, idx) => {
+                  if (idx % 2 === 1) {
+                    frag.appendChild(document.createTextNode(part));
+                  } else {
+                    const sec = part.trim();
+                    const lbl = idx === 0 ? ('GH ' + sec) : sec;
+                    frag.appendChild(makeGhLink(lbl, sec));
+                  }
+                });
+                lastIdx = m.index + full.length;
+                changed = true;
+                continue;
+              }
+              if (inSheetHeaderOrHeading || inSnKeyBox) continue;
               if (full.startsWith('SN-')) {
-                const insideSN = textNode.parentElement && textNode.parentElement.closest('#sn-codes-key');
+                const insideSN = parent && parent.closest('#sn-codes-key');
                 if (insideSN) continue;
-                const normKey = full.replace('-', '-').replace(/SN-1-8/, 'SN-1–8').replace(/SN-4-6/, 'SN-4–6');
+                const normKey = full.replace(/SN-1-8/, 'SN-1–8').replace(/SN-4-6/, 'SN-4–6');
                 const desc = SN_CODE_DESC[normKey] || SN_CODE_DESC['SN-1–8'];
                 if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
                 const a = document.createElement('a');
@@ -3903,8 +4002,7 @@
               const codeMatch = full.match(/(M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)$/);
               const key = codeMatch ? codeMatch[1] : null;
               const entry = key ? FORM_REGISTRY[key] : null;
-              // Do not self-link inside the exact target sheet/section
-              const insideSelf = entry && textNode.parentElement && textNode.parentElement.closest('#' + entry.targetId);
+              const insideSelf = entry && parent && parent.closest('#' + entry.targetId);
               if (!entry || insideSelf) continue;
               if (m.index > lastIdx) {
                 frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
