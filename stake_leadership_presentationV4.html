@@ -1046,17 +1046,55 @@
 
       /* Profile 4: Stake Command Kit (2 Double-Sided Sheets + Directory) */
       body.print-profile-stake-kit .tab-panel,
+      body.print-profile-stake-kit .stake-subpane,
       body.print-profile-stake-kit [data-print-item] { display: none !important; }
-      body.print-profile-stake-kit #panel-stake { display: block !important; }
+      body.print-profile-stake-kit #panel-stake,
+      body.print-profile-stake-kit #stake-pane-4a { display: block !important; }
       body.print-profile-stake-kit [data-print-item^="stake-sheet-"] { display: block !important; break-before: page; }
       body.print-profile-stake-kit [data-print-item="stake-sheet-1"] { break-before: auto; }
       body.print-profile-stake-kit { font-size: 8.6pt; }
+
+      /* Profile 4B: Stake Rollout Action List & Maintenance Cadence (Issue #4) */
+      .table-wrap { overflow: visible !important; }
+      #stake-action-sheet,
+      #family-worksheet-sheet {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      #stake-action-sheet thead { display: table-header-group; }
+      #stake-action-sheet tr { break-inside: avoid; page-break-inside: avoid; }
+      #stake-action-sheet h3 { break-after: avoid; page-break-after: avoid; }
+      .stake-act-input {
+        border: none !important;
+        border-bottom: 1pt solid #475569 !important;
+        border-radius: 0 !important;
+        padding: 1pt 0 !important;
+        background: transparent !important;
+        font-size: 8pt !important;
+        min-width: 0 !important;
+        color: #000000 !important;
+      }
+      .stake-act-input::placeholder { color: transparent !important; }
+      body.print-profile-stake-action-list .tab-panel,
+      body.print-profile-stake-action-list .stake-subpane,
+      body.print-profile-stake-action-list [data-print-item] { display: none !important; }
+      body.print-profile-stake-action-list #panel-stake,
+      body.print-profile-stake-action-list #stake-pane-4b,
+      body.print-profile-stake-action-list [data-print-item="stake-action-list"] { display: block !important; }
+      body.print-profile-stake-action-list #stake-pane-4b .drawer { display: none !important; }
+      body.print-profile-stake-action-list .progress-bar-wrap,
+      body.print-profile-stake-action-list .progress-bar-fill {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body.print-profile-stake-action-list { font-size: 8.4pt; }
 
       /* Profile 5: Full Plan Archive */
       body.print-profile-full .tab-panel { display: block !important; break-before: page; }
       body.print-profile-full #panel-start { break-before: auto; }
       body.print-profile-full .member-subpane,
       body.print-profile-full .ward-subpane,
+      body.print-profile-full .stake-subpane,
       body.print-profile-full .horizon-pane,
       body.print-profile-full .hz-band { display: block !important; }
       body.print-profile-full details.drawer,
@@ -1307,6 +1345,31 @@
     .prep-msg.err { display: block; background: var(--crimson-bg); color: var(--crimson); border: 1.5px solid var(--crimson); }
     @media (max-width: 640px) {
       .water-calc-summary { grid-template-columns: 1fr; }
+    }
+
+    .stake-subtabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stake-subpane { display: none; }
+    .stake-subpane.active { display: block; }
+    @media screen {
+      body.crisis-mode .stake-subtabs { display: none !important; }
+      body.crisis-mode #stake-pane-4a { display: block !important; }
+      body.crisis-mode #stake-pane-4b { display: none !important; }
+    }
+    .stake-act-input {
+      width: 100%;
+      min-width: 105px;
+      padding: 4px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      font-size: 0.78rem;
+      font-family: inherit;
+      margin-top: 3px;
+    }
+    .stake-act-chk {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--green);
+      cursor: pointer;
     }
 
     @media screen {
@@ -1595,6 +1658,10 @@
           <button type="button" data-leader-only="true" onclick="printProfile('stake-kit')">
             <strong>Stake Command Kit (2 Sheets + Directory)</strong>
             <span>Sheets S-A &amp; S-B + Unified Register + 2-Col Directory</span>
+          </button>
+          <button type="button" data-leader-only="true" onclick="printProfile('stake-action-list')">
+            <strong>Stake Rollout Action List &amp; Cadence</strong>
+            <span>12-item Stake Council rollout checklist, owners, due dates &amp; maintenance calendar</span>
           </button>
           <button type="button" onclick="printProfile('full')">
             <strong>Full Reference &amp; Recovery Archive (All 5 Tabs)</strong>
@@ -3049,11 +3116,20 @@
 
       <div class="card card-navy screen-only" data-mode="crisis" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <div>
-          <h2 style="margin:0;">Stake Command Kit — 2 Double-Sided Sheets + Unified Register &amp; Directory</h2>
+          <h2 style="margin:0;">Stake Command Kit &amp; Rollout Action Plan</h2>
           <p style="margin:4px 0 0; font-size:0.88rem;">Keep synchronized <strong>off-site Stake Go-Binders</strong> at home with Stake Pres, 1st/2nd Counselors, HC Comms, Stake RS Pres &amp; Stake Prep Rep (never rely solely on Building 1).</p>
         </div>
         <button type="button" class="btn" onclick="printProfile('stake-kit')">Print Stake Command Kit</button>
       </div>
+
+      <!-- V4.9 2-SUB-TAB STAKE SWITCHER (HIDDEN IN EMERGENCY MODE; 4A DEFAULT) -->
+      <div class="ward-subtabs stake-subtabs screen-only" role="tablist" aria-label="Stake sections">
+        <button type="button" id="stake-tab-4a" role="tab" aria-controls="stake-pane-4a" aria-selected="true" class="ward-subtab-btn stake-subtab-btn active" data-stake-sub="4a">4A. Stake Command Kit<small>Sheets S-A/S-B, Register &amp; Directory</small></button>
+        <button type="button" id="stake-tab-4b" role="tab" aria-controls="stake-pane-4b" aria-selected="false" class="ward-subtab-btn stake-subtab-btn" data-stake-sub="4b">4B. Rollout Action List &amp; Cadence<small>12-Item Council Checklist, Owners &amp; Schedule</small></button>
+      </div>
+
+      <!-- ===== SUB-TAB 4A: OPERATIONAL STAKE COMMAND KIT ===== -->
+      <div id="stake-pane-4a" role="tabpanel" aria-labelledby="stake-tab-4a" class="stake-subpane active">
 
       <!-- STAKE SHEET 1: S-A FRONT (STAKE PRES) & BACK (PREP REP / NET CONTROL) -->
       <div id="form-sa" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-1">
@@ -3334,32 +3410,156 @@
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Verified Master Directory • Keep in Off-Site Go-Binder</div>
       </div>
+      </div><!-- end #stake-pane-4a -->
 
-      <!-- VISIBLE IN PEACETIME (HIDDEN IN CRISIS MODE & STAKE CRISIS PRINT): PRE-EVENT STAKE COORDINATION -->
-      <div class="card card-safe" data-mode="prep">
-        <h2>Before an Event: Stake Pre-Event Coordination &amp; Readiness Roadmap (Single-Owner RACI)</h2>
-        <p style="font-size:0.86rem;">Strong crisis response starts in calm weather. Every pre-event coordination loop below has <strong>one accountable Stake owner</strong> (zero blank owners, zero volunteer burnout) and vanishes automatically in Crisis Mode or Stake Command Kit printouts.</p>
-        <div class="table-wrap">
-          <table style="font-size:0.82rem;">
-            <thead><tr><th>Phase &amp; Pre-Event Coordination Action</th><th>Single Accountable Owner</th><th>Cadence</th></tr></thead>
-            <tbody>
-              <tr><td><strong>1A. Regional &amp; Inter-Stake:</strong> Approve Plan, brief Area Seventy / Coordinating Council / WSRM &amp; confirm <strong>Lehi &amp; American Fork Stake</strong> host-housing reciprocity for wildfire evacuations</td><td><strong>Stake Presidency</strong></td><td>Annual</td></tr>
-              <tr><td><strong>1B. Stake Bishops' Council (<code>GH 22.11</code>):</strong> Align all 7 Bishops + Riverview Branch Pres on Bishops' Storehouse after-hours orders, offline fast offerings &amp; calling-release binder shredding</td><td><strong>Stake Presidency</strong></td><td>Semi-Annual</td></tr>
-              <tr><td><strong>1C. Specialist &amp; Ward Working Group:</strong> Call Stake Emergency Prep Specialist (<code>GH 22.9.4</code>) &amp; hold 45-min Ward Specialist / HAM kickoff</td><td><strong>Stake Pres / Prep Rep</strong></td><td>Phase 1 / Annual</td></tr>
-              <tr><td><strong>1D. Relief Society Leadership Instruction (<code>GH 9.6 / 29.3.8</code>):</strong> Orient all 7 Ward RS Presidencies + Riverview Branch on dignity-first <code>W-1</code>, EQ/RS split, host-family fatigue checks &amp; SA 11th/Riverview scope</td><td><strong>Stake RS President</strong></td><td>Annual</td></tr>
-              <tr><td><strong>2A. Church Facilities &amp; FM Consultation:</strong> Written Church FM audit (seismic gas valves, HVAC outside-air dampers, warming-hub rules) + verify 2-deep West-of-River mechanical keys/fobs &amp; 24/7 FM hotline</td><td><strong>HC Track 1: Facilities</strong></td><td>Annual FM Audit</td></tr>
-              <tr><td><strong>2B. Saratoga View Care Center Pipeline:</strong> Sync non-binding wheelchair/perimeter sentry rules with Executive Director &amp; DON; brief <strong>2 pre-assigned adjacent Wards (Crossroads &amp; Harvest Hills 8th)</strong></td><td><strong>HC Track 2: Care Center</strong></td><td>Semi-Annual</td></tr>
-              <tr><td><strong>2C. Off-Site Redundancy &amp; Shay Park Kit:</strong> Maintain synchronized off-site Stake Go-Binders (6 homes) &amp; verify Shay Park 12V mobile HAM/lighting Go-Box custodian</td><td><strong>HC Track 3: Comms &amp; Logistics</strong></td><td>Semi-Annual</td></tr>
-              <tr><td><strong>2D. Civic &amp; School Alignment:</strong> Non-binding written summaries with <strong>Saratoga Springs City EOC</strong> (Shay Park LZ &amp; <code>147.340 MHz</code>), North Fire/Police, Public Works &amp; <strong>Riverview Elementary Principal</strong></td><td><strong>HC Track 4: Public Safety &amp; Civil</strong></td><td>Annual</td></tr>
-              <tr><td><strong>3A. Comms &amp; Library Kit Hygiene:</strong> Quarterly 15-min HAM Net (<code>145.230 MHz</code>) + <strong>5-Item Library Kit Check</strong> (FRS batteries—avoid ruined trickle chargers, N95s, binder date stamp, flashlights, pens)</td><td><strong>Stake Prep Rep (<code>22.9.4</code>)</strong></td><td>Quarterly</td></tr>
-              <tr><td><strong>3B. Annual Rollup &amp; Version Sync:</strong> Ingest anonymized Q1 <code>Form W-5</code>s by March 31 (SA 11th Aug/Jan/May), update Unified Register &amp; stamp HTML/binder version date</td><td><strong>Stake Prep Rep (Single Compiler)</strong></td><td>Annual Q1 (Mar 31)</td></tr>
-            </tbody>
-          </table>
+      <!-- ===== SUB-TAB 4B: STAKE ROLLOUT ACTION LIST & MAINTENANCE CADENCE (PEACETIME ONLY) ===== -->
+      <div id="stake-pane-4b" role="tabpanel" aria-labelledby="stake-tab-4b" class="stake-subpane" data-mode="prep">
+        <div id="stake-action-sheet" class="sheet-box" data-print-item="stake-action-list">
+          <div class="sheet-header">
+            <div>
+              <span class="sheet-tag teal">Stake Council Governance • Worksheet 6 (Peacetime Only)</span>
+              <h2 class="sheet-title">Stake Rollout Action List &amp; Maintenance Cadence (12 Phased Items)</h2>
+            </div>
+            <div class="screen-only">
+              <button type="button" class="btn" style="min-height:40px;" onclick="printProfile('stake-action-list')">Print Stake Rollout Action List</button>
+            </div>
+          </div>
+          <p style="font-size:0.86rem; margin:0 0 8px;">Track how to enact, roll out, and maintain our Stake plan across all 3 phases. Every item has <strong>one accountable Stake role</strong>, editable owner name &amp; due date (auto-saved locally), verified contacts ("who to talk to"), and concrete completion criteria. Vanishes automatically in Emergency Mode and Stake Command Kit printouts.</p>
+
+          <div style="font-size:0.84rem; font-weight:800; color:var(--green);" id="stake-action-count">0 of 12 complete (0%)</div>
+          <div class="progress-bar-wrap" style="margin-bottom:10px;"><div class="progress-bar-fill" id="stake-action-bar"></div></div>
+
+          <div class="table-wrap">
+            <table style="font-size:0.8rem;">
+              <thead>
+                <tr>
+                  <th style="width:5%;">Done</th>
+                  <th style="width:35%;">Phase, Action &amp; Who to Talk To</th>
+                  <th style="width:26%;">Accountable Role, Owner &amp; Due Date</th>
+                  <th style="width:34%;">What "Done" Looks Like</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_1" aria-label="Mark Action 1 complete"></td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>1. Approve Plan, Gathering Sites &amp; Practice Cadence:</strong> Formally approve Bldg 1, Bldg 2, Shay Park LZ, Riverview Elem &amp; cadence. <em>Talk to:</em> Stake Council, Area Seventy, Coordinating Council &amp; WSRM.</td>
+                  <td><strong>Stake Presidency</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_1" placeholder="Owner name" aria-label="Action 1 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_1" aria-label="Action 1 target due date"></td>
+                  <td>Approved in Stake Council minutes; gathering sites &amp; cadence shared with all 7 Wards + Riverview Branch.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_2" aria-label="Mark Action 2 complete"></td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>2. Stake Bishops' Council &amp; Storehouse Alignment (<code>GH 22.11 / 22.6.1</code>):</strong> Align all 7 Bishops + Riverview Branch Pres on paper Storehouse orders, offline fast offerings &amp; calling-release shredding. <em>Talk to:</em> Bishops &amp; Saratoga Springs Storehouse (<a class="phone-link" href="tel:+18014368205">801-436-8205</a>).</td>
+                  <td><strong>Stake Presidency</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_2" placeholder="Owner name" aria-label="Action 2 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_2" aria-label="Action 2 target due date"></td>
+                  <td>After-hours Storehouse requisition path &amp; offline fast-offering rules verified in Stake &amp; Ward binders.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_3" aria-label="Mark Action 3 complete"></td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>3. Call Specialists &amp; Orient Ward RS/EQ Leadership (<code>GH 22.9.4 / 9.6 / 29.3.8</code>):</strong> Call Stake Prep Specialist, hold 45-min Ward Specialist/HAM kickoff, and orient all 7 Ward RS Presidencies on dignity-first <code>W-1</code>, EQ/RS split &amp; host-fatigue checks. <em>Talk to:</em> Ward Bishops, EQPs, Ward RSPs &amp; Specialists.</td>
+                  <td><strong>Stake Pres &amp; Stake RS Pres</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_3" placeholder="Owner name" aria-label="Action 3 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_3" aria-label="Action 3 target due date"></td>
+                  <td>All 7 Wards + Riverview Branch briefed; Ward Specialists called and equipped with Tab 2 &amp; Tab 3 Toolkit.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_4" aria-label="Mark Action 4 complete"></td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>4. Collect First 7-Ward Form W-5 Rollup (Zero Member Names):</strong> Aggregate anonymized <code>SN-1–8</code> gaps &amp; voluntary Pools 1–8 into the Unified Stake Readiness Register. <em>Talk to:</em> All 7 Ward Welfare Specialists &amp; Ward Clerks.</td>
+                  <td><strong>Stake Prep Rep (<code>GH 22.9.4</code>)</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_4" placeholder="Owner name" aria-label="Action 4 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_4" aria-label="Action 4 target due date"></td>
+                  <td>100% of Wards submit anonymized <code>Form W-5</code> by March 31 (SA 11th Aug/Jan/May); Tab 4 Register totals populated.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_5" aria-label="Mark Action 5 complete"></td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>5. Audit Minimal Meetinghouse Library Kits (Bldg 1 &amp; Bldg 2):</strong> Verify 5-item library kit (FRS batteries—avoid ruined trickle chargers, sealed N95 box, dated binder, flashlights, pens; zero bulk storage). <em>Talk to:</em> Building Reps &amp; Ward Specialists.</td>
+                  <td><strong>Stake Prep Rep</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_5" placeholder="Owner name" aria-label="Action 5 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_5" aria-label="Action 5 target due date"></td>
+                  <td>Both 368 W Aspen Hills &amp; 270 W Harvest Hills library kits audited, stamped with date, and set on quarterly check.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_6" aria-label="Mark Action 6 complete"></td>
+                  <td><span class="badge badge-amber">Phase 2: Facilities &amp; Lifelines</span><br><strong>6. Church FM Consultation (Seismic Gas, HVAC Dampers &amp; Power Rules):</strong> Inspect seismic gas shutoffs &amp; HVAC outside-air shutoffs at both buildings; verify 2-deep West-of-River keys/fobs &amp; warming-hub policy (<code>GH 35.5.5</code>). <em>Talk to:</em> Church Facilities Management (FM) 24/7.</td>
+                  <td><strong>HC Track 1: Facilities</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_6" placeholder="Owner name" aria-label="Action 6 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_6" aria-label="Action 6 target due date"></td>
+                  <td>Written FM audit notes filed in Stake Go-Binders confirming shutoff locations, keys/fobs &amp; generator/warming rules.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_7" aria-label="Mark Action 7 complete"></td>
+                  <td><span class="badge badge-amber">Phase 2: Facilities &amp; Lifelines</span><br><strong>7. Saratoga View Senior Living Alignment &amp; Adjacent-Ward Pool:</strong> Confirm non-binding wheelchair/perimeter support strictly under licensed nurse direction (zero Church medical liability). <em>Talk to:</em> Saratoga View Exec Dir &amp; DON (<a class="phone-link" href="tel:+13854301020">385-430-1020</a>), Crossroads &amp; Harvest Hills 8th Bishops, Riverview Branch Pres.</td>
+                  <td><strong>HC Track 2: Care Center</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_7" placeholder="Owner name" aria-label="Action 7 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_7" aria-label="Action 7 target due date"></td>
+                  <td>Written non-binding coordination summary confirmed semi-annually; Crossroads &amp; HH 8th briefed on volunteer pairs.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_8" aria-label="Mark Action 8 complete"></td>
+                  <td><span class="badge badge-amber">Phase 2: Facilities &amp; Lifelines</span><br><strong>8. Activate HAM Net, Shay Park 12V Go-Box &amp; Off-Site Go-Binders:</strong> Verify licensed HAMs across Wards, print laminated RF cards (<code>145.230 / 146.580 / 147.340 MHz</code> &amp; FRS Ch 1–7 Tone 0), stage Shay Park 12V kit &amp; distribute 6 off-site Stake Go-Binders. <em>Talk to:</em> Ward HAMs &amp; Shay Park Kit Custodian.</td>
+                  <td><strong>HC Track 3: Comms &amp; Logistics</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_8" placeholder="Owner name" aria-label="Action 8 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_8" aria-label="Action 8 target due date"></td>
+                  <td>6 off-site Go-Binders synced; Shay Park 12V kit custodian verified; first 15-min Stake HAM check-in net completed.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_9" aria-label="Mark Action 9 complete"></td>
+                  <td><span class="badge badge-amber">Phase 2: Facilities &amp; Lifelines</span><br><strong>9. Riverview Elementary Daytime Reunification &amp; Hazmat Alignment:</strong> Align parking-lot reunification flow and hazmat seal-indoors messaging so parents don't drive into plumes. <em>Talk to:</em> Riverview Elementary Principal (<a class="phone-link" href="tel:+13855797355">385-579-7355</a>).</td>
+                  <td><strong>HC Track 4: Public Safety &amp; Civil</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_9" placeholder="Owner name" aria-label="Action 9 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_9" aria-label="Action 9 target due date"></td>
+                  <td>Written non-binding reunification &amp; hazmat summary shared with Wards and reflected in Tab 2 family prep.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_10" aria-label="Mark Action 10 complete"></td>
+                  <td><span class="badge badge-amber">Phase 2: Facilities &amp; Lifelines</span><br><strong>10. Saratoga Springs City EOC, Fire &amp; Public Works Liaison:</strong> Align Shay Park staging/LZ, City EOC bridge (<code>147.340 MHz</code>), Everbridge alerts &amp; boil-water notices (zero MOUs without Church Legal). <em>Talk to:</em> City Emergency Manager (<a class="phone-link" href="tel:+18017669793">801-766-9793</a> Ext. 219), North Fire &amp; Public Works (<a class="phone-link" href="tel:+18014042468">801-404-2468</a>).</td>
+                  <td><strong>HC Track 4: Public Safety &amp; Civil</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_10" placeholder="Owner name" aria-label="Action 10 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_10" aria-label="Action 10 target due date"></td>
+                  <td>Annual civic contact established; City EOC comms &amp; Shay Park LZ protocol documented in Stake Go-Binders.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_11" aria-label="Mark Action 11 complete"></td>
+                  <td><span class="badge badge-green">Phase 3: Sustain &amp; Practice</span><br><strong>11. Inter-Stake Reciprocity &amp; Optional Home-Delivered Workshops:</strong> Confirm wildfire host-housing reciprocity with neighboring Stakes and coordinate optional zero-budget workshops / Home Storage carpools. <em>Talk to:</em> Lehi &amp; American Fork Stake Presidencies, Stake RS &amp; Ward Specialists.</td>
+                  <td><strong>Stake Pres &amp; Stake RS</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_11" placeholder="Owner name" aria-label="Action 11 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_11" aria-label="Action 11 target due date"></td>
+                  <td>Inter-stake host reciprocity confirmed annually; optional member workshops/carpools offered without budget strain.</td>
+                </tr>
+                <tr>
+                  <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_12" aria-label="Mark Action 12 complete"></td>
+                  <td><span class="badge badge-green">Phase 3: Sustain &amp; Practice</span><br><strong>12. Annual 60-Min Stake Council Tabletop Drill &amp; Plan Refresh:</strong> Run rotating scenario (Quake &rarr; Wildfire &rarr; Winter Freeze) covering all 4 Disruption Clusters; stamp updated HTML &amp; binder version date. <em>Talk to:</em> Full Stake Council &amp; Prep Rep.</td>
+                  <td><strong>Stake Pres &amp; Prep Rep</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_12" placeholder="Owner name" aria-label="Action 12 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_12" aria-label="Action 12 target due date"></td>
+                  <td>60-min tabletop completed; max 3 concrete AAR fixes assigned with owners; version date stamped on binders &amp; web plan.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- UNIFIED PRACTICE & MAINTENANCE FREQUENCY CADENCE (ALL 3 TIERS) -->
+          <h3 style="margin-top:12px;">Unified Practice &amp; Maintenance Frequency Cadence (Personal &bull; Ward &bull; Stake)</h3>
+          <div class="table-wrap">
+            <table style="font-size:0.8rem;">
+              <thead>
+                <tr>
+                  <th style="width:18%;">Tier</th>
+                  <th style="width:20%;">Monthly / Ongoing</th>
+                  <th style="width:22%;">Quarterly (Every 90d)</th>
+                  <th style="width:20%;">Semi-Annual (2&times;/Yr)</th>
+                  <th style="width:20%;">Annual Cycle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Personal &amp; Family</strong></td>
+                  <td>Add 1–2 shelf-stable foods to grocery trips; build gradually toward 1-mo reserve (zero debt).</td>
+                  <td>Review household contacts &amp; Skyward backups if schedules or move-ins change.</td>
+                  <td><strong>Spring &amp; Fall DST:</strong> Rotate water/meds/batteries, test O2/CPAP backup packs, check Member Tools.</td>
+                  <td><strong>10-Min Family Drill:</strong> Walk shutoffs, April Great Utah ShakeOut, or 15-min wildfire grab test.</td>
+                </tr>
+                <tr>
+                  <td><strong>Ward &amp; Ministering</strong></td>
+                  <td><strong>5 min in Ward Council:</strong> Rolling <code>W-1</code> refresh for babies, postpartum, widows &amp; move-ins.</td>
+                  <td>Ward Clerk prints refreshed LCR Ministering Districts onto <code>W-4</code>; seasonal 4-Quarter prep notes.</td>
+                  <td><strong>15-Min Reachability Practice:</strong> Low-stress ministering check-in (Spring text + Fall in-person); audit 5 binders.</td>
+                  <td><strong>Q1 (Mar 31):</strong> 2-min 5th-Sunday <code>W-2/3</code> sign-up &amp; anonymized <code>W-5</code> rollup (SA 11th Aug/Jan/May).</td>
+                </tr>
+                <tr>
+                  <td><strong>Stake Council</strong></td>
+                  <td>Track Phase 1–3 rollout owners above; onboard newly called Stake/Ward leaders (10 min).</td>
+                  <td>15-min Stake HAM Check-In Net (<code>145.230 MHz</code>) + 5-item Bldg 1 &amp; 2 library kit check.</td>
+                  <td>Sync Saratoga View DON, Stake Bishops' Council Storehouse check, Shay Park 12V kit &amp; 6 off-site Go-Binders.</td>
+                  <td>Q1 <code>W-5</code> Register rollup, FM/City EOC/School/Lehi–AF refresh, Fall 60-min Tabletop Drill &amp; AAR.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p style="font-size:0.82rem; margin:8px 0 0; background:#f8fafc; padding:8px 10px; border-radius:6px; border:1px solid #cbd5e1;">
+            <strong>Stake Operational Transition Gates:</strong> At <strong>T+72 Hours</strong>, pivot from acute intake to sustained welfare (Bishops' Storehouse pallets, inter-stake Lehi/AF billeting, rotating charging/cooling hubs, skilled trade crews). At <strong>T+14 Days</strong>, stand down emergency radio nets, support long-term emotional/financial recovery, and hold a <strong>30-minute Stake Council After-Action Review</strong> feeding max 3 lessons back into this action list.
+          </p>
+          <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Stake Rollout Action List &amp; Maintenance Cadence • Stake Council Handout</div>
         </div>
-        <p style="font-size:0.84rem; margin:8px 0 0; background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #cbd5e1;">
-          <strong>Stake Operational Transition Gates:</strong> At <strong>T+72 Hours</strong>, pivot from acute intake to sustained welfare (Bishops' Storehouse pallets, inter-stake Lehi/AF billeting, rotating charging/cooling hubs, skilled trade crews). At <strong>T+14 Days</strong>, stand down emergency radio nets, support long-term emotional/financial recovery, and hold a <strong>30-minute Stake Council After-Action Review</strong> feeding max 3 lessons back into Phase 1–3 above.
-        </p>
-      </div>
 
       <!-- COLLAPSED SCRIPTS ONLY: 10-MIN ONBOARDING & 60-MIN ANNUAL TABLETOP FACILITATOR GUIDE -->
       <details class="drawer" data-mode="prep">
@@ -3379,6 +3579,7 @@
           </ol>
         </div>
       </details>
+      </div><!-- end #stake-pane-4b -->
     </section>
 
     <!-- ========================================================== -->
@@ -4482,7 +4683,8 @@
           { id: 'kit72', lbl: 'kit72-count', bar: 'kit72-bar' },
           { id: 'quick', lbl: 'quick-wins-count', bar: 'quick-wins-bar' },
           { id: 'steady', lbl: 'steady-count', bar: 'steady-bar' },
-          { id: 'ward90', lbl: 'ward-launch-count', bar: 'ward-launch-bar' }
+          { id: 'ward90', lbl: 'ward-launch-count', bar: 'ward-launch-bar' },
+          { id: 'stakeAction', lbl: 'stake-action-count', bar: 'stake-action-bar' }
         ];
         groups.forEach(g => {
           const boxes = document.querySelectorAll('input[data-check-group="' + g.id + '"]');
@@ -4731,29 +4933,27 @@
       // LocalStorage persistence & 1:1 cross-field sync for Form M-1, Prep Worksheet & checklists
       document.querySelectorAll('[data-save-key]').forEach(el => {
         const key = el.dataset.saveKey;
-        try {
-          const val = localStorage.getItem(key);
-          if (el.type === 'checkbox') {
-            if (val === '1') el.checked = true;
-            el.addEventListener('change', () => {
-              const nv = el.checked ? '1' : '0';
-              try { localStorage.setItem(key, nv); } catch (e) {}
-              syncInputsForKey(key, nv, true);
-              updateCheckProgress();
+        const val = safeGet(key);
+        if (el.type === 'checkbox') {
+          if (val === '1') el.checked = true;
+          el.addEventListener('change', () => {
+            const nv = el.checked ? '1' : '0';
+            try { localStorage.setItem(key, nv); } catch (e) {}
+            syncInputsForKey(key, nv, true);
+            updateCheckProgress();
+          });
+        } else {
+          if (val !== null) el.value = val;
+          const handleValueUpdate = () => {
+            try { localStorage.setItem(key, el.value); } catch (e) {}
+            document.querySelectorAll('[data-save-key]').forEach(other => {
+              if (other !== el && other.dataset.saveKey === key) other.value = el.value;
             });
-          } else {
-            if (val !== null) el.value = val;
-            const handleValueUpdate = () => {
-              try { localStorage.setItem(key, el.value); } catch (e) {}
-              document.querySelectorAll('[data-save-key]').forEach(other => {
-                if (other !== el && other.dataset.saveKey === key) other.value = el.value;
-              });
-              if (key.startsWith('v4_prep_')) updateWaterCalculator();
-            };
-            el.addEventListener('input', handleValueUpdate);
-            el.addEventListener('change', handleValueUpdate);
-          }
-        } catch (e) {}
+            if (key.startsWith('v4_prep_')) updateWaterCalculator();
+          };
+          el.addEventListener('input', handleValueUpdate);
+          el.addEventListener('change', handleValueUpdate);
+        }
       });
       updateCheckProgress();
       updateWaterCalculator();
@@ -4774,7 +4974,7 @@
 
       // Wire Tab 3 3-Sub-Tab Ward Switcher
       window.setWardSubtab = function (sub) {
-        document.querySelectorAll('.ward-subtab-btn').forEach(b => b.classList.toggle('active', b.dataset.wardSub === sub));
+        document.querySelectorAll('.ward-subtab-btn:not(.member-subtab-btn):not(.stake-subtab-btn)').forEach(b => b.classList.toggle('active', b.dataset.wardSub === sub));
         document.querySelectorAll('.ward-subpane').forEach(p => p.classList.toggle('active', p.id === 'ward-pane-' + sub));
       };
       window.openWardSection = function (sub) {
@@ -4782,8 +4982,31 @@
         switchTab('ward', false);
         setWardSubtab(sub);
       };
-      document.querySelectorAll('.ward-subtab-btn').forEach(btn => {
+      document.querySelectorAll('.ward-subtab-btn:not(.member-subtab-btn):not(.stake-subtab-btn)').forEach(btn => {
         btn.addEventListener('click', () => setWardSubtab(btn.dataset.wardSub));
+      });
+
+      // Wire Tab 4 2-Sub-Tab Stake Switcher (4A Command Kit default; 4B Rollout Action List)
+      window.setStakeSubtab = function (sub) {
+        if (!['4a', '4b'].includes(sub)) sub = '4a';
+        document.querySelectorAll('.stake-subtab-btn').forEach(b => {
+          const active = b.dataset.stakeSub === sub;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        document.querySelectorAll('.stake-subpane').forEach(p => p.classList.toggle('active', p.id === 'stake-pane-' + sub));
+      };
+      const stakeSubtabBtns = Array.from(document.querySelectorAll('.stake-subtab-btn'));
+      stakeSubtabBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => setStakeSubtab(btn.dataset.stakeSub));
+        btn.addEventListener('keydown', e => {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const next = stakeSubtabBtns[(idx + (e.key === 'ArrowRight' ? 1 : -1) + stakeSubtabBtns.length) % stakeSubtabBtns.length];
+            setStakeSubtab(next.dataset.stakeSub);
+            next.focus();
+          }
+        });
       });
 
       // Wire Tab 5 4-Horizon Segmented Control & Hazard Horizon Filter
@@ -4871,13 +5094,13 @@
         'W-4':       { tab: 'ward',   subtab: '3c', targetId: 'form-w46',            label: 'Form W-4',        desc: 'Ministering District Check-In Rollup (EQ/RS Presidency — Sheet 4)' },
         'W-6':       { tab: 'ward',   subtab: '3c', targetId: 'form-w46',            label: 'Form W-6',        desc: 'Live Ward Care & Work-Crew Board (Sheet 4)' },
         'W-5':    { tab: 'ward',   subtab: '3c', targetId: 'form-w5',  label: 'Form W-5',  desc: 'Ward → Stake Anonymized Care & Status Update (Zero Names)' },
-        'S-A':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Sheet S-A', desc: 'Stake Presidency Command, Succession & Net Control' },
-        'S-0':    { tab: 'stake',  subtab: null, targetId: 'form-sa',  label: 'Form S-0',  desc: 'Stake Presidency First-Hour & Priesthood Keys (Sheet S-A Front)' },
-        'S-3':    { tab: 'stake',  subtab: null, targetId: 'form-s3',  label: 'Form S-3',  desc: 'Stake Net Control & De-Conflicted FRS/HAM Channel Plan (Sheet S-A Back)' },
-        'S-B':    { tab: 'stake',  subtab: null, targetId: 'form-sb',  label: 'Sheet S-B', desc: 'High Councilor 4-Track Card, 10-Pt Building Check & Stake RS' },
-        'S-1':       { tab: 'stake',  subtab: null, targetId: 'form-sb',             label: 'Form S-1',       desc: 'High Councilor 4-Track Card & 10-Pt Building Check (Sheet S-B Front)' },
-        'S-2':       { tab: 'stake',  subtab: null, targetId: 'form-s2',             label: 'Form S-2',       desc: 'Stake Relief Society First-Hour Card & Matchmaking (Sheet S-B Back)' },
-        'STAKE-REG': { tab: 'stake',  subtab: null, targetId: 'form-stake-register', label: 'Stake Register', desc: 'Unified Stake Readiness Register (1:1 Form W-5 Parity, Zero Names)' }
+        'S-A':       { tab: 'stake',  subtab: '4a', targetId: 'form-sa',             label: 'Sheet S-A',      desc: 'Stake Presidency Command, Succession & Net Control' },
+        'S-0':       { tab: 'stake',  subtab: '4a', targetId: 'form-sa',             label: 'Form S-0',       desc: 'Stake Presidency First-Hour & Priesthood Keys (Sheet S-A Front)' },
+        'S-3':       { tab: 'stake',  subtab: '4a', targetId: 'form-s3',             label: 'Form S-3',       desc: 'Stake Net Control & De-Conflicted FRS/HAM Channel Plan (Sheet S-A Back)' },
+        'S-B':       { tab: 'stake',  subtab: '4a', targetId: 'form-sb',             label: 'Sheet S-B',      desc: 'High Councilor 4-Track Card, 10-Pt Building Check & Stake RS' },
+        'S-1':       { tab: 'stake',  subtab: '4a', targetId: 'form-sb',             label: 'Form S-1',       desc: 'High Councilor 4-Track Card & 10-Pt Building Check (Sheet S-B Front)' },
+        'S-2':       { tab: 'stake',  subtab: '4a', targetId: 'form-s2',             label: 'Form S-2',       desc: 'Stake Relief Society First-Hour Card & Matchmaking (Sheet S-B Back)' },
+        'STAKE-REG': { tab: 'stake',  subtab: '4a', targetId: 'form-stake-register', label: 'Stake Register', desc: 'Unified Stake Readiness Register (1:1 Form W-5 Parity, Zero Names)' }
       };
 
       const SN_CODE_DESC = {
@@ -4955,6 +5178,9 @@
         }
         if (entry.tab === 'ward' && entry.subtab && window.setWardSubtab) {
           setWardSubtab(entry.subtab);
+        }
+        if (entry.tab === 'stake' && entry.subtab && window.setStakeSubtab) {
+          setStakeSubtab(entry.subtab);
         }
         highlightTarget(document.getElementById(entry.targetId));
       };
