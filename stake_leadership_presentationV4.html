@@ -1149,6 +1149,11 @@
       color: var(--slate-900);
     }
     .sn-key-box strong.sn-code { color: var(--navy); }
+    .sn-modal-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin-top: 8px; }
+    .sn-modal-table th, .sn-modal-table td { border: 1px solid var(--slate-200); padding: 7px 9px; text-align: left; vertical-align: top; }
+    .sn-modal-table th { background: var(--slate-100); color: var(--navy); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .sn-modal-table tr.sn-row-active td { background: #fef3c7 !important; }
+    .sn-modal-table td.sn-col-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 800; color: var(--navy); white-space: nowrap; }
     @keyframes formSpotlight {
       0% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.75); }
       70% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.45); }
@@ -2285,7 +2290,7 @@
           <strong class="sn-code">SN-6</strong> Sensory / Cognitive &middot;
           <strong class="sn-code">SN-7</strong> Infants / Expectant / Postpartum / Solo Parent &middot;
           <strong class="sn-code">SN-8</strong> Language / Deaf / HoH / Low-Vision / Landline-Only.
-          <span class="screen-only"><em>(Full field protocols: <a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();">Form W-0B SN-1–8 Table</a>)</em></span>
+          <span class="screen-only"><em>(<a href="#sn-modal" class="form-ref-link" onclick="event.preventDefault(); openSNModal();">Open Full SN-1–8 Reference Card</a>)</em></span>
         </div>
         <div class="table-wrap">
           <table class="write-table" style="font-size:0.8rem;">
@@ -2481,7 +2486,7 @@
           </table>
         </div>
 
-        <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (<a href="#form-stake-register" class="form-ref-link" onclick="event.preventDefault(); jumpToForm('STAKE-REG');" title="Jump to Tab 4 Unified Stake Readiness Register">Matches Tab 4 Register 1:1</a> &middot; <a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();" title="Jump to Full SN-1–8 Extra-Care Lookup Table on Form W-0B">SN-1–8 Lookup Table</a>)</h3>
+        <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (<a href="#form-stake-register" class="form-ref-link" onclick="event.preventDefault(); jumpToForm('STAKE-REG');" title="Jump to Tab 4 Unified Stake Readiness Register">Matches Tab 4 Register 1:1</a> &middot; <a href="#sn-modal" class="form-ref-link" onclick="event.preventDefault(); openSNModal();" title="Open Shared SN-1–8 Extra-Care Reference Card">SN-1–8 Reference Card</a>)</h3>
         <div class="table-wrap">
           <table class="write-table" style="font-size:0.8rem;">
             <thead>
@@ -2744,7 +2749,7 @@
           <strong class="sn-code">SN-8</strong> Language / Deaf / HoH / Low-Vision.<br>
           <strong>Resource Pools 1–8 (Matches Form W-5 Part B):</strong>
           <strong>1</strong> Power/Gen &middot; <strong>2</strong> Chainsaws/PPE Crews &middot; <strong>3</strong> Plumbers/Elec/HVAC &middot; <strong>4</strong> Plows/4x4/Rides &middot; <strong>5</strong> Gravity Water Filters &middot; <strong>6</strong> Willing Host Homes &middot; <strong>7</strong> Medical/Bilingual/ASL &middot; <strong>8</strong> Coolers/Mental Health.
-          <span class="screen-only"><em>(<a href="#sn-codes-key" class="form-ref-link" onclick="event.preventDefault(); jumpToSN();">Full SN-1–8 Field Protocols on Form W-0B</a>)</em></span>
+          <span class="screen-only"><em>(<a href="#sn-modal" class="form-ref-link" onclick="event.preventDefault(); openSNModal();">Open Full SN-1–8 Reference Card</a>)</em></span>
         </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Unified Stake Readiness Register • Zero Member Names (GH 22.4.5)</div>
       </div>
@@ -3491,12 +3496,77 @@
             <span class="fi-desc"><strong>Unified Stake Readiness Register (1:1 Form W-5 Parity)</strong><small>All 7 Wards + Riverview anonymized SN-1–8 tallies &amp; Pools 1–8</small></span>
             <span class="fi-go">Open &rarr;</span>
           </button>
-          <button type="button" class="forms-index-item" onclick="jumpToSN()">
+          <button type="button" class="forms-index-item" onclick="openSNModal()">
             <span class="fi-code">SN-1 to SN-8</span>
-            <span class="fi-desc"><strong>Extra-Care Codes Master Lookup Table (Form W-0B)</strong><small>Functional support categories SN-1..8 (Medical Power through Language/HoH)</small></span>
-            <span class="fi-go">Open &rarr;</span>
+            <span class="fi-desc"><strong>Extra-Care Codes Reference Card (Shared Ward &amp; Stake Key)</strong><small>Pop-up reference for SN-1..8 functional support codes — stays on your current tab</small></span>
+            <span class="fi-go">View &rarr;</span>
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sn-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="sn-modal-title">
+    <div class="modal-dialog" style="max-width:740px;">
+      <div class="modal-head">
+        <h2 id="sn-modal-title" style="margin:0; font-size:1.15rem; color:var(--navy);">Extra-Care Support Codes (SN-1 to SN-8)</h2>
+        <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="closeModal('sn-modal')">Close</button>
+      </div>
+      <p style="font-size:0.84rem; color:var(--slate-700); margin:0 0 8px;">
+        <strong>Shared Ward &amp; Stake Standard (<code>GH 22.4.5</code>):</strong> Voluntary functional support categories only—<strong>zero medical diagnoses</strong> and <strong>zero domestic-abuse entries</strong> (<code>GH 38.6.2</code>). Ward names stay strictly in locked offline Ward binders (<code>Form W-1</code>); Stake receives anonymized counts only (<code>Form W-5</code> &rarr; <code>Stake Register</code>).
+      </p>
+      <div class="table-wrap">
+        <table class="sn-modal-table">
+          <thead>
+            <tr>
+              <th style="width:12%;">Code</th>
+              <th style="width:28%;">Category</th>
+              <th style="width:60%;">What It Covers &amp; Immediate Action Guardrail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-sn-row="SN-1">
+              <td class="sn-col-code">SN-1</td>
+              <td><strong>Medical Power</strong></td>
+              <td>Oxygen concentrators, CPAP, home dialysis. <strong>RMP Medical Cert is NOT backup power; O2 &lt;2 hr reserve = call 911 immediately.</strong> Match loanable power stations/generators via Ward/Stake pool.</td>
+            </tr>
+            <tr data-sn-row="SN-2">
+              <td class="sn-col-code">SN-2</td>
+              <td><strong>Refrigerated Meds</strong></td>
+              <td>Insulin &amp; biologics. Keep at <strong>36–46&deg;F with a towel between vial &amp; cool pack (never direct ice)</strong>; protect from freezing in winter blackouts. Launch Stake/Ward cooler hub only after HC building pass.</td>
+            </tr>
+            <tr data-sn-row="SN-3">
+              <td class="sn-col-code">SN-3</td>
+              <td><strong>Mobility / Car-Less</strong></td>
+              <td>Walkers, wheelchairs, non-night/snow drivers, and car-less renters needing early wildfire or winter evacuation rides and main-floor host-home matching.</td>
+            </tr>
+            <tr data-sn-row="SN-4">
+              <td class="sn-col-code">SN-4</td>
+              <td><strong>Dialysis / Chronic</strong></td>
+              <td>Households requiring priority culinary water drops, cleared driveway/road access, and medical-transport continuity.</td>
+            </tr>
+            <tr data-sn-row="SN-5">
+              <td class="sn-col-code">SN-5</td>
+              <td><strong>Solo / Isolated</strong></td>
+              <td>Widows, seniors, and solo young adults living alone who benefit from early check-ins, warm visits, and daily companionship during extended outages.</td>
+            </tr>
+            <tr data-sn-row="SN-6">
+              <td class="sn-col-code">SN-6</td>
+              <td><strong>Sensory / Cognitive</strong></td>
+              <td>Individuals who benefit from a calm, familiar Ministering Companion check-in and a quiet room option if displaced.</td>
+            </tr>
+            <tr data-sn-row="SN-7">
+              <td class="sn-col-code">SN-7</td>
+              <td><strong>Infants / Expectant / Solo Parents</strong></td>
+              <td>Formula, boiled/safe water, diapers, postpartum care, and priority check-in if a commuting spouse is stranded east of the Jordan River.</td>
+            </tr>
+            <tr data-sn-row="SN-8">
+              <td class="sn-col-code">SN-8</td>
+              <td><strong>Language, Deaf/HoH &amp; Low-Vision</strong></td>
+              <td>Bilingual/ASL interpreter pairing <strong>plus in-person door knocks, 15pt large-print paper flyers, and landline voice Everbridge alerts</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -3853,11 +3923,33 @@
         });
       }
 
-      window.jumpToSN = function () {
+      window.openSNModal = function (code) {
         document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
-        switchTab('ward', false);
-        if (window.setWardSubtab) setWardSubtab('3a');
-        highlightTarget(document.getElementById('sn-codes-key'));
+        const modal = document.getElementById('sn-modal');
+        if (!modal) return;
+        const rows = modal.querySelectorAll('tr[data-sn-row]');
+        rows.forEach(r => r.classList.remove('sn-row-active'));
+        let activeCodes = [];
+        if (code === 'SN-4–6' || code === 'SN-4-6') {
+          activeCodes = ['SN-4', 'SN-5', 'SN-6'];
+        } else if (code && /^SN-[1-8]$/.test(code)) {
+          activeCodes = [code];
+        }
+        let firstMatch = null;
+        rows.forEach(r => {
+          if (activeCodes.includes(r.dataset.snRow)) {
+            r.classList.add('sn-row-active');
+            if (!firstMatch) firstMatch = r;
+          }
+        });
+        openModal('sn-modal');
+        if (firstMatch) {
+          requestAnimationFrame(() => firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+        }
+      };
+
+      window.jumpToSN = function (code) {
+        openSNModal(code);
       };
 
       window.jumpToForm = function (key) {
@@ -3935,7 +4027,7 @@
       function enhanceFormLinks() {
         const REF_RE = /\b(GH\s+\d+(?:\.\d+)+(?:\s*(?:\/|&)\s*\d+(?:\.\d+)+)*|(?:Forms?|Sheets?)\s+(?:M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3)|M-1|W-0\/0B|W-0B|W-0|W-1|W-2\/3|W-2|W-3|W-4\/6|W-4|W-6|W-5|S-A|S-B|S-0|S-1|S-2|S-3|SN-1\.\.8|SN-1[–\-]8|SN-4[–\-]6|SN-[1-8])\b/g;
         const SKIP_TAGS = new Set(['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'SUMMARY', 'SCRIPT', 'STYLE']);
-        const roots = [document.querySelector('main'), document.querySelector('.offline-banner'), document.getElementById('glossary-modal')].filter(Boolean);
+        const roots = [document.querySelector('main'), document.querySelector('.offline-banner'), document.getElementById('glossary-modal'), document.getElementById('sn-modal')].filter(Boolean);
         roots.forEach(root => {
           const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
           const nodes = [];
@@ -3980,19 +4072,19 @@
               }
               if (inSheetHeaderOrHeading || inSnKeyBox) continue;
               if (full.startsWith('SN-')) {
-                const insideSN = parent && parent.closest('#sn-codes-key');
+                const insideSN = parent && parent.closest('#sn-codes-key, #sn-modal');
                 if (insideSN) continue;
                 const normKey = full.replace(/SN-1-8/, 'SN-1–8').replace(/SN-4-6/, 'SN-4–6');
                 const desc = SN_CODE_DESC[normKey] || SN_CODE_DESC['SN-1–8'];
                 if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
                 const a = document.createElement('a');
-                a.href = '#sn-codes-key';
+                a.href = '#sn-modal';
                 a.className = 'form-ref-link';
-                a.title = full + ' — ' + desc + ' (Click for full SN-1–8 table)';
+                a.title = full + ' — ' + desc + ' (Click to view SN-1–8 reference card)';
                 a.textContent = full;
                 a.addEventListener('click', (e) => {
                   e.preventDefault();
-                  jumpToSN();
+                  openSNModal(normKey);
                 });
                 frag.appendChild(a);
                 lastIdx = m.index + full.length;
