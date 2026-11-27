@@ -1129,6 +1129,14 @@
       #stake-register-table td:first-child { text-align: left; width: 16%; }
       #stake-register-table .sn1-split .num-input { width: 18px !important; min-width: 0 !important; }
       #stake-register-table .num-input { max-width: 28px !important; width: 100% !important; min-width: 0 !important; }
+      #stake-live-table { font-size: 7pt !important; table-layout: fixed; width: 100%; }
+      #stake-live-table th,
+      #stake-live-table td { padding: 2px 2px !important; text-align: center; }
+      #stake-live-table th:first-child,
+      #stake-live-table td:first-child { text-align: left; width: 15%; }
+      #stake-live-table th:nth-child(10),
+      #stake-live-table td:nth-child(10) { text-align: left; width: 24%; }
+      #stake-live-table .num-input { max-width: 26px !important; width: 100% !important; min-width: 0 !important; }
       #form-w5 th,
       #form-w5 td { padding: 3px 4px !important; }
       #form-w5 .w5-pool-cell { font-size: 7pt !important; gap: 1px !important; }
@@ -1749,11 +1757,37 @@
       margin-top: 8px;
     }
 
+    .w5-annual-note {
+      display: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--amber);
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      padding: 4px 8px;
+      margin: 4px 0 6px;
+    }
+    #form-w5.w5-annual-mode #w5-part0-wrap { opacity: 0.55; }
+    #form-w5.w5-annual-mode .w5-annual-note { display: block; }
+    .live-board-box {
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      background: #fff7ed;
+      border: 2px solid #ea580c;
+      border-radius: 8px;
+    }
+    .live-board-box h3 { margin: 0 0 6px; color: #9a3412; font-size: 0.96rem; }
+
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
-      body.crisis-mode #ward-pane-3a { display: block !important; }
+      body.crisis-mode #ward-pane-3a,
+      body.crisis-mode #ward-pane-3c { display: block !important; }
       body.crisis-mode #ward-pane-3b,
-      body.crisis-mode #ward-pane-3c { display: none !important; }
+      body.crisis-mode #form-w1,
+      body.crisis-mode #form-w23,
+      body.crisis-mode #form-w46,
+      body.crisis-mode #ward-pane-3c .section-divider-banner { display: none !important; }
     }
 
     .role-grid-6 {
@@ -3206,12 +3240,13 @@
       <div class="card crisis-only ward-nonprint screen-only" style="background:var(--slate-50); border:1.5px solid var(--slate-200);">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
           <p style="margin:0; font-size:0.86rem; color:var(--slate-700);">
-            <strong>Showing 0–60 Minute Ward Action Card Only (<code>Form W-0 &amp; W-0B</code>).</strong>
-            Ready for blank binder forms (<code>W-1–W-5</code>) or 1–72h / 1–2w / 2+m recovery?
+            <strong>Showing Active Ward Emergency Tools Only (<code>Form W-0/0B</code> above + Live <code>Form W-5</code> below).</strong>
+            Need paper-only binder forms (<code>W-1–W-4</code>) or 1–72h recovery?
           </p>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="openWardSection('3c')">Open Printable Forms (W-1–W-5)</button>
-            <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="openWardSection('3b')">View 1–72h &amp; Recovery Guide</button>
+            <button type="button" class="btn" style="min-height:44px;" onclick="document.getElementById('form-w5').scrollIntoView({behavior:'smooth',block:'start'})">Jump to Live Form W-5 &darr;</button>
+            <button type="button" class="btn btn-outline" style="min-height:44px;" onclick="openWardSection('3c')">Open Paper Binder Forms (W-1–W-4)</button>
+            <button type="button" class="btn btn-outline" style="min-height:44px;" onclick="openWardSection('3b')">View 1–72h &amp; Recovery Guide</button>
           </div>
         </div>
       </div>
@@ -3334,15 +3369,21 @@
       <!-- ===== SUB-TAB 3C: PRINTABLE OFFLINE WARD BINDER FORMS (W-1 TO W-5) ===== -->
       <div id="ward-pane-3c" class="ward-subpane">
         <div class="section-divider-banner screen-only ward-nonprint">
-          <h3>Printable Offline Ward Binder Sheets (Forms W-1 to W-5 — Print All 5 Sheets Together)</h3>
-          <button type="button" class="btn" style="min-height:38px;" onclick="printProfile('ward-pack')">Print Complete 5-Sheet Ward Binder</button>
+          <div>
+            <h3 style="margin:0;">Ward Binder Forms: Paper-Only (<code>W-1</code>, <code>W-2/3</code>, <code>W-4/6</code>) &amp; Fillable Live/Audit (<code>W-5</code>)</h3>
+            <span style="font-size:0.78rem; opacity:0.9;">Forms <code>W-1</code>, <code>W-2/3</code> &amp; <code>W-4/6</code> stay paper-only by design (<code>GH 22.4.5</code>) — print &amp; write by hand. Use <code>Form W-5</code> below to send live or annual counts to Stake.</span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline" style="min-height:40px; background:#ffffff; color:var(--navy);" onclick="document.getElementById('form-w5').scrollIntoView({behavior:'smooth',block:'start'})">Jump to Fillable Form W-5 &darr;</button>
+            <button type="button" class="btn" style="min-height:40px;" onclick="printProfile('ward-pack')">Print Complete 5-Sheet Ward Binder</button>
+          </div>
         </div>
 
       <!-- WARD SHEET 2: FORM W-1 (CONFIDENTIAL SPECIAL NEEDS — DOMESTIC SAFETY REMOVED!) -->
       <div id="form-w1" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-2">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag red">Ward Sheet 2 • Form W-1 (Strictly Confidential — Never Leaves Ward)</span>
+            <span class="sheet-tag red">Ward Sheet 2 • Form W-1 (Paper-Only Binder Form — Never Stored Online • GH 22.4.5)</span>
             <h2 class="sheet-title">Voluntary Extra-Care Household Register (<code>GH 22.4.5</code>)</h2>
           </div>
           <span><strong>Last Monthly Review:</strong> __________</span>
@@ -3403,7 +3444,7 @@
       <div id="form-w23" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-3">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag">Ward Sheet 3 (Front &amp; Back) • Forms W-2 &amp; W-3</span>
+            <span class="sheet-tag">Ward Sheet 3 (Front &amp; Back) • Forms W-2 &amp; W-3 (Paper-Only Binder Form — Print &amp; Write By Hand)</span>
             <h2 class="sheet-title">Voluntary Equipment, Trades, Medical &amp; Relief Society Care Pools</h2>
           </div>
           <span><strong>Q1 5th-Sunday Update:</strong> __________</span>
@@ -3462,7 +3503,7 @@
       <div id="form-w46" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-4">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6</span>
+            <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6 (Paper-Only Live Board — Print &amp; Tally By Hand)</span>
             <h2 class="sheet-title">Ministering District Check-In Rollup &amp; Ward Care / Helping Hands Board</h2>
           </div>
           <span><strong>Board Scribe (Clerk/Spec):</strong> ______________</span>
@@ -3551,32 +3592,35 @@
           <input id="w5-ward" list="crossroads-wards-list" class="inline-input" style="width:155px;" data-save-key="v4_w5_ward" placeholder="e.g., Crossroads">
           <label for="w5-datetime"><strong>Date / Time:</strong></label>
           <input id="w5-datetime" class="inline-input" style="width:140px;" data-save-key="v4_w5_datetime" placeholder="e.g., T+60m / 14:30">
-          <label for="w5-submitted-by"><strong>Submitted By:</strong></label>
-          <input id="w5-submitted-by" class="inline-input" style="width:155px;" data-save-key="v4_w5_submitted_by" placeholder="Role / First name">
+          <label for="w5-submitted-by"><strong>Submitted By (Role Only):</strong></label>
+          <input id="w5-submitted-by" class="inline-input" style="width:175px;" data-save-key="v4_w5_submitted_by" placeholder="Role only (e.g., Ward Prep Spec)">
         </div>
         <p style="font-size:0.82rem; margin:0 0 8px;">
           <strong>One Shared Stake Listening Post:</strong> Share with <strong>Stake Command / Prep Rep Net Control</strong> (HAM <code>145.230 MHz</code>, Tactical <code>146.580 MHz</code>, Ward FRS Ch 1–7, or runner)—immediately shared live with Stake Pres, HC Tracks 1–4 &amp; Stake RS.
         </p>
 
-        <h3 style="margin:4px 0;">Part 0: Live Household Accountability Summary (From Sheet W-4/6)</h3>
-        <div class="table-wrap">
-          <table class="write-table" style="font-size:0.8rem;">
-            <thead>
-              <tr><th>Total Homes</th><th>Checked</th><th>GREEN (Safe)</th><th>YELLOW (Help)</th><th>RED (Urgent)</th><th>Unaccounted</th><th>Displaced</th><th>Acute Injuries</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_total" aria-label="Total Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_checked" aria-label="Checked Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_green" aria-label="GREEN Safe Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_yellow" aria-label="YELLOW Help Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_red" aria-label="RED Urgent Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_unacct" aria-label="Unaccounted Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_displaced" aria-label="Displaced Homes"></td>
-                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_injuries" aria-label="Acute Injuries"></td>
-              </tr>
-            </tbody>
-          </table>
+        <div id="w5-part0-wrap">
+          <h3 style="margin:4px 0;">Part 0: Live Household Accountability Summary (From Sheet W-4/6 — Live Care Updates Only)</h3>
+          <div class="w5-annual-note screen-only">Annual Audit Mode selected — Part 0 (Live G/Y/R/Injuries) is skipped for March 31 Annual Audits. Fill Part A &amp; Part B below.</div>
+          <div class="table-wrap">
+            <table class="write-table" style="font-size:0.8rem;">
+              <thead>
+                <tr><th>Total Homes</th><th>Checked</th><th>GREEN (Safe)</th><th>YELLOW (Help)</th><th>RED (Urgent)</th><th>Unaccounted</th><th>Displaced</th><th>Acute Injuries</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_total" aria-label="Total Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_checked" aria-label="Checked Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_green" aria-label="GREEN Safe Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_yellow" aria-label="YELLOW Help Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_red" aria-label="RED Urgent Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_unacct" aria-label="Unaccounted Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_displaced" aria-label="Displaced Homes"></td>
+                  <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_injuries" aria-label="Acute Injuries"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (<a href="#form-stake-register" class="form-ref-link" onclick="event.preventDefault(); jumpToForm('STAKE-REG');" title="Jump to Tab 4 Unified Stake Readiness Register">Matches Tab 4 Register 1:1</a> &middot; <a href="#sn-modal" class="form-ref-link" onclick="event.preventDefault(); openSNModal();" title="Open Shared SN-1–8 Extra-Care Reference Card">SN-1–8 Reference Card</a>)</h3>
@@ -3934,15 +3978,51 @@
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Stake Sheet 2 (S-B: HC 4-Track &amp; Stake RS) • Off-Site Go-Binder</div>
       </div>
 
-      <!-- UNIFIED STAKE READINESS REGISTER (MERGED TABS 4 & 5 — 1:1 W-5 PARITY) -->
+      <!-- UNIFIED STAKE READINESS REGISTER (LIVE BOARD + ANNUAL REGISTER — 1:1 W-5 PARITY) -->
       <div id="form-stake-register" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-3">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag teal">Unified Stake Readiness Register (1:1 Form W-5 Parity • Zero Names)</span>
-            <h2 class="sheet-title">Anonymized Extra-Care Tallies (Left) &amp; Voluntary Resource Pools (Right)</h2>
+            <span class="sheet-tag teal">Unified Stake Readiness Register &amp; Live Command Board (1:1 Form W-5 Parity • Zero Names)</span>
+            <h2 class="sheet-title">Live Ward Accountability (Top) &amp; Annual Extra-Care / Resource Pools (Bottom)</h2>
           </div>
           <span style="font-size:0.82rem; display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;"><strong>Single Compiler:</strong> Stake Prep Rep &middot; <label for="reg-updated"><strong>Updated:</strong></label><input id="reg-updated" class="inline-input" style="width:125px;" data-save-key="v4_reg_updated" placeholder="Date / Time"></span>
         </div>
+
+        <!-- LIVE EMERGENCY WARD ACCOUNTABILITY & UNMET NEEDS BOARD (RECEIVES LIVE FORM W-5 PART 0 + NEEDS + URGENT) -->
+        <div id="stake-live-board" class="live-board-box">
+          <h3>Live Emergency Ward Accountability &amp; Unmet Needs Board (Receives Live <code>Form W-5</code> Updates)</h3>
+          <div class="table-wrap">
+            <table class="write-table" id="stake-live-table" style="font-size:0.75rem;">
+              <thead>
+                <tr>
+                  <th>Unit (FRS Ch)</th>
+                  <th>Total</th>
+                  <th>Checked</th>
+                  <th style="color:#065f46;">GREEN</th>
+                  <th style="color:#92400e;">YELLOW</th>
+                  <th style="color:#991b1b;">RED</th>
+                  <th>Unacct</th>
+                  <th>Displ.</th>
+                  <th>Injuries</th>
+                  <th>Pool Needs &amp; Urgent Unmet Needs</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-live-ward="aspen"><td>Aspen Hills (Ch 1)</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_aspen_total" aria-label="Aspen Hills Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_aspen_checked" aria-label="Aspen Hills Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_aspen_green" aria-label="Aspen Hills Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_aspen_yellow" aria-label="Aspen Hills Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_aspen_red" aria-label="Aspen Hills Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_aspen_unacct" aria-label="Aspen Hills Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_aspen_displaced" aria-label="Aspen Hills Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_aspen_injuries" aria-label="Aspen Hills Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_aspen_urgent" aria-label="Aspen Hills Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_aspen_updated" aria-label="Aspen Hills Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="shay"><td>Shay Park (Ch 2)</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_shay_total" aria-label="Shay Park Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_shay_checked" aria-label="Shay Park Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_shay_green" aria-label="Shay Park Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_shay_yellow" aria-label="Shay Park Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_shay_red" aria-label="Shay Park Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_shay_unacct" aria-label="Shay Park Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_shay_displaced" aria-label="Shay Park Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_shay_injuries" aria-label="Shay Park Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_shay_urgent" aria-label="Shay Park Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_shay_updated" aria-label="Shay Park Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="hh10"><td>Harvest Hills 10th (Ch 3)</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_hh10_total" aria-label="Harvest Hills 10th Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_hh10_checked" aria-label="Harvest Hills 10th Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_hh10_green" aria-label="Harvest Hills 10th Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_hh10_yellow" aria-label="Harvest Hills 10th Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_hh10_red" aria-label="Harvest Hills 10th Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_hh10_unacct" aria-label="Harvest Hills 10th Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_hh10_displaced" aria-label="Harvest Hills 10th Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_hh10_injuries" aria-label="Harvest Hills 10th Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_hh10_urgent" aria-label="Harvest Hills 10th Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_hh10_updated" aria-label="Harvest Hills 10th Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="ysa11"><td>SA 11th YSA (Ch 4)</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_ysa11_total" aria-label="SA 11th YSA Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_ysa11_checked" aria-label="SA 11th YSA Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_ysa11_green" aria-label="SA 11th YSA Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_ysa11_yellow" aria-label="SA 11th YSA Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_ysa11_red" aria-label="SA 11th YSA Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_ysa11_unacct" aria-label="SA 11th YSA Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_ysa11_displaced" aria-label="SA 11th YSA Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_ysa11_injuries" aria-label="SA 11th YSA Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_ysa11_urgent" aria-label="SA 11th YSA Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_ysa11_updated" aria-label="SA 11th YSA Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="hh1"><td>Harvest Hills 1st (Ch 5)</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_hh1_total" aria-label="Harvest Hills 1st Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_hh1_checked" aria-label="Harvest Hills 1st Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_hh1_green" aria-label="Harvest Hills 1st Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_hh1_yellow" aria-label="Harvest Hills 1st Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_hh1_red" aria-label="Harvest Hills 1st Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_hh1_unacct" aria-label="Harvest Hills 1st Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_hh1_displaced" aria-label="Harvest Hills 1st Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_hh1_injuries" aria-label="Harvest Hills 1st Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_hh1_urgent" aria-label="Harvest Hills 1st Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_hh1_updated" aria-label="Harvest Hills 1st Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="hh8"><td>Harvest Hills 8th (Ch 6)*</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_hh8_total" aria-label="Harvest Hills 8th Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_hh8_checked" aria-label="Harvest Hills 8th Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_hh8_green" aria-label="Harvest Hills 8th Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_hh8_yellow" aria-label="Harvest Hills 8th Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_hh8_red" aria-label="Harvest Hills 8th Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_hh8_unacct" aria-label="Harvest Hills 8th Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_hh8_displaced" aria-label="Harvest Hills 8th Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_hh8_injuries" aria-label="Harvest Hills 8th Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_hh8_urgent" aria-label="Harvest Hills 8th Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_hh8_updated" aria-label="Harvest Hills 8th Last Update Time" placeholder="T+60m"></td></tr>
+                <tr data-live-ward="crossroads"><td>Crossroads (Ch 7)*</td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="total" data-save-key="v4_live_crossroads_total" aria-label="Crossroads Live Total Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="checked" data-save-key="v4_live_crossroads_checked" aria-label="Crossroads Live Checked"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="green" data-save-key="v4_live_crossroads_green" aria-label="Crossroads Live GREEN"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="yellow" data-save-key="v4_live_crossroads_yellow" aria-label="Crossroads Live YELLOW"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="red" data-save-key="v4_live_crossroads_red" aria-label="Crossroads Live RED"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="unacct" data-save-key="v4_live_crossroads_unacct" aria-label="Crossroads Live Unaccounted"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="displaced" data-save-key="v4_live_crossroads_displaced" aria-label="Crossroads Live Displaced"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-live-col="injuries" data-save-key="v4_live_crossroads_injuries" aria-label="Crossroads Live Injuries"></td><td><input type="text" class="cell-input" data-save-key="v4_live_crossroads_urgent" aria-label="Crossroads Urgent Unmet Needs" placeholder="Pool needs / urgent requests"></td><td><input type="text" class="cell-input" style="min-width:60px;" data-save-key="v4_live_crossroads_updated" aria-label="Crossroads Last Update Time" placeholder="T+60m"></td></tr>
+                <tr class="reg-total-row"><td>STAKE LIVE TOTAL</td><td id="live-tot-total">0</td><td id="live-tot-checked">0</td><td id="live-tot-green">0</td><td id="live-tot-yellow">0</td><td id="live-tot-red">0</td><td id="live-tot-unacct">0</td><td id="live-tot-displaced">0</td><td id="live-tot-injuries">0</td><td colspan="2" style="text-align:left; font-weight:600; font-size:0.72rem;">Live accountability from Form W-5 Part 0 + Pool Needs</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 style="margin:6px 0 4px;">Annual / Baseline Extra-Care Tallies (Left) &amp; Voluntary Resource Pools Available (Right)</h3>
         <div class="table-wrap">
           <table class="write-table" id="stake-register-table" style="font-size:0.76rem;">
             <thead>
@@ -4095,7 +4175,7 @@
                 </tr>
                 <tr>
                   <td style="text-align:center;"><input type="checkbox" class="stake-act-chk" data-check-group="stakeAction" data-save-key="v4_stake_act_chk_4" aria-label="Mark Action 4 complete"></td>
-                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>4. Collect First 7-Ward Form W-5 Rollup (Zero Member Names):</strong> Aggregate anonymized <code>SN-1–8</code> gaps &amp; voluntary Pools 1–8 into the Unified Stake Readiness Register. <em>Talk to:</em> All 7 Ward Welfare Specialists &amp; Ward Clerks.</td>
+                  <td><span class="badge badge-navy">Phase 1: Foundations</span><br><strong>4. Collect First 7-Ward Form W-5 Rollup (Zero Member Names):</strong> Aggregate anonymized <code>SN-1–8</code> gaps &amp; voluntary Pools 1–8 into the Unified Stake Readiness Register. <em>Talk to:</em> All 7 Ward Welfare Specialists &amp; Ward Clerks.<br><button type="button" class="btn btn-outline screen-only" style="min-height:38px; padding:4px 10px; font-size:0.78rem; margin-top:4px;" onclick="openSharePrefillModal('stake')">Share Stake Setup to Wards</button></td>
                   <td><strong>Stake Prep Rep (<code>GH 22.9.4</code>)</strong><br><input class="stake-act-input" data-save-key="v4_stake_act_owner_4" placeholder="Owner name" aria-label="Action 4 owner"><input class="stake-act-input" type="date" data-save-key="v4_stake_act_due_4" aria-label="Action 4 target due date"></td>
                   <td>100% of Wards submit anonymized <code>Form W-5</code> by March 31 (SA 11th Aug/Jan/May); Tab 4 Register totals populated.</td>
                 </tr>
@@ -5566,6 +5646,19 @@
         });
       };
 
+      window.updateStakeLiveTotals = function () {
+        const cols = ['total', 'checked', 'green', 'yellow', 'red', 'unacct', 'displaced', 'injuries'];
+        cols.forEach(col => {
+          let sum = 0;
+          document.querySelectorAll('#stake-live-table input[data-live-col="' + col + '"]').forEach(inp => {
+            const n = parseInt(inp.value, 10);
+            if (Number.isFinite(n) && n > 0) sum += n;
+          });
+          const cell = document.getElementById('live-tot-' + col);
+          if (cell) cell.textContent = String(sum);
+        });
+      };
+
       window.exportFamilyWorksheet = function () {
         const data = {};
         document.querySelectorAll('[data-save-key]').forEach(el => {
@@ -5700,6 +5793,15 @@
             syncPrintMirror();
             if (key.startsWith('v4_prep_')) updateWaterCalculator();
             if (key.startsWith('v4_reg_')) updateStakeRegisterTotals();
+            if (key.startsWith('v4_live_')) updateStakeLiveTotals();
+            if (key === 'v4_ward_name' && el.value.trim() && !getFieldValueByKey('v4_w5_ward').trim()) {
+              try { localStorage.setItem('v4_w5_ward', el.value.trim()); } catch (e) {}
+              syncInputsForKey('v4_w5_ward', el.value.trim(), false);
+            }
+            if (key === 'v4_w5_ward' && el.value.trim() && !getFieldValueByKey('v4_ward_name').trim()) {
+              try { localStorage.setItem('v4_ward_name', el.value.trim()); } catch (e) {}
+              syncInputsForKey('v4_ward_name', el.value.trim(), false);
+            }
             if (key === 'v4_m1_household' || key === 'v4_m1_leader_phone' || key === 'v2_m1_ward') {
               if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(key === 'v4_m1_leader_phone');
             }
@@ -5711,9 +5813,24 @@
           el.addEventListener('change', handleValueUpdate);
         }
       });
+      // Accessible labels & click-to-toggle for checklist rows while keeping inline links clickable
+      document.querySelectorAll('.check-list li').forEach(li => {
+        const cb = li.querySelector('input[type="checkbox"]');
+        const lbl = li.querySelector('label');
+        if (cb && lbl) {
+          if (!cb.getAttribute('aria-label')) cb.setAttribute('aria-label', lbl.textContent.trim().slice(0, 140));
+          lbl.style.cursor = 'pointer';
+          lbl.addEventListener('click', e => {
+            if (e.target.closest('a, button')) return;
+            cb.checked = !cb.checked;
+            cb.dispatchEvent(new Event('change', { bubbles: true }));
+          });
+        }
+      });
       updateCheckProgress();
       updateWaterCalculator();
       updateStakeRegisterTotals();
+      updateStakeLiveTotals();
 
       // Wire Tab 2 3-Sub-Tab Member Switcher (2A default in Peacetime)
       window.setMemberSubtab = function (sub) {
@@ -5922,7 +6039,7 @@
         if (curRole === 'member' && (entry.tab === 'ward' || entry.tab === 'stake')) {
           selectRole(entry.tab, false);
         }
-        if (entry.subtab === '3c' && document.body.classList.contains('crisis-mode')) {
+        if (entry.subtab === '3c' && key !== 'W-5' && document.body.classList.contains('crisis-mode')) {
           setCrisisMode(false);
         }
         if (document.body.classList.contains('crisis-mode')) {
@@ -6515,9 +6632,15 @@
           syncInputsForKey(item.key, item.value, false);
           applied++;
         });
+        const wNameAfter = getFieldValueByKey('v4_ward_name').trim();
+        if (wNameAfter && !getFieldValueByKey('v4_w5_ward').trim()) {
+          try { localStorage.setItem('v4_w5_ward', wNameAfter); } catch (e) {}
+          syncInputsForKey('v4_w5_ward', wNameAfter, false);
+        }
         updateCheckProgress();
         updateWaterCalculator();
         updateStakeRegisterTotals();
+        updateStakeLiveTotals();
         if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
         if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(true);
         if (mode === 'blanks') {
@@ -6748,6 +6871,22 @@
         return (checked && checked.value === 'annual') ? 'annual' : 'live';
       }
 
+      const W5_LIVE_COLS = ['total', 'checked', 'green', 'yellow', 'red', 'unacct', 'displaced', 'injuries'];
+      const W5_LIVE_LABELS = {
+        total: 'Part 0: Total Homes',
+        checked: 'Part 0: Checked Homes',
+        green: 'Part 0: GREEN (Safe)',
+        yellow: 'Part 0: YELLOW (Need Help)',
+        red: 'Part 0: RED (Urgent)',
+        unacct: 'Part 0: Unaccounted',
+        displaced: 'Part 0: Displaced',
+        injuries: 'Part 0: Acute Injuries'
+      };
+      const W5_POOL_NEED_NAMES = {
+        p1: 'Power/Gen', p2: 'Saws/Crews', p3: 'Plumb/Elec', p4: 'Plow/Ride',
+        p5: 'Filters', p6: 'Host Homes', p7: 'Med/Lang', p8: 'Coolers/MH'
+      };
+
       window.buildW5ImportPayload = function () {
         const rawWard = getFieldValueByKey('v4_w5_ward').trim() || getFieldValueByKey('v4_ward_name').trim();
         const slug = resolveW5WardSlug(rawWard);
@@ -6770,7 +6909,27 @@
           const v = sumKeys(colSources[col]);
           if (v !== undefined) c[col] = v;
         });
-        return { v: 1, ward: slug, mode, updated, c };
+        const payload = { v: 1, ward: slug, mode, updated, c };
+        if (mode === 'live') {
+          const p0 = {};
+          W5_LIVE_COLS.forEach(col => {
+            const raw = getFieldValueByKey('v4_w5_p0_' + col).trim();
+            if (raw !== '') p0[col] = parseNonNegInt(raw);
+          });
+          if (Object.keys(p0).length) payload.p0 = p0;
+          const needs = {};
+          for (let i = 1; i <= 8; i++) {
+            const raw = getFieldValueByKey('v4_w5_pool' + i + '_need').trim();
+            if (raw !== '') {
+              const n = parseNonNegInt(raw);
+              if (n > 0) needs['p' + i] = n;
+            }
+          }
+          if (Object.keys(needs).length) payload.needs = needs;
+          const urgent = getFieldValueByKey('v4_w5_urgent').trim().slice(0, 240);
+          if (urgent) payload.urgent = urgent;
+        }
+        return payload;
       };
 
       window.buildW5ImportUrl = function () {
@@ -6842,6 +7001,8 @@
           const w0Sms = getFieldValueByKey('v4_ward_stake_sms').trim();
           if (w0Sms || syncFromW0) phoneEl.value = w0Sms;
         }
+        const formW5El = document.getElementById('form-w5');
+        if (formW5El) formW5El.classList.toggle('w5-annual-mode', getSelectedW5Mode() === 'annual');
         const importUrl = buildW5ImportUrl();
         const incLink = !!(incLinkEl && incLinkEl.checked && importUrl);
         if (hintEl) {
@@ -6926,47 +7087,82 @@
         const wardLabel = parsed && typeof parsed === 'object' ? getW5WardLabel(parsed.ward) : null;
         if (
           !parsed || typeof parsed !== 'object' || parsed.v !== 1 || !wardLabel ||
-          (parsed.mode !== 'live' && parsed.mode !== 'annual') ||
-          !parsed.c || typeof parsed.c !== 'object' || Array.isArray(parsed.c)
+          (parsed.mode !== 'live' && parsed.mode !== 'annual')
         ) {
           showHashNotice('Could not import Form W-5 link — invalid payload or unrecognized Ward. Stake Register was not changed.', 'err');
           return;
         }
-        const sanitizedCounts = {};
-        let hasValidCount = false;
-        W5_REG_COLS.forEach(col => {
-          if (!Object.prototype.hasOwnProperty.call(parsed.c, col)) return;
-          const rawVal = parsed.c[col];
-          if (typeof rawVal === 'number' ? !Number.isInteger(rawVal) : (typeof rawVal !== 'string' || !/^\d{1,5}$/.test(rawVal))) return;
+        const parseStrictCount = rawVal => {
+          if (typeof rawVal === 'number' ? !Number.isInteger(rawVal) : (typeof rawVal !== 'string' || !/^\d{1,5}$/.test(rawVal))) return null;
           const num = Number(rawVal);
-          if (!Number.isFinite(num) || num < 0 || num > 99999) return;
-          sanitizedCounts[col] = num;
-          hasValidCount = true;
-        });
-        if (!hasValidCount) {
-          showHashNotice('Form W-5 import link contained no valid numeric counts. Stake Register was not changed.', 'err');
+          return (Number.isFinite(num) && num >= 0 && num <= 99999) ? num : null;
+        };
+        const sanitizedCounts = {};
+        if (parsed.c && typeof parsed.c === 'object' && !Array.isArray(parsed.c)) {
+          W5_REG_COLS.forEach(col => {
+            if (!Object.prototype.hasOwnProperty.call(parsed.c, col)) return;
+            const num = parseStrictCount(parsed.c[col]);
+            if (num !== null) sanitizedCounts[col] = num;
+          });
+        }
+        const sanitizedP0 = {};
+        if (parsed.mode === 'live' && parsed.p0 && typeof parsed.p0 === 'object' && !Array.isArray(parsed.p0)) {
+          W5_LIVE_COLS.forEach(col => {
+            if (!Object.prototype.hasOwnProperty.call(parsed.p0, col)) return;
+            const num = parseStrictCount(parsed.p0[col]);
+            if (num !== null) sanitizedP0[col] = num;
+          });
+        }
+        const sanitizedNeeds = {};
+        if (parsed.mode === 'live' && parsed.needs && typeof parsed.needs === 'object' && !Array.isArray(parsed.needs)) {
+          Object.keys(W5_POOL_NEED_NAMES).forEach(pKey => {
+            if (!Object.prototype.hasOwnProperty.call(parsed.needs, pKey)) return;
+            const num = parseStrictCount(parsed.needs[pKey]);
+            if (num !== null && num > 0) sanitizedNeeds[pKey] = num;
+          });
+        }
+        const sanitizedUrgent = (parsed.mode === 'live' && typeof parsed.urgent === 'string') ? parsed.urgent.trim().slice(0, 240) : '';
+        const hasAnyData = Object.keys(sanitizedCounts).length > 0 || Object.keys(sanitizedP0).length > 0 || Object.keys(sanitizedNeeds).length > 0 || !!sanitizedUrgent;
+        if (!hasAnyData) {
+          showHashNotice('Form W-5 import link contained no valid counts or live updates. Stake Register was not changed.', 'err');
           return;
         }
         const updated = typeof parsed.updated === 'string' ? parsed.updated.trim().slice(0, 60) : '';
-        pendingW5Import = { ward: parsed.ward, wardLabel, mode: parsed.mode, updated, counts: sanitizedCounts };
+        pendingW5Import = {
+          ward: parsed.ward, wardLabel, mode: parsed.mode, updated,
+          counts: sanitizedCounts, p0: sanitizedP0, needs: sanitizedNeeds, urgent: sanitizedUrgent
+        };
 
         const subEl = document.getElementById('w5-import-subtitle');
         const listEl = document.getElementById('w5-import-list');
-        const modeLabel = parsed.mode === 'annual' ? 'Annual Audit' : 'Live Care Update';
+        const modeLabel = parsed.mode === 'annual' ? 'Annual Audit (Readiness Register)' : 'Live Care Update (Live Accountability Board + Register)';
         subEl.textContent = 'Ward: ' + wardLabel + ' • Mode: ' + modeLabel + (updated ? ' • Updated: ' + updated : '');
         while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
-        Object.keys(sanitizedCounts).forEach(col => {
+        const addRow = (labelText, valText) => {
           const row = document.createElement('div');
           row.className = 'prefill-item';
           const lbl = document.createElement('div');
           lbl.className = 'prefill-item-label';
-          lbl.textContent = Object.prototype.hasOwnProperty.call(W5_COL_LABELS, col) ? W5_COL_LABELS[col] : col;
+          lbl.textContent = labelText;
           const val = document.createElement('div');
           val.className = 'prefill-item-val';
-          val.textContent = 'Incoming count: ' + sanitizedCounts[col];
+          val.textContent = valText;
           row.appendChild(lbl);
           row.appendChild(val);
           listEl.appendChild(row);
+        };
+        Object.keys(sanitizedP0).forEach(col => {
+          addRow(W5_LIVE_LABELS[col] || col, 'Incoming live count: ' + sanitizedP0[col]);
+        });
+        if (Object.keys(sanitizedNeeds).length) {
+          const needSummary = Object.keys(sanitizedNeeds).map(k => W5_POOL_NEED_NAMES[k] + ': ' + sanitizedNeeds[k]).join(', ');
+          addRow('Part B: Unmet Pool Needs', needSummary);
+        }
+        if (sanitizedUrgent) {
+          addRow('Urgent Unmet Needs / Storehouse Requests', sanitizedUrgent);
+        }
+        Object.keys(sanitizedCounts).forEach(col => {
+          addRow(Object.prototype.hasOwnProperty.call(W5_COL_LABELS, col) ? W5_COL_LABELS[col] : col, 'Incoming register count: ' + sanitizedCounts[col]);
         });
         openModal('w5-import-modal');
       }
@@ -6986,12 +7182,43 @@
           try { localStorage.setItem(key, strVal); } catch (e) {}
           syncInputsForKey(key, strVal, false);
         });
+        if (active.mode === 'live') {
+          Object.keys(active.p0).forEach(col => {
+            const key = 'v4_live_' + active.ward + '_' + col;
+            const strVal = String(active.p0[col]);
+            try { localStorage.setItem(key, strVal); } catch (e) {}
+            syncInputsForKey(key, strVal, false);
+          });
+          const needParts = Object.keys(active.needs).map(k => W5_POOL_NEED_NAMES[k] + ':' + active.needs[k]);
+          const combinedUrgent = [needParts.length ? 'Needs[' + needParts.join(', ') + ']' : '', active.urgent].filter(Boolean).join(' — ');
+          if (combinedUrgent) {
+            const uKey = 'v4_live_' + active.ward + '_urgent';
+            try { localStorage.setItem(uKey, combinedUrgent); } catch (e) {}
+            syncInputsForKey(uKey, combinedUrgent, false);
+          }
+          if (active.updated) {
+            const tKey = 'v4_live_' + active.ward + '_updated';
+            try { localStorage.setItem(tKey, active.updated); } catch (e) {}
+            syncInputsForKey(tKey, active.updated, false);
+          }
+        }
         if (active.updated) {
           try { localStorage.setItem('v4_reg_updated', active.updated); } catch (e) {}
           syncInputsForKey('v4_reg_updated', active.updated, false);
         }
         updateStakeRegisterTotals();
-        showHashNotice('Imported ' + active.wardLabel + ' Form W-5 counts into the Unified Stake Readiness Register and recalculated STAKE TOTAL.', 'ok');
+        updateStakeLiveTotals();
+        const curRole = document.body.getAttribute('data-role') || 'member';
+        if (curRole === 'stake' || curRole === 'ward') {
+          switchTab('stake', false);
+          setStakeSubtab('4a');
+          const scrollTarget = document.getElementById(active.mode === 'live' ? 'stake-live-board' : 'form-stake-register');
+          if (scrollTarget) highlightTarget(scrollTarget);
+        }
+        showHashNotice(
+          'Imported ' + active.wardLabel + (active.mode === 'live' ? ' Live Care Update (Part 0 + Needs + Register)' : ' Annual Audit counts') + ' and recalculated STAKE TOTALs.',
+          'ok'
+        );
       };
 
       // Stake -> Wards Update Broadcast Composer
