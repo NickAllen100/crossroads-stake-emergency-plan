@@ -3991,7 +3991,10 @@
 
         <!-- LIVE EMERGENCY WARD ACCOUNTABILITY & UNMET NEEDS BOARD (RECEIVES LIVE FORM W-5 PART 0 + NEEDS + URGENT) -->
         <div id="stake-live-board" class="live-board-box">
-          <h3>Live Emergency Ward Accountability &amp; Unmet Needs Board (Receives Live <code>Form W-5</code> Updates)</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+            <h3 style="margin:0;">Live Emergency Ward Accountability &amp; Unmet Needs Board (Receives Live <code>Form W-5</code> Updates)</h3>
+            <button type="button" id="btn-reset-live-board" class="btn btn-outline screen-only" style="min-height:44px; padding:6px 12px; font-size:0.8rem; border-color:#c2410c; color:#9a3412;" onclick="resetStakeLiveBoard()">Reset Live Board (Keep Annual Register)</button>
+          </div>
           <div class="table-wrap">
             <table class="write-table" id="stake-live-table" style="font-size:0.75rem;">
               <thead>
@@ -5659,6 +5662,27 @@
           const cell = document.getElementById('live-tot-' + col);
           if (cell) cell.textContent = String(sum);
         });
+      };
+
+      window.resetStakeLiveBoard = function () {
+        if (!window.confirm('Clear all 7 Wards\' Live Emergency Board counts and Riverview Branch live status checkboxes? Your Annual Readiness Register will remain untouched.')) {
+          return false;
+        }
+        const liveKeys = new Set(['v4_reg_rv_power', 'v4_reg_rv_evac', 'v4_reg_rv_vol']);
+        document.querySelectorAll('#stake-live-table [data-save-key]').forEach(el => {
+          const k = el.dataset.saveKey;
+          if (typeof k === 'string' && k.startsWith('v4_live_')) liveKeys.add(k);
+        });
+        liveKeys.forEach(k => {
+          const isRv = k.startsWith('v4_reg_rv_');
+          try { localStorage.removeItem(k); } catch (e) {}
+          syncInputsForKey(k, isRv ? '0' : '', isRv);
+        });
+        updateStakeLiveTotals();
+        if (typeof window.showHashNotice === 'function') {
+          showHashNotice('Live Emergency Board reset — Annual Readiness Register kept intact.', 'ok');
+        }
+        return true;
       };
 
       window.exportFamilyWorksheet = function () {
