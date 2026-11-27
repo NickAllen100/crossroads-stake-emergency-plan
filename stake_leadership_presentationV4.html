@@ -182,7 +182,8 @@
     }
     body.crisis-mode .site-header { padding: 10px 18px; }
     body.crisis-mode .header-subtitle,
-    body.crisis-mode .role-switcher-wrap { display: none; }
+    body.crisis-mode .role-compact-bar,
+    body.crisis-mode .role-switcher-wrap { display: none !important; }
     .header-inner { max-width: 1120px; margin: 0 auto; }
     .site-header h1 {
       margin: 0;
@@ -191,19 +192,77 @@
       letter-spacing: -0.01em;
     }
     .header-subtitle {
-      margin: 6px 0 14px;
+      margin: 6px 0 10px;
       font-size: 0.92rem;
       color: #dbeafe;
     }
 
-    .role-switcher-wrap {
+    .role-compact-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
       background: rgba(15, 23, 42, 0.45);
       border: 1.5px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      padding: 5px 8px 5px 14px;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+    }
+    .role-compact-bar strong { color: #ffffff; font-weight: 800; }
+    .role-edit-btn {
+      min-height: 40px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1.5px solid #93c5fd;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+    .role-edit-btn:hover, .role-edit-btn:focus-visible {
+      background: #ffffff;
+      color: var(--navy);
+      border-color: #ffffff;
+    }
+
+    .role-switcher-wrap {
+      margin-top: 10px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1.5px solid rgba(255, 255, 255, 0.32);
       border-radius: var(--radius);
       padding: 10px 12px;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 8px;
+    }
+    .role-switcher-wrap.expanded { display: flex; }
+    .role-picker-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .role-cancel-btn {
+      min-height: 40px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      background: transparent;
+      color: #e2e8f0;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+    }
+    .role-cancel-btn:hover, .role-cancel-btn:focus-visible {
+      background: rgba(255,255,255,0.16);
+      color: #ffffff;
+    }
+    body[data-role="member"] [data-leader-only="true"] { display: none !important; }
+    @media (min-width: 861px) {
+      body[data-role="member"] .tab-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     .role-row {
       display: flex;
@@ -1240,11 +1299,11 @@
             <strong>Senior 15pt Large-Print Fridge Card</strong>
             <span>True 15pt high-contrast print + Page 2 Meds &amp; Allergies Card</span>
           </button>
-          <button type="button" onclick="printProfile('ward-pack')">
+          <button type="button" data-leader-only="true" onclick="printProfile('ward-pack')">
             <strong>Self-Contained Ward Binder (5 Sheets)</strong>
             <span>W-0/0B, W-1, W-2/3, W-4/6, W-5 (0–60m crisis binder only)</span>
           </button>
-          <button type="button" onclick="printProfile('stake-kit')">
+          <button type="button" data-leader-only="true" onclick="printProfile('stake-kit')">
             <strong>Stake Command Kit (2 Sheets + Directory)</strong>
             <span>Sheets S-A &amp; S-B + Unified Register + 2-Col Directory</span>
           </button>
@@ -1267,12 +1326,20 @@
       <h1>Saratoga Springs Utah Crossroads Stake — Emergency Plan &amp; Recovery Guide (V4)</h1>
       <p class="header-subtitle">7 Wards (incl. SA 11th YSA) + Riverview Branch • Clarity Over Compression • Thin Crisis Core + Rich 4-Horizon Appendix</p>
 
-      <div class="role-switcher-wrap" role="region" aria-label="Choose your role">
-        <div class="role-row">
-          <span class="role-label">I am a:</span>
-          <button type="button" class="role-pill active" data-set-role="member">Member / Household</button>
-          <button type="button" class="role-pill" data-set-role="ward">Ward Leader (Bishop / EQ / RS)</button>
-          <button type="button" class="role-pill" data-set-role="stake">Stake Leader (SP / HC / RS / Prep)</button>
+      <div id="role-compact-bar" class="role-compact-bar" role="region" aria-label="Current viewing role">
+        <span>You are a: <strong id="role-summary-text">Member (All Households)</strong></span>
+        <button type="button" id="btn-role-edit" class="role-edit-btn" aria-expanded="false" aria-controls="role-picker-panel">Edit</button>
+      </div>
+
+      <div id="role-picker-panel" class="role-switcher-wrap" role="region" aria-label="Choose your role">
+        <div class="role-picker-head">
+          <div class="role-row">
+            <span class="role-label">I am a:</span>
+            <button type="button" class="role-pill active" data-set-role="member">Member / Household</button>
+            <button type="button" class="role-pill" data-set-role="ward">Ward Leader (Bishop / EQ / RS)</button>
+            <button type="button" class="role-pill" data-set-role="stake">Stake Leader (SP / HC / RS / Prep)</button>
+          </div>
+          <button type="button" id="btn-role-cancel" class="role-cancel-btn">Done / Cancel</button>
         </div>
         <div class="role-row cohort-row">
           <span class="role-label">Tailor for:</span>
@@ -1296,11 +1363,11 @@
         <span>2. Member Self-Reliance</span>
         <small>Form M-1 &amp; Home Prep</small>
       </button>
-      <button type="button" class="tab-btn" role="tab" id="tabbtn-ward" aria-controls="panel-ward" aria-selected="false" data-tab="ward">
+      <button type="button" class="tab-btn" role="tab" id="tabbtn-ward" aria-controls="panel-ward" aria-selected="false" data-tab="ward" data-leader-only="true">
         <span>3. Ward Ministering &amp; Forms</span>
         <small>EQ/RS Care + 5 Sheets</small>
       </button>
-      <button type="button" class="tab-btn" role="tab" id="tabbtn-stake" aria-controls="panel-stake" aria-selected="false" data-tab="stake">
+      <button type="button" class="tab-btn" role="tab" id="tabbtn-stake" aria-controls="panel-stake" aria-selected="false" data-tab="stake" data-leader-only="true">
         <span>4. Stake Coord &amp; Command</span>
         <small>Pre-Event + Sheets S-A/B</small>
       </button>
@@ -3432,7 +3499,7 @@
         </div>
       </div>
 
-      <div class="forms-index-group">
+      <div class="forms-index-group" data-leader-only="true">
         <h3>Ward Offline Binder (Tab 3 — 5 Sheets)</h3>
         <div class="forms-index-list">
           <button type="button" class="forms-index-item" onclick="jumpToForm('W-0')">
@@ -3468,7 +3535,7 @@
         </div>
       </div>
 
-      <div class="forms-index-group" style="margin-bottom:0;">
+      <div class="forms-index-group" data-leader-only="true">
         <h3>Stake Command Kit (Tab 4 — 2 Sheets)</h3>
         <div class="forms-index-list">
           <button type="button" class="forms-index-item" onclick="jumpToForm('S-A')">
@@ -3496,6 +3563,12 @@
             <span class="fi-desc"><strong>Unified Stake Readiness Register (1:1 Form W-5 Parity)</strong><small>All 7 Wards + Riverview anonymized SN-1–8 tallies &amp; Pools 1–8</small></span>
             <span class="fi-go">Open &rarr;</span>
           </button>
+        </div>
+      </div>
+
+      <div class="forms-index-group" style="margin-bottom:0;">
+        <h3>Shared Quick Reference</h3>
+        <div class="forms-index-list">
           <button type="button" class="forms-index-item" onclick="openSNModal()">
             <span class="fi-code">SN-1 to SN-8</span>
             <span class="fi-desc"><strong>Extra-Care Codes Reference Card (Shared Ward &amp; Stake Key)</strong><small>Pop-up reference for SN-1..8 functional support codes — stays on your current tab</small></span>
@@ -3629,26 +3702,70 @@
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
 
+      const COHORT_LABELS = {
+        all: 'All Households',
+        family: 'Family',
+        ysa: 'YSA / Renter',
+        senior: 'Senior 70+'
+      };
+
+      function updateRoleSummary() {
+        const el = document.getElementById('role-summary-text');
+        if (!el) return;
+        const role = document.body.getAttribute('data-role') || 'member';
+        const cohort = document.body.getAttribute('data-cohort') || 'all';
+        if (role === 'ward') el.textContent = 'Ward Leader';
+        else if (role === 'stake') el.textContent = 'Stake Leader';
+        else el.textContent = 'Member (' + (COHORT_LABELS[cohort] || 'All Households') + ')';
+      }
+
+      window.setRolePickerOpen = function (open, returnFocus) {
+        const panel = document.getElementById('role-picker-panel');
+        const btn = document.getElementById('btn-role-edit');
+        if (!panel || !btn) return;
+        const isOpen = !!open;
+        panel.classList.toggle('expanded', isOpen);
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (!isOpen && returnFocus) btn.focus();
+      };
+
       window.selectRole = function (role, jump) {
         if (!['member', 'ward', 'stake'].includes(role)) role = 'member';
         document.body.setAttribute('data-role', role);
-        document.querySelectorAll('.role-pill').forEach(b => b.classList.toggle('active', b.dataset.setRole === role));
+        document.querySelectorAll('.role-pill').forEach(b => {
+          const active = b.dataset.setRole === role;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
         try { localStorage.setItem('crossroads_v2_role', role); } catch (e) {}
+        updateRoleSummary();
+        setRolePickerOpen(false, false);
+        const activePanel = document.querySelector('.tab-panel.active');
+        const activeTabId = activePanel ? activePanel.id.replace('panel-', '') : 'start';
         if (jump) {
           const map = { member: 'member', ward: 'ward', stake: 'stake' };
           switchTab(map[role], false);
+        } else if (role === 'member' && (activeTabId === 'ward' || activeTabId === 'stake')) {
+          switchTab('member', false);
         }
       };
 
-      window.selectCohort = function (cohort) {
+      window.selectCohort = function (cohort, collapse) {
         if (!['all', 'family', 'ysa', 'senior'].includes(cohort)) cohort = 'all';
         document.body.setAttribute('data-cohort', cohort);
-        document.querySelectorAll('.cohort-pill').forEach(b => b.classList.toggle('active', b.dataset.setCohort === cohort));
+        document.querySelectorAll('.cohort-pill').forEach(b => {
+          const active = b.dataset.setCohort === cohort;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
         try { localStorage.setItem('crossroads_v2_cohort', cohort); } catch (e) {}
+        updateRoleSummary();
+        if (collapse) setRolePickerOpen(false, false);
       };
 
       window.setCrisisMode = function (on) {
         document.body.classList.toggle('crisis-mode', !!on);
+        if (on) setRolePickerOpen(false, false);
         const btn = document.getElementById('btn-crisis-mode');
         const txt = document.getElementById('crisis-btn-text');
         if (btn) btn.setAttribute('aria-checked', on ? 'true' : 'false');
@@ -3746,14 +3863,34 @@
         try { localStorage.setItem('crossroads_v2_largetext', on ? '1' : '0'); } catch (e) {}
       });
 
-      document.querySelectorAll('.role-pill').forEach(b => b.addEventListener('click', () => selectRole(b.dataset.setRole, true)));
-      document.querySelectorAll('.cohort-pill').forEach(b => b.addEventListener('click', () => { selectCohort(b.dataset.setCohort); switchTab('member', false); }));
+      const btnRoleEdit = document.getElementById('btn-role-edit');
+      const btnRoleCancel = document.getElementById('btn-role-cancel');
+      if (btnRoleEdit) {
+        btnRoleEdit.addEventListener('click', () => {
+          const panel = document.getElementById('role-picker-panel');
+          setRolePickerOpen(!(panel && panel.classList.contains('expanded')), false);
+        });
+      }
+      if (btnRoleCancel) {
+        btnRoleCancel.addEventListener('click', () => setRolePickerOpen(false, true));
+      }
 
-      document.querySelectorAll('.tab-btn').forEach((btn, idx, list) => {
+      document.querySelectorAll('.role-pill').forEach(b => b.addEventListener('click', () => selectRole(b.dataset.setRole, true)));
+      document.querySelectorAll('.cohort-pill').forEach(b => b.addEventListener('click', () => { selectCohort(b.dataset.setCohort, true); switchTab('member', false); }));
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab, false));
         btn.addEventListener('keydown', e => {
-          if (e.key === 'ArrowRight') { e.preventDefault(); const n = list[(idx + 1) % list.length]; switchTab(n.dataset.tab, true); }
-          if (e.key === 'ArrowLeft') { e.preventDefault(); const p = list[(idx - 1 + list.length) % list.length]; switchTab(p.dataset.tab, true); }
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          e.preventDefault();
+          const role = document.body.getAttribute('data-role') || 'member';
+          const visibleTabs = Array.from(document.querySelectorAll('.tab-btn')).filter(t => role !== 'member' || t.dataset.leaderOnly !== 'true');
+          const curIdx = visibleTabs.indexOf(btn);
+          if (curIdx === -1 || !visibleTabs.length) return;
+          const next = e.key === 'ArrowRight'
+            ? visibleTabs[(curIdx + 1) % visibleTabs.length]
+            : visibleTabs[(curIdx - 1 + visibleTabs.length) % visibleTabs.length];
+          switchTab(next.dataset.tab, true);
         });
       });
 
@@ -3762,10 +3899,20 @@
         m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
       });
       document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          document.querySelectorAll('.modal-backdrop.open').forEach(m => closeModal(m.id));
-          const pm = document.getElementById('print-menu');
-          if (pm) pm.removeAttribute('open');
+        if (e.key !== 'Escape') return;
+        const openModals = document.querySelectorAll('.modal-backdrop.open');
+        if (openModals.length) {
+          openModals.forEach(m => closeModal(m.id));
+          return;
+        }
+        const pm = document.getElementById('print-menu');
+        if (pm && pm.hasAttribute('open')) {
+          pm.removeAttribute('open');
+          return;
+        }
+        const rp = document.getElementById('role-picker-panel');
+        if (rp && rp.classList.contains('expanded') && !document.body.classList.contains('crisis-mode')) {
+          setRolePickerOpen(false, true);
         }
       });
 
@@ -3956,6 +4103,10 @@
         const entry = FORM_REGISTRY[key];
         if (!entry) return;
         document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+        const curRole = document.body.getAttribute('data-role') || 'member';
+        if (curRole === 'member' && (entry.tab === 'ward' || entry.tab === 'stake')) {
+          selectRole(entry.tab, false);
+        }
         if (entry.subtab === '3c' && document.body.classList.contains('crisis-mode')) {
           setCrisisMode(false);
         }
@@ -4124,31 +4275,42 @@
       }
       enhanceFormLinks();
 
+      function safeGet(k) {
+        try { return localStorage.getItem(k); } catch (e) { return null; }
+      }
+
       // Restore preferences & handle URL params (incl. legacy ?tab=8 -> member)
       const params = new URLSearchParams(location.search);
-      try {
-        if (localStorage.getItem('crossroads_v2_largetext') === '1') {
-          document.documentElement.classList.add('large-text');
-          largeBtn.classList.add('active');
-          largeBtn.setAttribute('aria-pressed', 'true');
-        }
-        selectRole(params.get('role') || localStorage.getItem('crossroads_v2_role') || 'member', false);
-        selectCohort(params.get('cohort') || localStorage.getItem('crossroads_v2_cohort') || 'all');
-        const legacyMap = { '0': 'start', '1': 'hazards', '2': 'hazards', '3': 'stake', '4': 'stake', '5': 'stake', '6': 'stake', '7': 'ward', '8': 'member' };
-        const qTab = params.get('tab');
-        const startTab = (qTab && (TAB_IDS.includes(qTab) ? qTab : legacyMap[qTab])) || localStorage.getItem('crossroads_v2_tab') || 'start';
-        switchTab(startTab, false);
-        if (params.get('mode') === 'crisis' || localStorage.getItem('crossroads_v3_crisis') === '1') {
-          setCrisisMode(true);
-        }
-        if (location.hash === '#sn-codes-key') {
-          jumpToSN();
-        } else if (location.hash && location.hash.startsWith('#form-')) {
-          const hashTarget = location.hash.slice(1);
-          const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
-          if (matchKey) jumpToForm(matchKey);
-        }
-      } catch (e) {}
+      if (safeGet('crossroads_v2_largetext') === '1') {
+        document.documentElement.classList.add('large-text');
+        largeBtn.classList.add('active');
+        largeBtn.setAttribute('aria-pressed', 'true');
+      }
+      const legacyMap = { '0': 'start', '1': 'hazards', '2': 'hazards', '3': 'stake', '4': 'stake', '5': 'stake', '6': 'stake', '7': 'ward', '8': 'member' };
+      const qTab = params.get('tab');
+      const resolvedTab = (qTab && (TAB_IDS.includes(qTab) ? qTab : legacyMap[qTab])) || null;
+      let initRole = params.get('role') || safeGet('crossroads_v2_role') || 'member';
+      if (!['member', 'ward', 'stake'].includes(initRole)) initRole = 'member';
+      if (initRole === 'member' && (resolvedTab === 'ward' || resolvedTab === 'stake')) {
+        initRole = resolvedTab;
+      }
+      selectRole(initRole, false);
+      selectCohort(params.get('cohort') || safeGet('crossroads_v2_cohort') || 'all', false);
+      let startTab = resolvedTab || safeGet('crossroads_v2_tab') || 'start';
+      if ((document.body.getAttribute('data-role') || 'member') === 'member' && (startTab === 'ward' || startTab === 'stake')) {
+        startTab = 'member';
+      }
+      switchTab(startTab, false);
+      if (params.get('mode') === 'crisis' || safeGet('crossroads_v3_crisis') === '1') {
+        setCrisisMode(true);
+      }
+      if (location.hash === '#sn-codes-key') {
+        jumpToSN();
+      } else if (location.hash && location.hash.startsWith('#form-')) {
+        const hashTarget = location.hash.slice(1);
+        const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
+        if (matchKey) jumpToForm(matchKey);
+      }
 
       // Offline status + Service Worker
       updateOfflineBadge();
