@@ -1,6 +1,6 @@
 // Offline cache for Saratoga Springs Utah Crossroads Stake Emergency Operations Plan
 // Keeps the plan, icons, and member illustrations available on phones even if cell networks fail.
-const CACHE_NAME = 'crossroads-stake-eop-v4.15';
+const CACHE_NAME = 'crossroads-stake-eop-v4.16';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

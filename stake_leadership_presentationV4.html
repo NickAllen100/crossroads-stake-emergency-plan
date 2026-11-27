@@ -6622,6 +6622,7 @@
         }
         let applied = 0;
         let skipped = 0;
+        let stakeSmsApplied = false;
         active.entries.forEach(item => {
           const current = getFieldValueByKey(item.key).trim();
           if (mode === 'blanks' && current) {
@@ -6630,6 +6631,7 @@
           }
           try { localStorage.setItem(item.key, item.value); } catch (e) {}
           syncInputsForKey(item.key, item.value, false);
+          if (item.key === 'v4_ward_stake_sms') stakeSmsApplied = true;
           applied++;
         });
         const wNameAfter = getFieldValueByKey('v4_ward_name').trim();
@@ -6642,7 +6644,7 @@
         updateStakeRegisterTotals();
         updateStakeLiveTotals();
         if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
-        if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(true);
+        if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(stakeSmsApplied);
         if (mode === 'blanks') {
           showHashNotice('Filled ' + applied + ' blank field' + (applied === 1 ? '' : 's') + (skipped ? ' (' + skipped + ' existing kept)' : '') + ' from ' + active.cfg.title + '.', 'ok');
         } else {
@@ -6857,15 +6859,16 @@
       function resolveW5WardSlug(rawName) {
         const s = String(rawName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
         if (!s) return null;
-        if (s === 'aspen' || s.includes('aspen hills')) return 'aspen';
-        if (s === 'shay' || s.includes('shay park')) return 'shay';
-        if (s === 'hh10' || s.includes('harvest hills 10') || s.includes('hh 10')) return 'hh10';
-        if (s === 'ysa11' || s.includes('sa 11') || s.includes('11th ysa') || s.includes('ysa')) return 'ysa11';
-        if (s === 'hh1' || s.includes('harvest hills 1st') || s === 'harvest hills 1' || s.includes('hh 1')) return 'hh1';
-        if (s === 'hh8' || s.includes('harvest hills 8') || s.includes('hh 8')) return 'hh8';
-        if (s === 'crossroads' || s.includes('crossroads')) return 'crossroads';
+        if (s === 'aspen' || /\baspen hills\b/.test(s)) return 'aspen';
+        if (s === 'shay' || /\bshay park\b/.test(s)) return 'shay';
+        if (s === 'hh10' || /\b(?:harvest hills|hh)\s*10(?:th)?\b/.test(s)) return 'hh10';
+        if (s === 'ysa11' || /\b(?:sa\s*11(?:th)?|11(?:th)?\s*(?:ward\s*)?ysa|saratoga\s*11(?:th)?)\b/.test(s) || s === 'ysa') return 'ysa11';
+        if (s === 'hh1' || /\b(?:harvest hills|hh)\s*1(?:st)?\b/.test(s)) return 'hh1';
+        if (s === 'hh8' || /\b(?:harvest hills|hh)\s*8(?:th)?\b/.test(s)) return 'hh8';
+        if (s === 'crossroads' || /\bcrossroads\b/.test(s)) return 'crossroads';
         return null;
       }
+      window.resolveW5WardSlug = resolveW5WardSlug;
       function getSelectedW5Mode() {
         const checked = document.querySelector('input[type="radio"][data-save-key="v4_w5_mode"]:checked');
         return (checked && checked.value === 'annual') ? 'annual' : 'live';
