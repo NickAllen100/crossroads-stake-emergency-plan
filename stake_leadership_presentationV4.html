@@ -1141,6 +1141,11 @@
       #form-w5 td { padding: 3px 4px !important; }
       #form-w5 .w5-pool-cell { font-size: 7pt !important; gap: 1px !important; }
       #form-w5 .w5-pool-row .num-input { width: 22px !important; min-width: 0 !important; }
+      #w46-tally-table { font-size: 7.4pt !important; table-layout: fixed; width: 100%; }
+      #w46-tally-table th,
+      #w46-tally-table td { padding: 2px 3px !important; height: 19px; }
+      #w46-tally-table .num-input,
+      #w46-tally-table .cell-input { width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
       .num-input::-webkit-inner-spin-button,
       .num-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
       .num-input { -moz-appearance: textfield; }
@@ -3372,8 +3377,8 @@
       <div id="ward-pane-3c" class="ward-subpane">
         <div class="section-divider-banner screen-only ward-nonprint">
           <div>
-            <h3 style="margin:0;">Ward Binder Forms: Paper-Only (<code>W-1</code>, <code>W-2/3</code>, <code>W-4/6</code>) &amp; Fillable Live/Audit (<code>W-5</code>)</h3>
-            <span style="font-size:0.78rem; opacity:0.9;">Forms <code>W-1</code>, <code>W-2/3</code> &amp; <code>W-4/6</code> stay paper-only by design (<code>GH 22.4.5</code>) — print &amp; write by hand. Use <code>Form W-5</code> below to send live or annual counts to Stake.</span>
+            <h3 style="margin:0;">Ward Binder Forms: Paper-Only (<code>W-1</code>, <code>W-2/3</code>) &amp; Fillable Zero-Name (<code>W-4/6</code> Tally, <code>W-5</code>)</h3>
+            <span style="font-size:0.78rem; opacity:0.9;">Forms <code>W-1</code> &amp; <code>W-2/3</code> stay paper-only by design (<code>GH 22.4.5</code>). Use <code>Form W-4/6</code> below for optional zero-name district tallies and <code>Form W-5</code> to send live or annual counts to Stake.</span>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button type="button" class="btn btn-outline" style="min-height:40px; background:#ffffff; color:var(--navy);" onclick="document.getElementById('form-w5').scrollIntoView({behavior:'smooth',block:'start'})">Jump to Fillable Form W-5 &darr;</button>
@@ -3505,7 +3510,7 @@
       <div id="form-w46" class="sheet-box" data-mode="crisis" data-print-item="ward-sheet-4">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6 (Paper-Only Live Board — Print &amp; Tally By Hand)</span>
+            <span class="sheet-tag">Ward Sheet 4 (Front &amp; Back) • Forms W-4 &amp; W-6 (Optional Zero-Name Numeric Tally • Names Stay Paper-Only)</span>
             <h2 class="sheet-title">Ministering District Check-In Rollup &amp; Ward Care / Helping Hands Board</h2>
           </div>
           <span><strong>Board Scribe (Clerk/Spec):</strong> ______________</span>
@@ -3516,36 +3521,42 @@
         </p>
 
         <div class="table-wrap">
-          <table class="write-table" style="font-size:0.8rem;">
+          <table class="write-table" id="w46-tally-table" style="font-size:0.8rem;">
             <thead>
               <tr>
-                <th style="width:16%;">Ministering District (EQ/RS)</th>
-                <th style="width:20%;">District Leader (EQ / RS Pres.)</th>
-                <th style="width:8%;">Homes</th>
-                <th style="width:8%;">Green</th>
-                <th style="width:8%;">Yellow</th>
-                <th style="width:8%;">Red</th>
-                <th style="width:10%;">Unacct.</th>
-                <th style="width:10%;">W-1 Done?</th>
+                <th style="width:15%;">Ministering District (EQ/RS)</th>
+                <th style="width:19%;">District Leader (Paper Only)</th>
+                <th style="width:9%;">Homes</th>
+                <th style="width:9%;">Green</th>
+                <th style="width:9%;">Yellow</th>
+                <th style="width:9%;">Red</th>
+                <th style="width:9%;">Unacct.</th>
+                <th style="width:9%;">W-1 Done?</th>
                 <th style="width:12%;">Time In</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>District 1:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 2:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 3:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 4:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 5:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 6:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 7:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 8:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 9:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 10:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 11:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr><td>District 12:</td><td></td><td></td><td></td><td></td><td></td><td></td><td>[ ]</td><td></td></tr>
-              <tr style="font-weight:800;"><td>WARD TOTAL (&rarr; W-5 Part 0)</td><td></td><td></td><td></td><td></td><td></td><td></td><td>All [ ]</td><td></td></tr>
+              <tr><td>District 1:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d1_homes" aria-label="District 1 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d1_green" aria-label="District 1 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d1_yellow" aria-label="District 1 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d1_red" aria-label="District 1 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d1_unacct" aria-label="District 1 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d1_w1done" aria-label="District 1 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d1_time" aria-label="District 1 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 2:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d2_homes" aria-label="District 2 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d2_green" aria-label="District 2 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d2_yellow" aria-label="District 2 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d2_red" aria-label="District 2 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d2_unacct" aria-label="District 2 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d2_w1done" aria-label="District 2 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d2_time" aria-label="District 2 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 3:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d3_homes" aria-label="District 3 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d3_green" aria-label="District 3 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d3_yellow" aria-label="District 3 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d3_red" aria-label="District 3 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d3_unacct" aria-label="District 3 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d3_w1done" aria-label="District 3 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d3_time" aria-label="District 3 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 4:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d4_homes" aria-label="District 4 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d4_green" aria-label="District 4 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d4_yellow" aria-label="District 4 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d4_red" aria-label="District 4 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d4_unacct" aria-label="District 4 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d4_w1done" aria-label="District 4 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d4_time" aria-label="District 4 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 5:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d5_homes" aria-label="District 5 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d5_green" aria-label="District 5 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d5_yellow" aria-label="District 5 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d5_red" aria-label="District 5 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d5_unacct" aria-label="District 5 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d5_w1done" aria-label="District 5 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d5_time" aria-label="District 5 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 6:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d6_homes" aria-label="District 6 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d6_green" aria-label="District 6 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d6_yellow" aria-label="District 6 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d6_red" aria-label="District 6 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d6_unacct" aria-label="District 6 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d6_w1done" aria-label="District 6 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d6_time" aria-label="District 6 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 7:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d7_homes" aria-label="District 7 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d7_green" aria-label="District 7 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d7_yellow" aria-label="District 7 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d7_red" aria-label="District 7 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d7_unacct" aria-label="District 7 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d7_w1done" aria-label="District 7 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d7_time" aria-label="District 7 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 8:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d8_homes" aria-label="District 8 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d8_green" aria-label="District 8 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d8_yellow" aria-label="District 8 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d8_red" aria-label="District 8 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d8_unacct" aria-label="District 8 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d8_w1done" aria-label="District 8 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d8_time" aria-label="District 8 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 9:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d9_homes" aria-label="District 9 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d9_green" aria-label="District 9 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d9_yellow" aria-label="District 9 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d9_red" aria-label="District 9 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d9_unacct" aria-label="District 9 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d9_w1done" aria-label="District 9 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d9_time" aria-label="District 9 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 10:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d10_homes" aria-label="District 10 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d10_green" aria-label="District 10 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d10_yellow" aria-label="District 10 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d10_red" aria-label="District 10 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d10_unacct" aria-label="District 10 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d10_w1done" aria-label="District 10 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d10_time" aria-label="District 10 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 11:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d11_homes" aria-label="District 11 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d11_green" aria-label="District 11 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d11_yellow" aria-label="District 11 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d11_red" aria-label="District 11 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d11_unacct" aria-label="District 11 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d11_w1done" aria-label="District 11 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d11_time" aria-label="District 11 Time In" placeholder="14:30"></td></tr>
+              <tr><td>District 12:</td><td></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="homes" data-save-key="v4_w46_d12_homes" aria-label="District 12 Homes"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="green" data-save-key="v4_w46_d12_green" aria-label="District 12 Green"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="yellow" data-save-key="v4_w46_d12_yellow" aria-label="District 12 Yellow"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="red" data-save-key="v4_w46_d12_red" aria-label="District 12 Red"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-w46-col="unacct" data-save-key="v4_w46_d12_unacct" aria-label="District 12 Unaccounted"></td><td style="text-align:center;"><input type="checkbox" data-w46-chk="1" data-save-key="v4_w46_d12_w1done" aria-label="District 12 W-1 Done"></td><td><input type="text" class="cell-input" data-save-key="v4_w46_d12_time" aria-label="District 12 Time In" placeholder="14:30"></td></tr>
+              <tr class="reg-total-row"><td>WARD TOTAL (&rarr; W-5 Part 0)</td><td></td><td id="w46-tot-homes">0</td><td id="w46-tot-green">0</td><td id="w46-tot-yellow">0</td><td id="w46-tot-red">0</td><td id="w46-tot-unacct">0</td><td id="w46-tot-w1done">0/12</td><td></td></tr>
             </tbody>
           </table>
+        </div>
+
+        <div id="w46-action-bar" class="share-action-bar screen-only" role="group" aria-label="Form W-4/6 tally actions">
+          <button type="button" id="btn-copy-w46-to-w5" class="btn" style="min-height:44px; padding:6px 14px; font-size:0.84rem;" onclick="copyW46ToW5()">Copy Ward Totals &rarr; Form W-5 Part 0</button>
+          <button type="button" id="btn-reset-w46" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem;" onclick="resetW46Tallies()">Reset W-4/6 Tallies</button>
+          <span id="w46-feedback" style="font-size:0.82rem; font-weight:700; color:var(--green);" role="status" aria-live="polite"></span>
         </div>
 
         <div class="grid-2" style="margin-top:8px;">
@@ -5689,6 +5700,60 @@
         return true;
       };
 
+      window.updateW46Totals = function () {
+        const cols = ['homes', 'green', 'yellow', 'red', 'unacct'];
+        const totals = {};
+        cols.forEach(col => {
+          let sum = 0;
+          document.querySelectorAll('#w46-tally-table input[data-w46-col="' + col + '"]').forEach(inp => {
+            const n = parseInt(inp.value, 10);
+            if (Number.isFinite(n) && n > 0) sum += n;
+          });
+          totals[col] = sum;
+          const cell = document.getElementById('w46-tot-' + col);
+          if (cell) cell.textContent = String(sum);
+        });
+        const doneCount = Array.from(document.querySelectorAll('#w46-tally-table input[data-w46-chk="1"]')).filter(cb => cb.checked).length;
+        const doneCell = document.getElementById('w46-tot-w1done');
+        if (doneCell) doneCell.textContent = doneCount + '/12';
+        return totals;
+      };
+
+      window.copyW46ToW5 = function () {
+        const t = updateW46Totals();
+        const checked = t.green + t.yellow + t.red;
+        const map = {
+          v4_w5_p0_total: String(t.homes),
+          v4_w5_p0_checked: String(checked),
+          v4_w5_p0_green: String(t.green),
+          v4_w5_p0_yellow: String(t.yellow),
+          v4_w5_p0_red: String(t.red),
+          v4_w5_p0_unacct: String(t.unacct)
+        };
+        Object.keys(map).forEach(k => {
+          try { localStorage.setItem(k, map[k]); } catch (e) {}
+          syncInputsForKey(k, map[k], false);
+        });
+        if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(false);
+        const fb = document.getElementById('w46-feedback');
+        if (fb) fb.textContent = 'Copied Ward Totals (Total:' + t.homes + ', Checked:' + checked + ', G:' + t.green + ', Y:' + t.yellow + ', R:' + t.red + ') into Form W-5 Part 0!';
+      };
+
+      window.resetW46Tallies = function () {
+        if (!window.confirm('Clear all 12 Districts\' numeric tallies on Form W-4/6?')) return false;
+        document.querySelectorAll('#w46-tally-table [data-save-key]').forEach(el => {
+          const k = el.dataset.saveKey;
+          if (typeof k !== 'string' || !k.startsWith('v4_w46_')) return;
+          const isChk = el.type === 'checkbox';
+          try { localStorage.removeItem(k); } catch (e) {}
+          syncInputsForKey(k, isChk ? '0' : '', isChk);
+        });
+        updateW46Totals();
+        const fb = document.getElementById('w46-feedback');
+        if (fb) fb.textContent = 'Form W-4/6 tallies cleared.';
+        return true;
+      };
+
       window.exportFamilyWorksheet = function () {
         const data = {};
         document.querySelectorAll('[data-save-key]').forEach(el => {
@@ -5796,6 +5861,7 @@
             try { localStorage.setItem(key, nv); } catch (e) {}
             syncInputsForKey(key, nv, true);
             updateCheckProgress();
+            if (key.startsWith('v4_w46_')) updateW46Totals();
           });
         } else if (el.type === 'radio') {
           const validVals = Array.from(document.querySelectorAll('input[type="radio"][data-save-key="' + key + '"]')).map(r => r.value);
@@ -5824,6 +5890,7 @@
             if (key.startsWith('v4_prep_')) updateWaterCalculator();
             if (key.startsWith('v4_reg_')) updateStakeRegisterTotals();
             if (key.startsWith('v4_live_')) updateStakeLiveTotals();
+            if (key.startsWith('v4_w46_')) updateW46Totals();
             if (key === 'v4_ward_name' && el.value.trim() && !getFieldValueByKey('v4_w5_ward').trim()) {
               try { localStorage.setItem('v4_w5_ward', el.value.trim()); } catch (e) {}
               syncInputsForKey('v4_w5_ward', el.value.trim(), false);
@@ -5861,6 +5928,7 @@
       updateWaterCalculator();
       updateStakeRegisterTotals();
       updateStakeLiveTotals();
+      updateW46Totals();
 
       // Wire Tab 2 3-Sub-Tab Member Switcher (2A default in Peacetime)
       window.setMemberSubtab = function (sub) {
