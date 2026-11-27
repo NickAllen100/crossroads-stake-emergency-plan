@@ -52,12 +52,27 @@
 
     a { color: var(--navy-mid); }
     a.phone-link {
-      font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 800;
+      text-decoration: none;
       white-space: nowrap;
-      color: inherit;
+      color: var(--navy);
+      background: #dbeafe;
+      border: 1.5px solid #93c5fd;
+      border-radius: 6px;
+      padding: 1px 7px;
+      cursor: pointer;
+      transition: background 0.12s, transform 0.08s, border-color 0.12s;
     }
+    a.phone-link::before { content: "\260E\FE0E"; font-size: 0.9em; }
+    a.phone-link:hover, a.phone-link:focus-visible {
+      background: #bfdbfe;
+      border-color: var(--navy-mid);
+      color: #0f172a;
+    }
+    a.phone-link:active { transform: translateY(1px); }
     code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 0.88em;
@@ -84,7 +99,41 @@
     body.crisis-mode .crisis-bar {
       background: var(--crimson);
       border-bottom-color: #fde68a;
+      padding: 6px 14px;
     }
+    @media screen {
+      body.crisis-mode .utility-group,
+      body.crisis-mode .site-header,
+      body.crisis-mode .tab-nav-wrap,
+      body.crisis-mode .offline-banner,
+      body.crisis-mode .crisis-active-banner,
+      body.crisis-mode .senior-print-prompt { display: none !important; }
+    }
+    .crisis-bar-exit {
+      display: none;
+      min-height: 44px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      background: #ffffff;
+      color: #7f1d1d;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+    .crisis-bar-exit:hover, .crisis-bar-exit:focus-visible { background: #fef3c7; }
+    body.crisis-mode .crisis-bar-exit { display: inline-flex; align-items: center; }
+    body.crisis-mode .crisis-toggle-btn {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: #ffffff;
+      padding: 4px 2px;
+      min-height: 36px;
+      cursor: default;
+    }
+    body.crisis-mode .crisis-toggle-btn:hover { background: transparent; }
+    body.crisis-mode .crisis-toggle-btn .crisis-dot { background: #fef08a; }
     .crisis-toggle-btn {
       display: inline-flex;
       align-items: center;
@@ -465,19 +514,169 @@
     .life-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       min-height: 44px;
-      padding: 6px 12px;
-      border-radius: 8px;
+      padding: 7px 14px;
+      border-radius: 9px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
       background: var(--crimson);
       color: var(--white);
       text-decoration: none;
-      font-weight: 700;
-      font-size: 0.86rem;
+      font-weight: 800;
+      font-size: 0.88rem;
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.22);
+      cursor: pointer;
+      transition: transform 0.08s, filter 0.12s, box-shadow 0.12s;
     }
+    .life-pill::before { content: "\260E\FE0E"; font-size: 1.05em; line-height: 1; }
+    .life-pill:hover, .life-pill:focus-visible { filter: brightness(1.08); box-shadow: 0 3px 8px rgba(15, 23, 42, 0.28); }
+    .life-pill:active { transform: translateY(1px); }
     .life-pill.navy { background: var(--navy); }
     .life-pill.teal { background: var(--teal); }
     .life-pill.amber { background: var(--gold); }
+
+    /* ===== UNIFIED SINGLE-SCREEN EMERGENCY VIEW (ISSUE #2) ===== */
+    #emergency-view {
+      display: none;
+      max-width: 1120px;
+      margin: 12px auto 0;
+      padding: 0 14px;
+    }
+    @media screen {
+      body.crisis-mode #emergency-view { display: block; }
+      body.crisis-mode[data-crisis-view="command"] #em-hazard-section,
+      body.crisis-mode[data-crisis-view="command"] #em-next60-divider { display: none !important; }
+    }
+    .em-leader-switch {
+      display: none;
+      gap: 8px;
+      margin-bottom: 12px;
+      background: var(--white);
+      border: 2px solid var(--navy-mid);
+      border-radius: var(--radius);
+      padding: 8px;
+    }
+    body[data-role="ward"] .em-leader-switch,
+    body[data-role="stake"] .em-leader-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .em-switch-btn {
+      min-height: 46px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 2px solid var(--slate-200);
+      background: var(--slate-50);
+      color: var(--slate-900);
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .em-switch-btn[aria-pressed="true"] {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+    }
+    .em-call-card {
+      background: #fef2f2;
+      border: 2px solid var(--crimson);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .em-call-card h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      color: var(--crimson);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .em-hazard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .em-hazard-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      min-height: 64px;
+      padding: 10px 12px;
+      border-radius: 9px;
+      border: 2px solid var(--slate-200);
+      background: var(--white);
+      color: var(--slate-900);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color 0.12s, background 0.12s, transform 0.08s;
+    }
+    .em-hazard-tile strong { font-size: 0.94rem; color: var(--navy); }
+    .em-hazard-tile small { font-size: 0.78rem; font-weight: 700; color: var(--crimson); }
+    .em-hazard-tile:hover, .em-hazard-tile:focus-visible { border-color: var(--crimson); background: #fff7ed; }
+    .em-hazard-tile[aria-pressed="true"] {
+      border-color: var(--crimson);
+      background: var(--crimson);
+      color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.25);
+    }
+    .em-hazard-tile[aria-pressed="true"] strong,
+    .em-hazard-tile[aria-pressed="true"] small { color: #ffffff; }
+    .em-action-card {
+      display: none;
+      margin-top: 12px;
+      scroll-margin-top: 84px;
+      background: #ffffff;
+      border: 2.5px solid var(--crimson);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+    .em-action-card.visible { display: block; }
+    .em-action-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .em-action-head h3 { margin: 0; font-size: 1.15rem; color: var(--crimson); }
+    .em-steps-list {
+      margin: 0 0 12px;
+      padding-left: 22px;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .em-steps-list li { margin-bottom: 7px; }
+    .em-guardrail-box {
+      background: var(--crimson-bg);
+      border: 2px solid var(--crimson);
+      border-left: 6px solid var(--crimson);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      color: #7f1d1d;
+    }
+    .em-cohort-callout {
+      margin-top: 8px;
+      background: #eff6ff;
+      border: 1.5px solid var(--navy-mid);
+      border-left: 5px solid var(--navy-mid);
+      border-radius: 7px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      color: var(--navy);
+    }
+    .em-next60-divider {
+      background: var(--navy);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 9px 14px;
+      margin: 12px 0 4px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+    }
 
     /* 15-Second Visual Decision Tree */
     .dtree {
@@ -1267,6 +1466,18 @@
     @media print {
       .form-ref-link, .gh-ref-link { color: inherit !important; text-decoration: none !important; background: none !important; padding: 0 !important; }
       .form-ref-link::after, .gh-ref-link::after { content: "" !important; }
+      a.phone-link, .life-pill {
+        display: inline !important;
+        gap: 0 !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        color: #000000 !important;
+        min-height: auto !important;
+        font-weight: 700 !important;
+      }
+      a.phone-link::before, .life-pill::before { content: none !important; display: none !important; }
     }
 
     @media (max-width: 860px) {
@@ -1286,6 +1497,7 @@
       <span class="crisis-dot" aria-hidden="true"></span>
       <span id="crisis-btn-text">MODE: PEACETIME &amp; RECOVERY (Tap for Emergency Only)</span>
     </button>
+    <button id="btn-crisis-exit" class="crisis-bar-exit" type="button" onclick="setCrisisMode(false)">Exit Emergency Mode</button>
 
     <div class="utility-group">
       <details class="print-menu" id="print-menu">
@@ -1397,6 +1609,75 @@
     <button type="button" class="btn" onclick="printProfile('m1-large')">Print 15pt Large-Print Fridge Card</button>
   </div>
 
+  <!-- ===== UNIFIED SINGLE-SCREEN EMERGENCY VIEW (VISIBLE ONLY IN EMERGENCY MODE) ===== -->
+  <section id="emergency-view" class="screen-only" aria-label="Emergency Right Now Action Screen">
+    <div id="em-leader-switch" class="em-leader-switch" role="group" aria-label="Switch between Home First and Leadership Command">
+      <button type="button" id="em-btn-home" class="em-switch-btn" aria-pressed="true" onclick="setCrisisSubView('home')">1. My Home First (0–10m)</button>
+      <button type="button" id="em-btn-command" class="em-switch-btn" aria-pressed="false" onclick="setCrisisSubView('command')">2. Ward Command (Form W-0/0B)</button>
+    </div>
+
+    <div class="em-call-card">
+      <h2>Tap to Call — Emergency Lifelines (West of Jordan River First)</h2>
+      <div class="lifelines" style="margin-top:0;">
+        <a class="life-pill" href="tel:911">Call 911</a>
+        <a class="life-pill" href="tel:+18017633500">Call ER (801) 763-3500</a>
+        <a class="life-pill amber" href="tel:+18007671689">Call Gas Leak 1-800-767-1689</a>
+        <a class="life-pill amber" href="tel:+18775085088">Call RMP Power 1-877-508-5088</a>
+        <a class="life-pill teal" href="tel:988">Call / Text 988 Crisis</a>
+        <a class="life-pill navy" href="tel:+18002221222">Call Poison 1-800-222-1222</a>
+      </div>
+    </div>
+
+    <div id="em-hazard-section" class="card" style="margin-bottom:10px; border:2px solid var(--navy-mid);">
+      <h2 style="margin:0 0 4px; color:var(--navy);">What Is Happening Right Now? (Tap Your Emergency)</h2>
+      <p style="margin:0 0 6px; font-size:0.86rem; color:var(--slate-700);">Tap one tile to see ONLY the 3–5 immediate steps and life-safety guardrails for this event.</p>
+      <div class="em-hazard-grid" role="group" aria-label="Select active emergency hazard">
+        <button type="button" class="em-hazard-tile" data-em-hazard="earthquake" aria-pressed="false">
+          <strong>Earthquake</strong>
+          <small>Drop, Cover, Hold</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="wildfire" aria-pressed="false">
+          <strong>Wildfire (Lake Mtn)</strong>
+          <small>Evacuate North</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="hazmat" aria-pressed="false">
+          <strong>Hazmat / Chemical</strong>
+          <small>Seal Indoors, HVAC Off</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="freeze" aria-pressed="false">
+          <strong>Power Outage / Freeze</strong>
+          <small>1 Warm Room</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="gas-medical" aria-pressed="false">
+          <strong>Gas Leak / Fire / Medical</strong>
+          <small>Get Out &amp; Call 911</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="wind" aria-pressed="false">
+          <strong>High Windstorm</strong>
+          <small>Stay Indoors</small>
+        </button>
+        <button type="button" class="em-hazard-tile" data-em-hazard="water" aria-pressed="false">
+          <strong>Water / Boil Order</strong>
+          <small>Do Not Flush</small>
+        </button>
+      </div>
+
+      <div id="em-hazard-card" class="em-action-card" aria-live="polite">
+        <div class="em-action-head">
+          <h3 id="em-hazard-title"></h3>
+          <button type="button" id="em-hazard-clear" class="btn btn-outline" style="min-height:38px;" onclick="selectEmergencyHazard(null, true)">Change Hazard</button>
+        </div>
+        <ol id="em-hazard-steps" class="em-steps-list"></ol>
+        <div id="em-hazard-guardrail" class="em-guardrail-box"></div>
+        <div id="em-hazard-cohort" class="em-cohort-callout" style="display:none;"></div>
+      </div>
+    </div>
+
+    <div id="em-next60-divider" class="em-next60-divider">
+      Next 60 Minutes &amp; Household Status (Form M-1 — Scroll Down for Checklist, Green/Yellow/Red &amp; Saved Contacts)
+    </div>
+  </section>
+
   <main>
     <!-- ========================================================== -->
     <!-- TAB 1: START & ACTIVATION                                  -->
@@ -1412,12 +1693,12 @@
       <div class="card card-navy" data-mode="crisis">
         <h2>Emergency Lifelines (West of Jordan River First)</h2>
         <div class="lifelines">
-          <a class="life-pill" href="tel:911">911 Emergency</a>
-          <a class="life-pill" href="tel:+18017633500">Intermountain Saratoga ER (801) 763-3500</a>
-          <a class="life-pill teal" href="tel:988">988 Mental Health Crisis</a>
-          <a class="life-pill amber" href="tel:+18007671689">Enbridge Gas Leak 1-800-767-1689</a>
-          <a class="life-pill amber" href="tel:+18775085088">RMP Power 1-877-508-5088</a>
-          <a class="life-pill navy" href="tel:+18002221222">Poison Control 1-800-222-1222</a>
+          <a class="life-pill" href="tel:911">Call 911 Emergency</a>
+          <a class="life-pill" href="tel:+18017633500">Call Intermountain Saratoga ER (801) 763-3500</a>
+          <a class="life-pill teal" href="tel:988">Call / Text 988 Crisis</a>
+          <a class="life-pill amber" href="tel:+18007671689">Call Enbridge Gas 1-800-767-1689</a>
+          <a class="life-pill amber" href="tel:+18775085088">Call RMP Power 1-877-508-5088</a>
+          <a class="life-pill navy" href="tel:+18002221222">Call Poison Control 1-800-222-1222</a>
         </div>
         <p style="font-size:0.86rem; color:var(--slate-700); margin-top:8px;">
           <strong>Start Here:</strong>
@@ -3739,6 +4020,7 @@
         });
         try { localStorage.setItem('crossroads_v2_role', role); } catch (e) {}
         updateRoleSummary();
+        if (typeof syncEmergencyLeaderSwitch === 'function') syncEmergencyLeaderSwitch();
         setRolePickerOpen(false, false);
         const activePanel = document.querySelector('.tab-panel.active');
         const activeTabId = activePanel ? activePanel.id.replace('panel-', '') : 'start';
@@ -3760,21 +4042,221 @@
         });
         try { localStorage.setItem('crossroads_v2_cohort', cohort); } catch (e) {}
         updateRoleSummary();
+        if (currentEmHazard) selectEmergencyHazard(currentEmHazard);
         if (collapse) setRolePickerOpen(false, false);
       };
 
+      const EMERGENCY_HAZARDS = {
+        earthquake: {
+          title: 'EARTHQUAKE — Do This Right Now',
+          steps: [
+            'DROP, COVER under a sturdy table, and HOLD ON until shaking stops.',
+            'Put on sturdy shoes and grab a flashlight before walking (broken glass).',
+            'Check for gas smell/hissing: Homeowners turn gas OFF ONLY if smelled, hissing, or meter spinning.',
+            'DO NOT FLUSH toilets until sewer lines are cleared; close water-heater cold inlet to save 40–50 gal.',
+            'Post GREEN / YELLOW / RED in a front window and check next door once safe.'
+          ],
+          guardrail: 'DO NOT run outside during shaking or turn gas back on yourself. Renters: NEVER hunt locked HOA gas mains—evacuate upwind and call Enbridge outside. Seniors: no dark stairs or outdoor valves alone.',
+          cohort: {
+            senior: 'Senior Safety: Stay off dark stairs and do not touch outdoor gas/water valves alone—wait for daylight or your Ministering Companion.',
+            ysa: 'Renter / YSA Rule: Never enter locked HOA utility rooms for gas valves; if phones fail >2 hrs, check in at Bldg 1, Bldg 2, or Shay Park.',
+            family: 'Family Bridge Rule: If a commuter is east of the Jordan River and SR-73/2100 N bridges look damaged, DO NOT cross—shelter east and text your out-of-area relay.'
+          }
+        },
+        wildfire: {
+          title: 'WILDFIRE (Lake Mountain) — Evacuate North',
+          steps: [
+            'Leave IMMEDIATELY on evacuation order—drive NORTH toward SR-73 (15-min grab-and-go).',
+            'Grab meds (inhalers, EpiPen, insulin, O2 tanks), glasses, IDs/wallet, phones, water, and pets.',
+            'Close all windows and doors, leave exterior lights ON for firefighters, and lock up.',
+            'Text your out-of-area relay and Ministering Companion once clear of the smoke zone.'
+          ],
+          guardrail: 'DO NOT wait to see flames or drive south toward Lake Mountain. If trapped by smoke/fire, call 911 immediately.',
+          cohort: {
+            senior: 'Senior / Non-Night-Driver Rule: Leave EARLY on Wildfire Watch before dark—do not wait for a midnight evacuation order.',
+            ysa: 'Car-Less / Renter Rule: Contact your pre-assigned Ward ride immediately on Wildfire Watch; bring roommates and pets.',
+            family: 'Family Rule: Confirm Skyward school pickup plan and keep vehicle tanks above half full on Red Flag days.'
+          }
+        },
+        hazmat: {
+          title: 'HAZMAT / CHEMICAL PLUME (SR-68 / Redwood Rd) — Seal Indoors',
+          steps: [
+            'GET INSIDE immediately—close and lock all windows and exterior doors.',
+            'SHUT OFF HVAC, furnace, swamp cooler, bathroom/kitchen exhaust fans, and fireplace dampers.',
+            'Move to an interior room above ground level and pack wet towels/plastic around door gaps.',
+            'Monitor City Everbridge alerts and stay sealed until civil officials issue All-Clear.'
+          ],
+          guardrail: 'DO NOT go outside to check on neighbors and DO NOT drive to Riverview Elementary during an active plume—the school seals students safely indoors.',
+          cohort: {
+            senior: 'Senior / Oxygen Rule: Keep windows sealed; if breathing distress occurs or oxygen reserve drops under 2 hours, call 911 immediately.',
+            ysa: 'Basement Renter Rule: Move to a pre-arranged upstairs landlord/neighbor room or seal the highest interior room with HVAC OFF.',
+            family: 'Parent Rule: Do NOT drive through the plume to Riverview Elementary; wait for Alpine School District All-Clear reunification instructions.'
+          }
+        },
+        freeze: {
+          title: 'POWER OUTAGE / WINTER FREEZE — Protect Warmth & Meds',
+          steps: [
+            'Close off unused rooms and move the whole household into ONE interior warm room with layers/sleeping bags.',
+            'Keep fridge/freezer doors shut; protect insulin/biologics from BOTH freezing (coat pocket/warm room) and summer heat (36–46°F towel-wrapped cool pack).',
+            'If pipes risk freezing, let interior faucets drip slightly and open under-sink cabinets.',
+            'Check battery CO detector; wait for Stake Presidency confirmation before driving to any chapel (GH 35.5.5).'
+          ],
+          guardrail: 'CRITICAL LIFE SAFETY: Oxygen concentrator <2 hrs backup reserve = CALL 911 IMMEDIATELY (RMP Medical Cert is NOT backup power). NEVER run generators, camp stoves, charcoal, or propane heaters indoors—20+ ft outside only!',
+          cohort: {
+            senior: 'Senior Safety: Accept a warm host home early before nightfall; avoid icy walkways and never use unvented heaters indoors.',
+            ysa: 'Apartment / YSA Rule: If heat fails >2 hrs in sub-freezing weather, coordinate with neighbors or a Ward host home (singles & pets welcome).',
+            family: 'Family Rule: Keep infants warm with skin-to-skin/layers in the warm room and conserve phone batteries for top-of-the-hour (:00) check-ins.'
+          }
+        },
+        'gas-medical': {
+          title: 'GAS LEAK, FIRE OR MEDICAL EMERGENCY — Get Out & Call 911',
+          steps: [
+            'GET EVERYONE OUT immediately—leave doors open behind you and move upwind/across the street.',
+            'CALL 911 from outside (for gas leak also call Enbridge Gas 1-800-767-1689 once clear).',
+            'If medical emergency (chest pain, severe bleeding, oxygen <2 hrs, overdose): call 911 FIRST—do not wait for a Ward check-in.',
+            'Alert immediate next-door neighbors or hallway units from a safe distance.'
+          ],
+          guardrail: 'DO NOT flip light switches, use matches, start a car in the garage, or re-enter a gas-smelling or burning structure for belongings.',
+          cohort: {
+            senior: 'Senior Safety: Do not hesitate to call 911 first; take your meds list/glasses if within arm’s reach, otherwise exit immediately.',
+            ysa: 'Apartment / Townhome Rule: Knock on hallway doors on your way out upwind and notify landlord/property management from outside.',
+            family: 'Family Rule: Account for all children and pets at your outside meeting spot before anyone calls back to the house.'
+          }
+        },
+        wind: {
+          title: 'HIGH WINDSTORM (50+ mph Gusts) — Stay Indoors',
+          steps: [
+            'Stay inside away from large windows, glass doors, and skylight rooms.',
+            'Expect sudden power flickers—stage flashlights, charge phones, and avoid driving high-profile vehicles.',
+            'Stay 35+ feet away from any downed power line (assume EVERY downed line is live) and call RMP 1-877-508-5088.',
+            'Wait until sustained gusts drop below 25 mph before stepping outside to inspect roof/tree debris.'
+          ],
+          guardrail: 'DO NOT go outside to chase trampolines/debris during active gusts, and NEVER climb wet/windy ladders or run chainsaws alone.',
+          cohort: {
+            senior: 'Senior Safety: Stay strictly indoors during high winds; ask EQ/RS helping hands to check yard or fence damage after winds subside.',
+            ysa: 'Renter / Commuter Rule: Park clear of mature trees and power lines if safe beforehand; check patio items before wind peaks.',
+            family: 'Family Rule: Keep kids away from backyard trampolines and exterior windows until gusts stay below 25 mph.'
+          }
+        },
+        water: {
+          title: 'WATER OUTAGE / BOIL ORDER — Safe Water & Sanitation',
+          steps: [
+            'Switch immediately to stored drinking water (1 gal/person/day + pets) and close your water-heater cold inlet valve.',
+            'If under a Boil-Water Order, bring questionable tap water to a rolling boil for 3 FULL MINUTES (4,500 ft elevation).',
+            'If sewer/water is out, DO NOT FLUSH—line a dry toilet bowl with two heavy trash bags + kitty litter/shavings.',
+            'Report main breaks to Saratoga Springs Public Works (801-404-2468).'
+          ],
+          guardrail: 'NEVER drink pressurized secondary irrigation water (untreated Utah Lake water)—it is non-potable and hazardous even if clear.',
+          cohort: {
+            senior: 'Senior Safety: Use easy-lift 1–2.5 gal jugs or a siphon pump; call Ward EQ/RS for water delivery rather than lifting heavy containers.',
+            ysa: 'Renter / YSA Rule: Fill clean pitchers/pots immediately at first notice of low pressure; check with Ward RS/EQ for gravity water filter access.',
+            family: 'Infant Formula Rule: Use sealed bottled water or 3-minute boiled & cooled water strictly for infant formula and baby bottles.'
+          }
+        }
+      };
+
+      let preCrisisTab = 'start';
+      let currentEmHazard = null;
+
+      window.selectEmergencyHazard = function (key, returnFocus) {
+        const prev = currentEmHazard;
+        currentEmHazard = (key && Object.prototype.hasOwnProperty.call(EMERGENCY_HAZARDS, key)) ? key : null;
+        document.querySelectorAll('.em-hazard-tile').forEach(btn => {
+          btn.setAttribute('aria-pressed', btn.dataset.emHazard === currentEmHazard ? 'true' : 'false');
+        });
+        const card = document.getElementById('em-hazard-card');
+        if (!card) return;
+        if (!currentEmHazard) {
+          card.classList.remove('visible');
+          if (returnFocus) {
+            const tile = document.querySelector('.em-hazard-tile[data-em-hazard="' + prev + '"]') || document.querySelector('.em-hazard-tile');
+            if (tile) tile.focus();
+          }
+          return;
+        }
+        const h = EMERGENCY_HAZARDS[currentEmHazard];
+        document.getElementById('em-hazard-title').textContent = h.title;
+        const list = document.getElementById('em-hazard-steps');
+        list.textContent = '';
+        h.steps.forEach(step => {
+          const li = document.createElement('li');
+          li.textContent = step;
+          list.appendChild(li);
+        });
+        const guard = document.getElementById('em-hazard-guardrail');
+        guard.textContent = '';
+        const gStrong = document.createElement('strong');
+        gStrong.textContent = 'CRITICAL SAFETY: ';
+        guard.appendChild(gStrong);
+        guard.appendChild(document.createTextNode(h.guardrail));
+
+        const cohortEl = document.getElementById('em-hazard-cohort');
+        const activeCohort = document.body.getAttribute('data-cohort') || 'all';
+        if (h.cohort && Object.prototype.hasOwnProperty.call(h.cohort, activeCohort)) {
+          cohortEl.textContent = h.cohort[activeCohort];
+          cohortEl.style.display = 'block';
+        } else {
+          cohortEl.textContent = '';
+          cohortEl.style.display = 'none';
+        }
+        card.classList.add('visible');
+        requestAnimationFrame(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }));
+      };
+
+      function syncEmergencyLeaderSwitch() {
+        const role = document.body.getAttribute('data-role') || 'member';
+        const cmdBtn = document.getElementById('em-btn-command');
+        if (cmdBtn) {
+          cmdBtn.textContent = role === 'stake'
+            ? '2. Stake Command (Sheets S-A/S-B)'
+            : '2. Ward Command (Form W-0/0B)';
+        }
+        if (role === 'member' && document.body.getAttribute('data-crisis-view') === 'command') {
+          setCrisisSubView('home');
+        }
+      }
+
+      window.setCrisisSubView = function (view) {
+        const role = document.body.getAttribute('data-role') || 'member';
+        if (role === 'member') view = 'home';
+        const mode = view === 'command' ? 'command' : 'home';
+        document.body.setAttribute('data-crisis-view', mode);
+        const homeBtn = document.getElementById('em-btn-home');
+        const cmdBtn = document.getElementById('em-btn-command');
+        if (homeBtn) homeBtn.setAttribute('aria-pressed', mode === 'home' ? 'true' : 'false');
+        if (cmdBtn) cmdBtn.setAttribute('aria-pressed', mode === 'command' ? 'true' : 'false');
+        if (document.body.classList.contains('crisis-mode')) {
+          if (mode === 'command') {
+            switchTab(role === 'stake' ? 'stake' : 'ward', false);
+          } else {
+            switchTab('member', false);
+          }
+        }
+      };
+
       window.setCrisisMode = function (on) {
+        const wasOn = document.body.classList.contains('crisis-mode');
+        if (on && !wasOn) {
+          const activePanel = document.querySelector('.tab-panel.active');
+          preCrisisTab = activePanel ? activePanel.id.replace('panel-', '') : 'start';
+        }
         document.body.classList.toggle('crisis-mode', !!on);
         if (on) setRolePickerOpen(false, false);
         const btn = document.getElementById('btn-crisis-mode');
         const txt = document.getElementById('crisis-btn-text');
         if (btn) btn.setAttribute('aria-checked', on ? 'true' : 'false');
-        if (txt) txt.textContent = on ? 'EMERGENCY RIGHT NOW: 0–60 MIN ONLY' : 'MODE: PEACETIME & RECOVERY (Tap for Emergency Only)';
+        if (txt) txt.textContent = on ? 'EMERGENCY MODE — 0–60 Min Actions' : 'MODE: PEACETIME & RECOVERY (Tap for Emergency Only)';
         try { localStorage.setItem('crossroads_v3_crisis', on ? '1' : '0'); } catch (e) {}
         if (on) {
+          syncEmergencyLeaderSwitch();
+          selectEmergencyHazard(null);
+          setCrisisSubView('home');
+        } else if (wasOn) {
+          document.body.removeAttribute('data-crisis-view');
           const role = document.body.getAttribute('data-role') || 'member';
-          const map = { member: 'member', ward: 'ward', stake: 'stake' };
-          switchTab(map[role] || 'start', false);
+          let restoreTab = preCrisisTab || 'start';
+          if (role === 'member' && (restoreTab === 'ward' || restoreTab === 'stake')) restoreTab = 'member';
+          switchTab(restoreTab, false);
         }
       };
 
@@ -3852,6 +4334,12 @@
       // Wire events
       document.getElementById('btn-crisis-mode').addEventListener('click', function () {
         setCrisisMode(!document.body.classList.contains('crisis-mode'));
+      });
+      document.querySelectorAll('.em-hazard-tile').forEach(tile => {
+        tile.addEventListener('click', () => {
+          const key = tile.dataset.emHazard;
+          selectEmergencyHazard(currentEmHazard === key ? null : key);
+        });
       });
 
       const largeBtn = document.getElementById('btn-large-text');
@@ -4110,6 +4598,10 @@
         if (entry.subtab === '3c' && document.body.classList.contains('crisis-mode')) {
           setCrisisMode(false);
         }
+        if (document.body.classList.contains('crisis-mode')) {
+          syncEmergencyLeaderSwitch();
+          setCrisisSubView((entry.tab === 'ward' || entry.tab === 'stake') ? 'command' : 'home');
+        }
         switchTab(entry.tab, false);
         if (entry.tab === 'ward' && entry.subtab && window.setWardSubtab) {
           setWardSubtab(entry.subtab);
@@ -4304,13 +4796,17 @@
       if (params.get('mode') === 'crisis' || safeGet('crossroads_v3_crisis') === '1') {
         setCrisisMode(true);
       }
-      if (location.hash === '#sn-codes-key') {
-        jumpToSN();
-      } else if (location.hash && location.hash.startsWith('#form-')) {
-        const hashTarget = location.hash.slice(1);
-        const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
-        if (matchKey) jumpToForm(matchKey);
+      function handleLocationHash() {
+        if (location.hash === '#sn-codes-key') {
+          jumpToSN();
+        } else if (location.hash && location.hash.startsWith('#form-')) {
+          const hashTarget = location.hash.slice(1);
+          const matchKey = Object.keys(FORM_REGISTRY).find(k => FORM_REGISTRY[k].targetId === hashTarget);
+          if (matchKey) jumpToForm(matchKey);
+        }
       }
+      handleLocationHash();
+      window.addEventListener('hashchange', handleLocationHash);
 
       // Offline status + Service Worker
       updateOfflineBadge();
