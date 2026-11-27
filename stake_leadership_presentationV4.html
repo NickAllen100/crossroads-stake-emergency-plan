@@ -545,6 +545,7 @@
     @media screen {
       body.crisis-mode #emergency-view { display: block; }
       body.crisis-mode[data-crisis-view="command"] #em-hazard-section,
+      body.crisis-mode[data-crisis-view="command"] #em-status-strip,
       body.crisis-mode[data-crisis-view="command"] #em-next60-divider { display: none !important; }
     }
     .em-leader-switch {
@@ -1608,6 +1609,101 @@
     .hash-notice.err { background: var(--crimson-bg); color: var(--crimson); border: 2px solid var(--crimson); }
     .hash-notice.info { background: #eff6ff; color: var(--navy); border: 2px solid var(--navy-mid); }
 
+    /* ===== V4.12 1-TAP SEND STATUS TO MY LEADER COMPOSER ===== */
+    .status-composer {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border: 2px solid var(--navy-mid);
+      border-radius: 10px;
+      scroll-margin-top: 84px;
+    }
+    .status-composer h3 { margin: 0 0 6px; color: var(--navy); font-size: 1rem; }
+    .status-btn-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 8px 0;
+    }
+    .status-choice-btn {
+      min-height: 46px;
+      padding: 8px 6px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.86rem;
+      font-family: inherit;
+      cursor: pointer;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.2;
+      transition: transform 0.1s ease, box-shadow 0.12s ease;
+    }
+    .status-choice-btn small { font-weight: 600; font-size: 0.72rem; opacity: 0.92; margin-top: 2px; }
+    .status-choice-btn[aria-pressed="true"] small { opacity: 1; }
+    .status-choice-btn.green { background: #ecfdf5; color: #065f46; border-color: #10b981; }
+    .status-choice-btn.yellow { background: #fffbeb; color: #92400e; border-color: #f59e0b; }
+    .status-choice-btn.red { background: #fef2f2; color: #991b1b; border-color: #dc2626; }
+    .status-choice-btn.green[aria-pressed="true"] { background: #047857; color: #ffffff; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35); }
+    .status-choice-btn.yellow[aria-pressed="true"] { background: #92400e; color: #ffffff; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35); }
+    .status-choice-btn.red[aria-pressed="true"] { background: #b91c1c; color: #ffffff; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.35); }
+    .status-composer .cell-input { font-size: 1rem; min-height: 44px; padding: 8px 10px; }
+    .status-red-guardrail {
+      display: none;
+      margin: 10px 0;
+      padding: 12px 14px;
+      background: #991b1b;
+      color: #ffffff;
+      border: 2px solid #7f1d1d;
+      border-radius: 8px;
+    }
+    .status-red-guardrail.open { display: block; }
+    .status-red-guardrail-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .status-call911-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #991b1b !important;
+      font-weight: 900;
+      font-size: 0.96rem;
+      text-decoration: none;
+      border: 2px solid #fecaca;
+    }
+    .status-preview-box {
+      margin: 8px 0;
+      padding: 8px 10px;
+      background: #ffffff;
+      border: 1px dashed #94a3b8;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.78rem;
+      color: var(--slate-900);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .status-offline-note {
+      margin: 8px 0 0;
+      font-size: 0.8rem;
+      color: var(--slate-700);
+      font-weight: 600;
+    }
+    @media (max-width: 440px) {
+      .status-btn-row { grid-template-columns: 1fr; }
+    }
+
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
       body.crisis-mode #ward-pane-3a { display: block !important; }
@@ -2053,6 +2149,16 @@
       </div>
     </div>
 
+    <div id="em-status-strip" class="card" style="margin-bottom:10px; border:2px solid var(--green); background:#f8fafc;">
+      <h2 style="margin:0 0 4px; color:var(--navy); font-size:1.02rem;">Send My Status to My Leader (1-Tap SMS / Copy)</h2>
+      <p style="margin:0 0 6px; font-size:0.84rem; color:var(--slate-700);">Tap your household status to compose a quick check-in text to your Ministering Companion or Ward leader.</p>
+      <div class="status-btn-row" role="group" aria-label="Quick send status to leader">
+        <button type="button" class="status-choice-btn green" data-em-status="GREEN" aria-pressed="false" onclick="selectMemberStatus('GREEN', true)">GREEN<small>Safe / OK</small></button>
+        <button type="button" class="status-choice-btn yellow" data-em-status="YELLOW" aria-pressed="false" onclick="selectMemberStatus('YELLOW', true)">YELLOW<small>Need Help</small></button>
+        <button type="button" class="status-choice-btn red" data-em-status="RED" aria-pressed="false" onclick="selectMemberStatus('RED', true)">RED<small>Urgent / Call 911</small></button>
+      </div>
+    </div>
+
     <div id="em-next60-divider" class="em-next60-divider">
       Next 60 Minutes &amp; Household Status (Form M-1 — Scroll Down for Checklist, Green/Yellow/Red &amp; Saved Contacts)
     </div>
@@ -2480,6 +2586,61 @@
             Medical emergency, oxygen &lt;2h, trapped, fire, or gas leak. <strong>Call 911 first</strong>, then post red in front window for your Ministering Companions.
           </div>
         </div>
+
+        <!-- 1-TAP SEND STATUS TO MY LEADER COMPOSER (SCREEN ONLY — HIDDEN IN PRINT) -->
+        <div id="m1-status-composer" class="status-composer screen-only" role="region" aria-label="Send Status to My Leader">
+          <h3>Send Status to My Leader (When Cell / SMS Works)</h3>
+          <div class="status-btn-row" role="group" aria-label="Choose household status color">
+            <button type="button" id="status-btn-green" class="status-choice-btn green" data-status-val="GREEN" aria-pressed="true" onclick="selectMemberStatus('GREEN', false)">GREEN<small>Safe / OK</small></button>
+            <button type="button" id="status-btn-yellow" class="status-choice-btn yellow" data-status-val="YELLOW" aria-pressed="false" onclick="selectMemberStatus('YELLOW', false)">YELLOW<small>Safe Now, Need Help</small></button>
+            <button type="button" id="status-btn-red" class="status-choice-btn red" data-status-val="RED" aria-pressed="false" onclick="selectMemberStatus('RED', false)">RED<small>Urgent / Danger</small></button>
+          </div>
+
+          <div id="status-red-guardrail" class="status-red-guardrail" role="alert">
+            <div class="status-red-guardrail-row">
+              <div>
+                <strong style="font-size:1rem;">LIFE DANGER? CALL 911 FIRST</strong><br>
+                <span style="font-size:0.84rem;">Do not delay emergency medical, fire, or gas help by texting a church leader first. Call 911 immediately, then send your RED text below.</span>
+              </div>
+              <a id="status-call911-btn" class="status-call911-btn" href="tel:911">Call 911</a>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:8px; margin-top:8px;">
+            <div id="status-inline-phone-wrap">
+              <label for="status-inline-phone" style="display:block; font-size:0.8rem; font-weight:700; color:var(--navy); margin-bottom:3px;">Leader / Ministering Companion Mobile #</label>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <input id="status-inline-phone" type="tel" class="cell-input" placeholder="e.g., 801-555-0199 (or leave blank to pick in SMS)">
+                <button type="button" id="status-phone-done-btn" class="btn btn-outline" style="display:none; min-height:44px; padding:6px 12px; font-size:0.82rem; white-space:nowrap;" onclick="toggleInlineStatusPhone(false)">Done</button>
+              </div>
+              <label for="status-save-phone" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; margin-top:6px; color:var(--slate-700); cursor:pointer;">
+                <input id="status-save-phone" type="checkbox" style="width:18px; height:18px;" checked> Save this number to Form M-1
+              </label>
+            </div>
+            <div>
+              <label for="status-note-input" style="display:block; font-size:0.8rem; font-weight:700; color:var(--navy); margin-bottom:3px;">Optional Short Note (Needs, Location, Headcount)</label>
+              <input id="status-note-input" type="text" class="cell-input" maxlength="180" placeholder="e.g., Power out 3 hrs, need insulin cool pack">
+            </div>
+          </div>
+
+          <div id="status-saved-recipient" style="display:none; font-size:0.84rem; margin-top:8px; color:var(--navy);">
+            <strong>Recipient:</strong> <span id="status-saved-recipient-num"></span>
+            <button type="button" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem; margin-left:8px;" onclick="toggleInlineStatusPhone(true)">Change #</button>
+          </div>
+
+          <div id="status-message-preview" class="status-preview-box" aria-label="Status message preview"></div>
+
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:8px;">
+            <a id="status-sms-btn" class="btn" href="#">Text My Leader</a>
+            <button type="button" id="status-copy-btn" class="btn btn-outline" onclick="copyMemberStatusText()">Copy Status Text</button>
+            <span id="status-feedback" style="font-size:0.82rem; font-weight:700; color:var(--green);" role="status" aria-live="polite"></span>
+          </div>
+
+          <p class="status-offline-note">
+            SMS requires cell signal. If texts fail, post <strong>GREEN / YELLOW / RED</strong> in your front window.
+          </p>
+        </div>
+
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Member Sheet 1 (Front) • Keep on Fridge</div>
       </div>
 
@@ -5295,6 +5456,7 @@
         });
         updateCheckProgress();
         updateWaterCalculator();
+        if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
         showPrepMsg('Restored ' + staged.length + ' saved items from your local backup file.', true);
         return true;
       };
@@ -5307,8 +5469,15 @@
           try { localStorage.removeItem(k); } catch (e) {}
           syncInputsForKey(k, kind === 'checkbox' ? '0' : '', kind === 'checkbox');
         });
+        const inlinePh = document.getElementById('status-inline-phone');
+        const noteIn = document.getElementById('status-note-input');
+        const fbEl = document.getElementById('status-feedback');
+        if (inlinePh) inlinePh.value = '';
+        if (noteIn) noteIn.value = '';
+        if (fbEl) fbEl.textContent = '';
         updateCheckProgress();
         updateWaterCalculator();
+        if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
         showPrepMsg('All saved household worksheet and contact data cleared from this device.', true);
         return true;
       };
@@ -5370,6 +5539,9 @@
             syncPrintMirror();
             if (key.startsWith('v4_prep_')) updateWaterCalculator();
             if (key.startsWith('v4_reg_')) updateStakeRegisterTotals();
+            if (key === 'v4_m1_household' || key === 'v4_m1_leader_phone' || key === 'v2_m1_ward') {
+              if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(key === 'v4_m1_leader_phone');
+            }
           };
           el.addEventListener('input', handleValueUpdate);
           el.addEventListener('change', handleValueUpdate);
@@ -5678,7 +5850,7 @@
             const parent = n.parentElement;
             if (!parent) continue;
             if (SKIP_TAGS.has(parent.tagName)) continue;
-            if (parent.closest('a, button, summary, label[for], .print-footer-stamp, .gyr-strip')) continue;
+            if (parent.closest('a, button, summary, label[for], .print-footer-stamp, .gyr-strip, .status-composer')) continue;
             nodes.push(n);
           }
           nodes.forEach(textNode => {
@@ -5894,7 +6066,9 @@
       function sanitizePhoneDigits(raw) {
         if (!raw) return '';
         const cleaned = String(raw).trim().replace(/[^\d+]/g, '');
-        return cleaned.replace(/(?!^)\+/g, '');
+        const norm = cleaned.replace(/(?!^)\+/g, '');
+        const digits = norm.replace(/\D/g, '');
+        return digits.length >= 3 ? norm : '';
       }
       function buildSmsUri(phone, body) {
         const cleanPhone = sanitizePhoneDigits(phone);
@@ -6180,12 +6354,180 @@
         updateCheckProgress();
         updateWaterCalculator();
         updateStakeRegisterTotals();
+        if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
         if (mode === 'blanks') {
           showHashNotice('Filled ' + applied + ' blank field' + (applied === 1 ? '' : 's') + (skipped ? ' (' + skipped + ' existing kept)' : '') + ' from ' + active.cfg.title + '.', 'ok');
         } else {
           showHashNotice('Updated ' + applied + ' matching field' + (applied === 1 ? '' : 's') + ' from ' + active.cfg.title + '.', 'ok');
         }
       };
+
+      // ===== V4.12 1-TAP SEND STATUS TO MY LEADER COMPOSER =====
+      let activeMemberStatus = 'GREEN';
+      let forceInlinePhoneEdit = false;
+
+      function formatLocalTimeShort() {
+        try {
+          return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        } catch (e) {
+          return new Date().toTimeString().slice(0, 5);
+        }
+      }
+
+      window.buildMemberStatusMessage = function () {
+        const labels = {
+          GREEN: 'GREEN - SAFE',
+          YELLOW: 'YELLOW - NEED HELP',
+          RED: 'RED - URGENT'
+        };
+        const statusLabel = Object.prototype.hasOwnProperty.call(labels, activeMemberStatus) ? labels[activeMemberStatus] : 'GREEN - SAFE';
+        const household = getFieldValueByKey('v4_m1_household').trim();
+        const ward = getFieldValueByKey('v2_m1_ward').trim();
+        const noteEl = document.getElementById('status-note-input');
+        const note = noteEl ? noteEl.value.trim() : '';
+        const parts = ['STATUS: ' + statusLabel];
+        if (household) parts.push('Household: ' + household);
+        if (ward) parts.push('Ward: ' + ward);
+        if (note) parts.push('Note: ' + note);
+        parts.push('Time: ' + formatLocalTimeShort());
+        return parts.join(' | ');
+      };
+
+      function getEffectiveStatusPhone() {
+        const saved = getFieldValueByKey('v4_m1_leader_phone').trim();
+        const inlineEl = document.getElementById('status-inline-phone');
+        const inlineVal = inlineEl ? inlineEl.value.trim() : '';
+        if (forceInlinePhoneEdit || !saved) return inlineVal;
+        return saved;
+      }
+
+      window.toggleInlineStatusPhone = function (show) {
+        forceInlinePhoneEdit = !!show;
+        const inlineEl = document.getElementById('status-inline-phone');
+        if (show && inlineEl) {
+          inlineEl.value = getFieldValueByKey('v4_m1_leader_phone').trim();
+        }
+        refreshMemberStatusComposer(false);
+        if (show && inlineEl) inlineEl.focus();
+      };
+
+      window.refreshMemberStatusComposer = function (resetExternalEdit) {
+        if (resetExternalEdit) forceInlinePhoneEdit = false;
+        const savedPhone = getFieldValueByKey('v4_m1_leader_phone').trim();
+        const inlineWrap = document.getElementById('status-inline-phone-wrap');
+        const inlineEl = document.getElementById('status-inline-phone');
+        const doneBtn = document.getElementById('status-phone-done-btn');
+        const savedRow = document.getElementById('status-saved-recipient');
+        const savedNum = document.getElementById('status-saved-recipient-num');
+        const redBox = document.getElementById('status-red-guardrail');
+        const previewEl = document.getElementById('status-message-preview');
+        const smsBtn = document.getElementById('status-sms-btn');
+
+        const isEditingInline = forceInlinePhoneEdit || !savedPhone;
+        if (inlineWrap) inlineWrap.style.display = isEditingInline ? 'block' : 'none';
+        if (doneBtn) doneBtn.style.display = (isEditingInline && !!savedPhone) ? 'inline-flex' : 'none';
+        if (savedRow) savedRow.style.display = isEditingInline ? 'none' : 'block';
+        if (savedNum) savedNum.textContent = savedPhone;
+
+        document.querySelectorAll('#m1-status-composer .status-choice-btn').forEach(btn => {
+          btn.setAttribute('aria-pressed', btn.dataset.statusVal === activeMemberStatus ? 'true' : 'false');
+        });
+        document.querySelectorAll('#em-status-strip .status-choice-btn').forEach(btn => {
+          btn.setAttribute('aria-pressed', btn.dataset.emStatus === activeMemberStatus ? 'true' : 'false');
+        });
+
+        if (redBox) redBox.classList.toggle('open', activeMemberStatus === 'RED');
+
+        const msg = buildMemberStatusMessage();
+        if (previewEl) previewEl.textContent = msg;
+
+        const phone = getEffectiveStatusPhone();
+        const cleanPhone = sanitizePhoneDigits(phone);
+        if (smsBtn) {
+          smsBtn.setAttribute('href', buildSmsUri(cleanPhone, msg));
+          if (activeMemberStatus === 'RED') {
+            smsBtn.textContent = cleanPhone ? 'Send RED Text to Leader' : 'Open RED SMS (Pick Contact)';
+            smsBtn.style.background = 'var(--crimson)';
+          } else {
+            smsBtn.textContent = cleanPhone ? 'Text My Leader' : 'Open SMS (Pick Contact)';
+            smsBtn.style.background = '';
+          }
+        }
+      };
+
+      window.selectMemberStatus = function (status, fromEmergencyStrip) {
+        if (!['GREEN', 'YELLOW', 'RED'].includes(status)) status = 'GREEN';
+        activeMemberStatus = status;
+        if (fromEmergencyStrip && document.body.classList.contains('crisis-mode')) {
+          setCrisisSubView('home');
+        }
+        refreshMemberStatusComposer(false);
+        const fb = document.getElementById('status-feedback');
+        if (fb) fb.textContent = '';
+        if (fromEmergencyStrip) {
+          const comp = document.getElementById('m1-status-composer');
+          if (comp) {
+            comp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const targetFocus = status === 'RED' ? document.getElementById('status-call911-btn') : document.getElementById('status-note-input');
+            if (targetFocus) targetFocus.focus({ preventScroll: true });
+          }
+        }
+      };
+
+      function persistInlineStatusPhoneIfChecked() {
+        const savedPhone = getFieldValueByKey('v4_m1_leader_phone').trim();
+        const isEditingInline = forceInlinePhoneEdit || !savedPhone;
+        if (!isEditingInline) return;
+        const inlineEl = document.getElementById('status-inline-phone');
+        const saveChk = document.getElementById('status-save-phone');
+        if (!inlineEl || !saveChk || !saveChk.checked) return;
+        const val = inlineEl.value.trim();
+        if (!val) {
+          try { localStorage.removeItem('v4_m1_leader_phone'); } catch (e) {}
+          syncInputsForKey('v4_m1_leader_phone', '', false);
+          return;
+        }
+        try { localStorage.setItem('v4_m1_leader_phone', val); } catch (e) {}
+        syncInputsForKey('v4_m1_leader_phone', val, false);
+      }
+
+      window.copyMemberStatusText = function () {
+        persistInlineStatusPhoneIfChecked();
+        refreshMemberStatusComposer(false);
+        const msg = buildMemberStatusMessage();
+        const fb = document.getElementById('status-feedback');
+        copyTextToClipboard(msg).then(ok => {
+          if (fb) fb.textContent = ok ? 'Copied! Paste into any text or group message.' : 'Copy failed — select preview text above.';
+        });
+      };
+
+      const statusInlinePhoneEl = document.getElementById('status-inline-phone');
+      const statusSavePhoneEl = document.getElementById('status-save-phone');
+      const statusNoteEl = document.getElementById('status-note-input');
+      const statusSmsBtnEl = document.getElementById('status-sms-btn');
+      if (statusInlinePhoneEl) {
+        statusInlinePhoneEl.addEventListener('input', () => {
+          forceInlinePhoneEdit = true;
+          persistInlineStatusPhoneIfChecked();
+          refreshMemberStatusComposer(false);
+        });
+      }
+      if (statusSavePhoneEl) {
+        statusSavePhoneEl.addEventListener('change', () => {
+          persistInlineStatusPhoneIfChecked();
+          refreshMemberStatusComposer(false);
+        });
+      }
+      if (statusNoteEl) {
+        statusNoteEl.addEventListener('input', () => refreshMemberStatusComposer(false));
+      }
+      if (statusSmsBtnEl) {
+        statusSmsBtnEl.addEventListener('click', () => {
+          persistInlineStatusPhoneIfChecked();
+          refreshMemberStatusComposer(false);
+        });
+      }
+      refreshMemberStatusComposer(true);
 
       function handleLocationHash() {
         if (location.hash && location.hash.startsWith('#prefill=')) {
