@@ -1542,6 +1542,72 @@
     }
     .reg-total-row td:first-child { text-align: left; }
 
+    /* ===== V4.11 CASCADING PREFILL SHARE & REVIEW UI ===== */
+    .share-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 8px 0;
+      padding: 8px 10px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      font-size: 0.82rem;
+    }
+    .share-url-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: #f8fafc;
+      color: var(--slate-900);
+      margin: 8px 0;
+    }
+    .prefill-list {
+      max-height: 46vh;
+      overflow-y: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      margin: 10px 0;
+      background: #ffffff;
+    }
+    .prefill-item {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--slate-200);
+      font-size: 0.84rem;
+    }
+    .prefill-item:last-child { border-bottom: none; }
+    .prefill-item-label { font-weight: 800; color: var(--navy); }
+    .prefill-item-val { color: var(--slate-900); margin-top: 2px; word-break: break-word; }
+    .prefill-item-meta { font-size: 0.76rem; margin-top: 3px; color: var(--slate-700); word-break: break-word; overflow-wrap: anywhere; }
+    .prefill-item-meta.blank { color: var(--green); font-weight: 700; }
+    .prefill-item-meta.existing { color: var(--amber); font-weight: 700; }
+    .hash-notice {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2500;
+      width: min(680px, calc(100vw - 24px));
+      padding: 12px 14px;
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.25);
+      font-size: 0.88rem;
+      font-weight: 700;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .hash-notice.open { display: flex; }
+    .hash-notice.ok { background: var(--green-bg); color: var(--green); border: 2px solid var(--green); }
+    .hash-notice.err { background: var(--crimson-bg); color: var(--crimson); border: 2px solid var(--crimson); }
+    .hash-notice.info { background: #eff6ff; color: var(--navy); border: 2px solid var(--navy-mid); }
+
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
       body.crisis-mode #ward-pane-3a { display: block !important; }
@@ -2258,7 +2324,10 @@
           </div>
 
           <!-- MODULE 3: HOUSEHOLD CONTACTS & REUNIFICATION (SYNCED 1:1 WITH FORM M-1 BACK) -->
-          <h3>3. Household Contacts &amp; Reunification (Auto-Syncs 1:1 With Printable Form M-1)</h3>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h3 style="margin-bottom:4px;">3. Household Contacts &amp; Reunification (Auto-Syncs 1:1 With Printable Form M-1)</h3>
+            <button type="button" class="btn btn-outline screen-only" style="min-height:36px; padding:6px 12px; font-size:0.82rem;" onclick="openSharePrefillModal('family')">Share Family Plan</button>
+          </div>
           <div class="fill-grid">
             <div class="fill-field"><label for="prep-m1-household">Our Household Name &amp; Street (Optional)</label><input id="prep-m1-household" data-save-key="v4_m1_household" placeholder="e.g., Smith Family — 412 W Aspen Hills Blvd"></div>
             <div class="fill-field"><label for="prep-m1-leader-phone">Ministering Companion / Leader Mobile # (For 1-Tap Check-In)</label><input id="prep-m1-leader-phone" type="tel" data-save-key="v4_m1_leader_phone" placeholder="e.g., 801-555-0199"></div>
@@ -2421,7 +2490,10 @@
             <span class="sheet-tag teal">Member Sheet 1 (Back) • Auto-Saves Privately on This Device</span>
             <h2 class="sheet-title">Household Contacts, Reunification, 2-Min How-Tos &amp; Neighbor Care Slip</h2>
           </div>
-          <span class="screen-only" style="font-size:0.8rem; color:var(--slate-700);">Saved only in your browser — never sent online.</span>
+          <div class="screen-only" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:0.8rem; color:var(--slate-700);">Saved only in your browser — never sent online.</span>
+            <button type="button" class="btn btn-outline" style="min-height:36px; padding:6px 12px; font-size:0.82rem;" onclick="openSharePrefillModal('family')">Share Family Plan</button>
+          </div>
         </div>
 
         <div class="fill-grid">
@@ -2837,6 +2909,12 @@
           <option value="Harvest Hills 8th"></option>
           <option value="Crossroads"></option>
         </datalist>
+
+        <div class="share-action-bar screen-only" role="group" aria-label="Share Ward setup links">
+          <strong>Prefill Links (<code>#hash</code> only &middot; Excludes <code>W-1</code> &amp; <code>W-2/3</code>):</strong>
+          <button type="button" class="btn btn-outline" style="min-height:36px; padding:6px 12px; font-size:0.82rem;" onclick="openSharePrefillModal('ward-council')">Share to Ward Council</button>
+          <button type="button" class="btn" style="min-height:36px; padding:6px 12px; font-size:0.82rem;" onclick="openSharePrefillModal('ward-member')">Share Ward Setup to Members</button>
+        </div>
 
         <div class="grid-2">
           <div>
@@ -3376,7 +3454,10 @@
             <span class="sheet-tag">Stake Sheet 1 (Front &amp; Back) • Sheet S-A (Forms S-0 &amp; S-3)</span>
             <h2 class="sheet-title">Stake Presidency Command, Succession &amp; HAM/FRS Net Control</h2>
           </div>
-          <span style="font-size:0.84rem;"><strong>Primary Command:</strong> Bldg 1 &rarr; <strong>Fallback:</strong> Shay Park Pavilion</span>
+          <div style="display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-size:0.84rem;"><strong>Primary Command:</strong> Bldg 1 &rarr; <strong>Fallback:</strong> Shay Park Pavilion</span>
+            <button type="button" class="btn btn-outline screen-only" style="min-height:36px; padding:6px 12px; font-size:0.82rem;" onclick="openSharePrefillModal('stake')">Share Stake Setup to Wards</button>
+          </div>
         </div>
 
         <div class="grid-2">
@@ -4497,6 +4578,49 @@
     </div>
   </div>
 
+  <div id="hash-notice-banner" class="hash-notice screen-only" role="status" aria-live="polite">
+    <span id="hash-notice-text"></span>
+    <button type="button" class="btn btn-outline" style="min-height:32px; padding:4px 10px; font-size:0.78rem;" onclick="hideHashNotice()">Dismiss</button>
+  </div>
+
+  <div id="share-link-modal" class="modal-backdrop screen-only" role="dialog" aria-modal="true" aria-labelledby="share-link-title">
+    <div class="modal-dialog" style="max-width:620px;">
+      <div class="modal-head">
+        <h2 id="share-link-title" style="margin:0; font-size:1.12rem; color:var(--navy);">Share Privacy-Safe Prefill Link</h2>
+        <button type="button" class="btn btn-outline" style="min-height:36px;" onclick="closeModal('share-link-modal')">Close</button>
+      </div>
+      <div class="card card-warn" style="padding:8px 10px; margin:8px 0; font-size:0.82rem;">
+        <strong>Privacy Notice (<code>GH 22.4.5</code>):</strong> Share privately with family/unit only—never post leader phone numbers publicly. Data stays strictly inside the <code>#hash</code> fragment (never sent to servers), and <strong>Form W-1 &amp; W-2/3 are never included</strong>.
+      </div>
+      <p id="share-link-summary" style="font-size:0.85rem; margin:6px 0;"></p>
+      <label for="share-link-url" style="font-size:0.8rem; font-weight:700; color:var(--slate-700);">Generated Prefill Link:</label>
+      <input id="share-link-url" class="share-url-input" type="text" readonly>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+        <button type="button" id="share-link-native-btn" class="btn" style="display:none;" onclick="nativeShareLink()">Share</button>
+        <button type="button" id="share-link-copy-btn" class="btn" onclick="copyShareLink()">Copy Link</button>
+        <a id="share-link-sms-btn" class="btn btn-outline" href="#">Text Link (SMS)</a>
+      </div>
+      <div id="share-link-feedback" style="font-size:0.82rem; font-weight:700; color:var(--green); margin-top:8px; min-height:1.1em;" role="status" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div id="prefill-review-modal" class="modal-backdrop screen-only" role="dialog" aria-modal="true" aria-labelledby="prefill-review-title">
+    <div class="modal-dialog" style="max-width:640px;">
+      <div class="modal-head">
+        <h2 id="prefill-review-title" style="margin:0; font-size:1.12rem; color:var(--navy);">Review &amp; Accept Shared Setup</h2>
+        <button type="button" class="btn btn-outline" style="min-height:36px;" onclick="applyPendingPrefill('cancel')">Cancel</button>
+      </div>
+      <p id="prefill-review-subtitle" style="font-size:0.86rem; margin:6px 0 8px; color:var(--slate-700);"></p>
+      <div id="prefill-review-list" class="prefill-list" aria-label="Incoming shared fields"></div>
+      <p style="font-size:0.8rem; color:var(--slate-700); margin:4px 0 10px;">Nothing has been changed yet. Saved only in your browser—every field remains editable anytime.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <button type="button" id="prefill-accept-blanks-btn" class="btn" style="background:var(--green);" onclick="applyPendingPrefill('blanks')">Fill Blank Fields Only (Keep Mine)</button>
+        <button type="button" id="prefill-accept-overwrite-btn" class="btn btn-outline" onclick="applyPendingPrefill('overwrite')">Overwrite Matching Fields</button>
+        <button type="button" id="prefill-cancel-btn" class="btn btn-outline" onclick="applyPendingPrefill('cancel')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <div id="sn-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="sn-modal-title">
     <div class="modal-dialog" style="max-width:740px;">
       <div class="modal-head">
@@ -4933,6 +5057,9 @@
       window.closeModal = function (id) {
         const el = document.getElementById(id);
         if (el) el.classList.remove('open');
+        if (id === 'prefill-review-modal' && typeof window.cancelPendingPrefillIfOpen === 'function') {
+          window.cancelPendingPrefillIfOpen();
+        }
         if (lastFocus) lastFocus.focus();
       };
 
@@ -5666,8 +5793,404 @@
       if (params.get('mode') === 'crisis' || safeGet('crossroads_v3_crisis') === '1') {
         setCrisisMode(true);
       }
+      // ===== V4.11 CASCADING PRIVACY-SAFE #HASH PREFILL & SHARE ENGINE =====
+      const PREFILL_FIELD_LABELS = {
+        v4_stake_pres: 'Stake Pres / 1st / 2nd / Clerk',
+        v4_stake_prep_phone: 'Stake Command / Prep Rep Mobile # (W-5 Intake)',
+        v4_stake_area70: 'Area Seventy & Coordinating Chair',
+        v4_stake_fm: 'Church FM (24/7) & WSRM',
+        v4_stake_risk: 'Church Risk Mgmt & Area Comms',
+        v4_stake_neighbor_stakes: 'Lehi & American Fork Stake Pres',
+        v4_stake_bishops_1: 'Aspen Hills / Shay Park Bishops',
+        v4_stake_bishops_2: 'HH 10th / SA 11th YSA Bishops',
+        v4_stake_bishops_3: 'HH 1st / HH 8th / Crossroads Bishops',
+        v4_stake_rv_rs: 'Riverview Branch Pres / Stake RS',
+        v4_stake_gobox_custodian: 'Shay Park 12V Go-Box Custodian',
+        v4_stake_gobox_backup: 'Shay Park 12V Go-Box Backup',
+        v4_stake_hc1_lead: 'HC Track 1 (Facilities) Lead',
+        v4_stake_hc1_backup: 'HC Track 1 (Facilities) Backup',
+        v4_stake_hc2_lead: 'HC Track 2 (Care Center) Lead',
+        v4_stake_hc2_backup: 'HC Track 2 (Care Center) Backup',
+        v4_stake_hc3_lead: 'HC Track 3 (Comms/Logistics) Lead',
+        v4_stake_hc3_backup: 'HC Track 3 (Comms/Logistics) Backup',
+        v4_stake_hc4_lead: 'HC Track 4 (Public Safety/Civil) Lead',
+        v4_stake_hc4_backup: 'HC Track 4 (Public Safety/Civil) Backup',
+        v4_stake_shutoff_gas: 'Bldg 1/2 Gas Shutoff Notes',
+        v4_stake_shutoff_water: 'Bldg 1/2 Water Shutoff Notes',
+        v4_stake_shutoff_hvac: 'Bldg 1/2 HVAC Shutoff Notes',
+        v4_ward_name: 'Ward Name',
+        v4_ward_frs: 'Assigned Ward FRS Channel',
+        v4_ward_rally: 'Outdoor / Home Ward Rally Point',
+        v4_ward_bishopric: 'Bishop / 1st / 2nd Counselors',
+        v4_ward_clerk: 'Ward Clerk & Exec Secretary',
+        v4_ward_eqp: 'EQ Pres & EQ 1st Counselor',
+        v4_ward_rsp: 'Ward RS Pres & RS 1st Counselor',
+        v4_ward_spec: 'Ward Welfare Specialist',
+        v4_ward_ham: 'Ward HAM Operator / Call Sign',
+        v4_ward_stake_contact: 'Stake Pres Cell & Assigned HC',
+        v4_ward_stake_sms: 'Stake Command / Prep Rep Mobile # (W-5 SMS)',
+        v4_ward_member_checkin: 'Default Ward Check-In Mobile # (For Members)',
+        v4_m1_household: 'Our Household Name & Street',
+        v4_m1_leader_phone: 'Ministering Companion / Leader Mobile #',
+        v2_m1_ward: 'Our Ward & Assigned FRS Channel',
+        v2_m1_relay: 'Out-of-Area Family Relay',
+        v2_m1_school: 'School / Campus / Workplace Emergency Line',
+        v2_m1_skyward: 'Authorized School Backup Pickup',
+        v2_m1_commuter: 'East-of-River Commuter Safe Contact',
+        v2_m1_landlord: 'Landlord / Property Mgmt 24/7',
+        v2_m1_ins: 'Home / Renter Insurance',
+        v2_m1_buddy: 'Ministering Companion, District Leader & Rally Spot',
+        v2_m1_dme: 'Doctor / Pharmacy / Oxygen-DME Supplier',
+        v2_m1_pets: 'Pediatric Rescue Meds / Pets / Special Notes',
+        v4_prep_loc_outside: 'Immediate Outside-Home Meeting Spot',
+        v4_prep_loc_rally: 'Neighborhood / Ward Rally Spot'
+      };
+
+      const PREFILL_SCOPES = {
+        stake: {
+          title: 'Stake Setup (Stake → Ward Leaders)',
+          smsIntro: 'Crossroads Stake Emergency Plan — Stake leadership & Ward W-0 setup link (share privately with Ward leaders only): ',
+          allowedKeys: new Set([
+            'v4_stake_pres', 'v4_stake_prep_phone', 'v4_stake_area70', 'v4_stake_fm', 'v4_stake_risk',
+            'v4_stake_neighbor_stakes', 'v4_stake_bishops_1', 'v4_stake_bishops_2', 'v4_stake_bishops_3',
+            'v4_stake_rv_rs', 'v4_stake_gobox_custodian', 'v4_stake_gobox_backup',
+            'v4_stake_hc1_lead', 'v4_stake_hc1_backup', 'v4_stake_hc2_lead', 'v4_stake_hc2_backup',
+            'v4_stake_hc3_lead', 'v4_stake_hc3_backup', 'v4_stake_hc4_lead', 'v4_stake_hc4_backup',
+            'v4_stake_shutoff_gas', 'v4_stake_shutoff_water', 'v4_stake_shutoff_hvac',
+            'v4_ward_stake_contact', 'v4_ward_stake_sms'
+          ])
+        },
+        'ward-council': {
+          title: 'Ward Council Setup (Full Form W-0 Roster)',
+          smsIntro: 'Crossroads Stake Emergency Plan — Ward Council Form W-0 roster link (share privately with Ward Council only): ',
+          allowedKeys: new Set([
+            'v4_ward_name', 'v4_ward_frs', 'v4_ward_rally', 'v4_ward_bishopric', 'v4_ward_clerk',
+            'v4_ward_eqp', 'v4_ward_rsp', 'v4_ward_spec', 'v4_ward_ham',
+            'v4_ward_stake_contact', 'v4_ward_stake_sms', 'v4_ward_member_checkin'
+          ])
+        },
+        'ward-member': {
+          title: 'Ward Setup (Member Basics)',
+          smsIntro: 'Our Ward Emergency Plan setup link (Ward FRS channel, rally point & check-in contact): ',
+          allowedKeys: new Set([
+            'v2_m1_ward', 'v4_prep_loc_rally', 'v2_m1_buddy', 'v4_m1_leader_phone'
+          ])
+        },
+        family: {
+          title: 'Family Plan (Form M-1 Household Contacts)',
+          smsIntro: 'Our Family Emergency Plan contacts & rally spots (Form M-1 setup link): ',
+          allowedKeys: new Set([
+            'v4_m1_household', 'v4_m1_leader_phone', 'v2_m1_ward', 'v2_m1_relay', 'v2_m1_school',
+            'v2_m1_skyward', 'v2_m1_commuter', 'v2_m1_landlord', 'v2_m1_ins', 'v2_m1_buddy',
+            'v2_m1_dme', 'v2_m1_pets', 'v4_prep_loc_outside', 'v4_prep_loc_rally'
+          ])
+        }
+      };
+
+      function isIOSDevice() {
+        const ua = navigator.userAgent || '';
+        return /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      }
+      function sanitizePhoneDigits(raw) {
+        if (!raw) return '';
+        const cleaned = String(raw).trim().replace(/[^\d+]/g, '');
+        return cleaned.replace(/(?!^)\+/g, '');
+      }
+      function buildSmsUri(phone, body) {
+        const cleanPhone = sanitizePhoneDigits(phone);
+        const sep = isIOSDevice() ? '&' : '?';
+        return 'sms:' + cleanPhone + sep + 'body=' + encodeURIComponent(body || '');
+      }
+      function copyTextToClipboard(text) {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          return navigator.clipboard.writeText(text).then(() => true).catch(() => fallbackCopy(text));
+        }
+        return Promise.resolve(fallbackCopy(text));
+      }
+      function fallbackCopy(text) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          const ok = document.execCommand('copy');
+          ta.remove();
+          return ok;
+        } catch (e) {
+          return false;
+        }
+      }
+      function encodeHashPayload(obj) {
+        const json = JSON.stringify(obj);
+        const bytes = new TextEncoder().encode(json);
+        let bin = '';
+        for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+        return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+      function decodeHashPayload(b64u) {
+        if (typeof b64u !== 'string' || !b64u || b64u.length > 16000 || !/^[A-Za-z0-9_-]+$/.test(b64u)) return null;
+        try {
+          let b64 = b64u.replace(/-/g, '+').replace(/_/g, '/');
+          while (b64.length % 4) b64 += '=';
+          const bin = atob(b64);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          const json = new TextDecoder().decode(bytes);
+          return JSON.parse(json);
+        } catch (e) {
+          return null;
+        }
+      }
+      function clearLocationHash() {
+        try {
+          history.replaceState(null, '', location.pathname + location.search);
+        } catch (e) {
+          try { location.hash = ''; } catch (e2) {}
+        }
+      }
+      function getCleanBaseUrl() {
+        return location.href.split('#')[0].split('?')[0];
+      }
+      function getPrefillScope(scope) {
+        return (typeof scope === 'string' && Object.prototype.hasOwnProperty.call(PREFILL_SCOPES, scope))
+          ? PREFILL_SCOPES[scope]
+          : null;
+      }
+      function getFieldValueByKey(key) {
+        const el = Array.from(document.querySelectorAll('[data-save-key]')).find(node => node.dataset.saveKey === key);
+        if (el) return el.type === 'checkbox' ? (el.checked ? '1' : '0') : String(el.value || '');
+        const stored = safeGet(key);
+        return stored == null ? '' : String(stored);
+      }
+
+      let hashNoticeTimer = null;
+      window.showHashNotice = function (msg, kind) {
+        const el = document.getElementById('hash-notice-banner');
+        const txt = document.getElementById('hash-notice-text');
+        if (!el || !txt) return;
+        txt.textContent = msg;
+        el.className = 'hash-notice screen-only open ' + (kind || 'info');
+        if (hashNoticeTimer) clearTimeout(hashNoticeTimer);
+        hashNoticeTimer = setTimeout(() => { el.classList.remove('open'); }, 9000);
+      };
+      window.hideHashNotice = function () {
+        const el = document.getElementById('hash-notice-banner');
+        if (el) el.classList.remove('open');
+      };
+
+      window.buildPrefillPayload = function (scope) {
+        const cfg = getPrefillScope(scope);
+        if (!cfg) return null;
+        const data = {};
+        if (scope === 'ward-member') {
+          const wName = getFieldValueByKey('v4_ward_name').trim();
+          const wFrsRaw = getFieldValueByKey('v4_ward_frs').trim();
+          const wFrs = wFrsRaw.replace(/^(?:frs\s*)?(?:ch\.?\s*)?/i, '').trim();
+          const wRally = getFieldValueByKey('v4_ward_rally').trim();
+          const wCheckin = getFieldValueByKey('v4_ward_member_checkin').trim();
+          if (wName || wFrs) {
+            const wardLabel = wName ? (wName.toLowerCase().includes('ward') || wName.toLowerCase().includes('branch') ? wName : wName + ' Ward') : 'Our Ward';
+            data.v2_m1_ward = wFrs ? (wardLabel + ' — FRS Ch ' + wFrs + ' (Tone 0)') : wardLabel;
+          }
+          if (wRally) {
+            data.v4_prep_loc_rally = wRally;
+            data.v2_m1_buddy = 'Ward Rally: ' + wRally;
+          }
+          if (wCheckin) data.v4_m1_leader_phone = wCheckin;
+        } else {
+          cfg.allowedKeys.forEach(k => {
+            if (scope === 'stake' && (k === 'v4_ward_stake_contact' || k === 'v4_ward_stake_sms')) return;
+            const v = getFieldValueByKey(k).trim();
+            if (v) data[k] = v;
+          });
+          if (scope === 'stake') {
+            const sp = getFieldValueByKey('v4_stake_pres').trim();
+            const hc3 = getFieldValueByKey('v4_stake_hc3_lead').trim();
+            const prepPh = getFieldValueByKey('v4_stake_prep_phone').trim();
+            if (sp || hc3) data.v4_ward_stake_contact = [sp, hc3 ? 'HC: ' + hc3 : ''].filter(Boolean).join(' | ');
+            if (prepPh) data.v4_ward_stake_sms = prepPh;
+          }
+        }
+        // Strict allowlist enforcement on encode (never includes Form W-1 or W-2/3)
+        const filtered = {};
+        Object.keys(data).forEach(k => {
+          if (cfg.allowedKeys.has(k) && typeof data[k] === 'string' && data[k].trim()) {
+            filtered[k] = data[k].trim().slice(0, 240);
+          }
+        });
+        return { v: 1, scope, data: filtered };
+      };
+
+      window.buildPrefillUrl = function (scope) {
+        const payload = buildPrefillPayload(scope);
+        if (!payload) return '';
+        const encoded = encodeHashPayload(payload);
+        return getCleanBaseUrl() + '#prefill=' + encoded;
+      };
+
+      let activeShareState = null;
+      window.openSharePrefillModal = function (scope) {
+        const cfg = getPrefillScope(scope);
+        if (!cfg) return;
+        const payload = buildPrefillPayload(scope);
+        const count = Object.keys(payload.data).length;
+        const url = getCleanBaseUrl() + '#prefill=' + encodeHashPayload(payload);
+        activeShareState = { scope, cfg, payload, url, count };
+
+        document.getElementById('share-link-title').textContent = 'Share: ' + cfg.title;
+        const sumEl = document.getElementById('share-link-summary');
+        const urlInput = document.getElementById('share-link-url');
+        const smsBtn = document.getElementById('share-link-sms-btn');
+        const nativeBtn = document.getElementById('share-link-native-btn');
+        const copyBtn = document.getElementById('share-link-copy-btn');
+        const fb = document.getElementById('share-link-feedback');
+        fb.textContent = '';
+
+        if (count === 0) {
+          sumEl.textContent = 'No fields are filled in yet for this section. Type at least one field first, then click Share again to generate a prefill link.';
+          urlInput.value = '';
+          copyBtn.disabled = true;
+          smsBtn.removeAttribute('href');
+          smsBtn.setAttribute('aria-disabled', 'true');
+          smsBtn.tabIndex = -1;
+          smsBtn.style.pointerEvents = 'none';
+          smsBtn.style.opacity = '0.5';
+          nativeBtn.style.display = 'none';
+        } else {
+          sumEl.textContent = 'Includes ' + count + ' filled field' + (count === 1 ? '' : 's') + '. Recipients will review every field before choosing whether to fill blanks or overwrite.';
+          urlInput.value = url;
+          copyBtn.disabled = false;
+          smsBtn.setAttribute('href', buildSmsUri('', cfg.smsIntro + url));
+          smsBtn.removeAttribute('aria-disabled');
+          smsBtn.removeAttribute('tabindex');
+          smsBtn.style.pointerEvents = '';
+          smsBtn.style.opacity = '';
+          nativeBtn.style.display = (typeof navigator.share === 'function') ? 'inline-flex' : 'none';
+        }
+        openModal('share-link-modal');
+      };
+
+      window.copyShareLink = function () {
+        if (!activeShareState || !activeShareState.count) return;
+        const fb = document.getElementById('share-link-feedback');
+        copyTextToClipboard(activeShareState.url).then(ok => {
+          fb.textContent = ok ? 'Link copied! Paste privately in SMS or email.' : 'Select the link box above and copy manually.';
+        });
+      };
+
+      window.nativeShareLink = function () {
+        if (!activeShareState || !activeShareState.count || typeof navigator.share !== 'function') return;
+        const fb = document.getElementById('share-link-feedback');
+        navigator.share({
+          title: activeShareState.cfg.title,
+          text: activeShareState.cfg.smsIntro.trim(),
+          url: activeShareState.url
+        }).then(() => {
+          fb.textContent = 'Shared via device share sheet.';
+        }).catch(() => {});
+      };
+
+      let pendingPrefill = null;
+      window.cancelPendingPrefillIfOpen = function () {
+        if (!pendingPrefill) return;
+        pendingPrefill = null;
+        clearLocationHash();
+        showHashNotice('Shared setup cancelled — zero fields were changed.', 'info');
+      };
+
+      function handlePrefillHash(rawHash) {
+        const b64 = rawHash.slice('#prefill='.length);
+        clearLocationHash();
+        const parsed = decodeHashPayload(b64);
+        const cfg = parsed && typeof parsed === 'object' ? getPrefillScope(parsed.scope) : null;
+        if (!parsed || typeof parsed !== 'object' || parsed.v !== 1 || !cfg || !parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) {
+          showHashNotice('Could not read that share link — it may be incomplete or corrupted. Your saved plan data was not changed.', 'err');
+          return;
+        }
+        const entries = [];
+        Object.keys(parsed.data).forEach(k => {
+          if (!Object.prototype.hasOwnProperty.call(parsed.data, k)) return;
+          if (!cfg.allowedKeys.has(k)) return;
+          const v = parsed.data[k];
+          if (typeof v !== 'string') return;
+          const trimmed = v.trim().slice(0, 240);
+          if (!trimmed) return;
+          const lbl = Object.prototype.hasOwnProperty.call(PREFILL_FIELD_LABELS, k) ? PREFILL_FIELD_LABELS[k] : k;
+          entries.push({ key: k, label: lbl, value: trimmed });
+        });
+        if (!entries.length) {
+          showHashNotice('That share link contained no recognized fields for its scope. Your saved data was not changed.', 'err');
+          return;
+        }
+        pendingPrefill = { scope: parsed.scope, cfg, entries };
+        const subEl = document.getElementById('prefill-review-subtitle');
+        const listEl = document.getElementById('prefill-review-list');
+        subEl.textContent = 'Sender tier: ' + cfg.title + ' (' + entries.length + ' field' + (entries.length === 1 ? '' : 's') + ' ready to review)';
+        while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+        entries.forEach(item => {
+          const row = document.createElement('div');
+          row.className = 'prefill-item';
+          const lbl = document.createElement('div');
+          lbl.className = 'prefill-item-label';
+          lbl.textContent = item.label;
+          const val = document.createElement('div');
+          val.className = 'prefill-item-val';
+          val.textContent = item.value;
+          const meta = document.createElement('div');
+          const current = getFieldValueByKey(item.key).trim();
+          if (current) {
+            meta.className = 'prefill-item-meta existing';
+            meta.textContent = 'Currently saved on this device: ' + current;
+          } else {
+            meta.className = 'prefill-item-meta blank';
+            meta.textContent = 'Currently blank — will be filled';
+          }
+          row.appendChild(lbl);
+          row.appendChild(val);
+          row.appendChild(meta);
+          listEl.appendChild(row);
+        });
+        openModal('prefill-review-modal');
+      }
+
+      window.applyPendingPrefill = function (mode) {
+        const active = pendingPrefill;
+        pendingPrefill = null;
+        closeModal('prefill-review-modal');
+        clearLocationHash();
+        if (!active || (mode !== 'blanks' && mode !== 'overwrite')) {
+          showHashNotice('Shared setup cancelled — zero fields were changed.', 'info');
+          return;
+        }
+        let applied = 0;
+        let skipped = 0;
+        active.entries.forEach(item => {
+          const current = getFieldValueByKey(item.key).trim();
+          if (mode === 'blanks' && current) {
+            skipped++;
+            return;
+          }
+          try { localStorage.setItem(item.key, item.value); } catch (e) {}
+          syncInputsForKey(item.key, item.value, false);
+          applied++;
+        });
+        updateCheckProgress();
+        updateWaterCalculator();
+        updateStakeRegisterTotals();
+        if (mode === 'blanks') {
+          showHashNotice('Filled ' + applied + ' blank field' + (applied === 1 ? '' : 's') + (skipped ? ' (' + skipped + ' existing kept)' : '') + ' from ' + active.cfg.title + '.', 'ok');
+        } else {
+          showHashNotice('Updated ' + applied + ' matching field' + (applied === 1 ? '' : 's') + ' from ' + active.cfg.title + '.', 'ok');
+        }
+      };
+
       function handleLocationHash() {
-        if (location.hash === '#sn-codes-key') {
+        if (location.hash && location.hash.startsWith('#prefill=')) {
+          handlePrefillHash(location.hash);
+        } else if (location.hash === '#sn-codes-key') {
           jumpToSN();
         } else if (location.hash && location.hash.startsWith('#form-')) {
           const hashTarget = location.hash.slice(1);
