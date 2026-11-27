@@ -1166,6 +1166,8 @@
       body.print-profile-full .stake-subpane,
       body.print-profile-full .horizon-pane,
       body.print-profile-full .hz-band { display: block !important; }
+      body.print-profile-full [data-print-item="stake-sheet-3a"],
+      body.print-profile-full [data-print-item="stake-sheet-3b"] { break-before: page; page-break-before: always; }
       body.print-profile-full details.drawer,
       body.print-profile-full details.hazard-detail { display: block !important; }
       body.print-profile-full { font-size: 8.5pt; }
@@ -3979,24 +3981,17 @@
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Stake Sheet 2 (S-B: HC 4-Track &amp; Stake RS) • Off-Site Go-Binder</div>
       </div>
 
-      <!-- UNIFIED STAKE READINESS REGISTER (LIVE BOARD + ANNUAL REGISTER — 1:1 W-5 PARITY) -->
-      <div id="form-stake-register" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-3">
+      <!-- STAKE SHEET 3A: LIVE EMERGENCY WARD ACCOUNTABILITY & UNMET NEEDS BOARD -->
+      <div id="stake-live-board" class="sheet-box live-board-box" data-mode="crisis" data-print-item="stake-sheet-3a">
         <div class="sheet-header">
           <div>
-            <span class="sheet-tag teal">Unified Stake Readiness Register &amp; Live Command Board (1:1 Form W-5 Parity • Zero Names)</span>
-            <h2 class="sheet-title">Live Ward Accountability (Top) &amp; Annual Extra-Care / Resource Pools (Bottom)</h2>
+            <span class="sheet-tag red">Stake Sheet 3A • Live Emergency Ward Accountability Board (1:1 Form W-5 Part 0 • Zero Names)</span>
+            <h2 class="sheet-title">Live Ward Accountability &amp; Urgent Unmet Needs (Receives Live Form W-5 Updates)</h2>
           </div>
-          <span style="font-size:0.82rem; display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;"><strong>Single Compiler:</strong> Stake Prep Rep &middot; <label for="reg-updated"><strong>Updated:</strong></label><input id="reg-updated" class="inline-input" style="width:125px;" data-save-key="v4_reg_updated" placeholder="Date / Time"></span>
+          <button type="button" id="btn-reset-live-board" class="btn btn-outline screen-only" style="min-height:44px; padding:6px 12px; font-size:0.8rem; border-color:#c2410c; color:#9a3412;" onclick="resetStakeLiveBoard()">Reset Live Board (Keep Annual Register)</button>
         </div>
-
-        <!-- LIVE EMERGENCY WARD ACCOUNTABILITY & UNMET NEEDS BOARD (RECEIVES LIVE FORM W-5 PART 0 + NEEDS + URGENT) -->
-        <div id="stake-live-board" class="live-board-box">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
-            <h3 style="margin:0;">Live Emergency Ward Accountability &amp; Unmet Needs Board (Receives Live <code>Form W-5</code> Updates)</h3>
-            <button type="button" id="btn-reset-live-board" class="btn btn-outline screen-only" style="min-height:44px; padding:6px 12px; font-size:0.8rem; border-color:#c2410c; color:#9a3412;" onclick="resetStakeLiveBoard()">Reset Live Board (Keep Annual Register)</button>
-          </div>
-          <div class="table-wrap">
-            <table class="write-table" id="stake-live-table" style="font-size:0.75rem;">
+        <div class="table-wrap">
+          <table class="write-table" id="stake-live-table" style="font-size:0.75rem;">
               <thead>
                 <tr>
                   <th>Unit (FRS Ch)</th>
@@ -4024,9 +4019,18 @@
               </tbody>
             </table>
           </div>
-        </div>
+        <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Stake Sheet 3A (Live Emergency Ward Accountability) • Zero Member Names (GH 22.4.5)</div>
+      </div>
 
-        <h3 style="margin:6px 0 4px;">Annual / Baseline Extra-Care Tallies (Left) &amp; Voluntary Resource Pools Available (Right)</h3>
+      <!-- STAKE SHEET 3B: UNIFIED STAKE READINESS REGISTER (ANNUAL EXTRA-CARE & VOLUNTARY POOLS) -->
+      <div id="form-stake-register" class="sheet-box" data-mode="crisis" data-print-item="stake-sheet-3b">
+        <div class="sheet-header">
+          <div>
+            <span class="sheet-tag teal">Stake Sheet 3B • Unified Stake Readiness Register (1:1 Form W-5 Parity • Zero Names)</span>
+            <h2 class="sheet-title">Annual / Baseline Extra-Care Tallies (Left) &amp; Voluntary Resource Pools (Right)</h2>
+          </div>
+          <span style="font-size:0.82rem; display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;"><strong>Single Compiler:</strong> Stake Prep Rep &middot; <label for="reg-updated"><strong>Updated:</strong></label><input id="reg-updated" class="inline-input" style="width:125px;" data-save-key="v4_reg_updated" placeholder="Date / Time"></span>
+        </div>
         <div class="table-wrap">
           <table class="write-table" id="stake-register-table" style="font-size:0.76rem;">
             <thead>
