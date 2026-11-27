@@ -971,8 +971,10 @@
 
       /* Profile 1: Member Fridge Card Standard (1 Double-Sided Sheet) */
       body.print-profile-m1-std .tab-panel,
+      body.print-profile-m1-std .member-subpane,
       body.print-profile-m1-std [data-print-item] { display: none !important; }
-      body.print-profile-m1-std #panel-member { display: block !important; }
+      body.print-profile-m1-std #panel-member,
+      body.print-profile-m1-std #member-pane-2c { display: block !important; }
       body.print-profile-m1-std [data-print-item="m1-front"],
       body.print-profile-m1-std [data-print-item="m1-back"] { display: block !important; }
       body.print-profile-m1-std [data-print-item="m1-back"] { break-before: page; }
@@ -980,8 +982,10 @@
 
       /* Profile 2: Senior 15pt Large-Print Fridge Card (TRUE 15pt!) */
       body.print-profile-m1-large .tab-panel,
+      body.print-profile-m1-large .member-subpane,
       body.print-profile-m1-large [data-print-item] { display: none !important; }
-      body.print-profile-m1-large #panel-member { display: block !important; }
+      body.print-profile-m1-large #panel-member,
+      body.print-profile-m1-large #member-pane-2c { display: block !important; }
       body.print-profile-m1-large [data-print-item="m1-front"],
       body.print-profile-m1-large [data-print-item="m1-meds-large"] { display: block !important; }
       body.print-profile-m1-large [data-print-item="m1-meds-large"] { break-before: page; }
@@ -1001,6 +1005,34 @@
       body.print-profile-m1-large .fill-grid,
       body.print-profile-m1-large .gyr-strip { grid-template-columns: 1fr !important; }
       body.print-profile-m1-large .sheet-box { border-width: 2.5pt !important; }
+
+      /* Profile 2B: Filled Family Preparedness Worksheet (Issue #3) */
+      body.print-profile-family-worksheet .tab-panel,
+      body.print-profile-family-worksheet .member-subpane,
+      body.print-profile-family-worksheet [data-print-item] { display: none !important; }
+      body.print-profile-family-worksheet #panel-member,
+      body.print-profile-family-worksheet #member-pane-2a,
+      body.print-profile-family-worksheet [data-print-item="family-worksheet"] { display: block !important; }
+      body.print-profile-family-worksheet #family-worksheet-sheet {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
+      body.print-profile-family-worksheet #family-worksheet-sheet h3 { break-after: avoid; }
+      body.print-profile-family-worksheet .water-calc-summary,
+      body.print-profile-family-worksheet .fill-field { break-inside: avoid; }
+      body.print-profile-family-worksheet .progress-bar-wrap,
+      body.print-profile-family-worksheet .progress-bar-fill {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body.print-profile-family-worksheet { font-size: 8.8pt; }
+      body.print-profile-family-worksheet .fill-field input {
+        border: none !important;
+        border-bottom: 1pt solid #475569 !important;
+        border-radius: 0 !important;
+        padding: 2pt 0 !important;
+        background: transparent !important;
+      }
 
       /* Profile 3: Self-Contained Ward Binder (5 Sheets) */
       body.print-profile-ward-pack .tab-panel,
@@ -1023,6 +1055,7 @@
       /* Profile 5: Full Plan Archive */
       body.print-profile-full .tab-panel { display: block !important; break-before: page; }
       body.print-profile-full #panel-start { break-before: auto; }
+      body.print-profile-full .member-subpane,
       body.print-profile-full .ward-subpane,
       body.print-profile-full .horizon-pane,
       body.print-profile-full .hz-band { display: block !important; }
@@ -1236,6 +1269,46 @@
     .ward-subtab-btn.active small { color: #dbeafe; }
     .ward-subpane { display: none; }
     .ward-subpane.active { display: block; }
+    .member-subpane { display: none; }
+    .member-subpane.active { display: block; }
+    @media screen {
+      body.crisis-mode .member-subtabs { display: none !important; }
+      body.crisis-mode #member-pane-2a,
+      body.crisis-mode #member-pane-2b { display: none !important; }
+      body.crisis-mode #member-pane-2c { display: block !important; }
+    }
+    .water-calc-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .water-stat strong { display: block; font-size: 1.05rem; color: var(--navy); }
+    .water-stat small { color: var(--slate-700); font-size: 0.78rem; }
+    .prep-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .prep-msg {
+      display: none;
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+    .prep-msg.ok { display: block; background: var(--green-bg); color: var(--green); border: 1.5px solid var(--green); }
+    .prep-msg.err { display: block; background: var(--crimson-bg); color: var(--crimson); border: 1.5px solid var(--crimson); }
+    @media (max-width: 640px) {
+      .water-calc-summary { grid-template-columns: 1fr; }
+    }
+
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
       body.crisis-mode #ward-pane-3a { display: block !important; }
@@ -1503,6 +1576,10 @@
       <details class="print-menu" id="print-menu">
         <summary class="util-btn" role="button" tabindex="0">Print Kit &#9662;</summary>
         <div class="print-dropdown">
+          <button type="button" onclick="printProfile('family-worksheet')">
+            <strong>My Family Preparedness Worksheet</strong>
+            <span>Your filled-in water/food tracker, home shutoffs, contacts &amp; checklists</span>
+          </button>
           <button type="button" onclick="printProfile('m1-std')">
             <strong>Member Fridge Card (Form M-1)</strong>
             <span>1 double-sided sheet (9.5pt) — First 60 Min + Contacts + Care Slip</span>
@@ -1877,10 +1954,151 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- TAB 2: MEMBER GUIDE & 2:00 AM CARD (FORM M-1)              -->
+    <!-- TAB 2: MEMBER GUIDE, PREP WORKSHEET & FRIDGE CARD (M-1)    -->
     <!-- ========================================================== -->
     <section id="panel-member" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-member">
 
+      <!-- V4.8 PEACETIME-FIRST 3-SUB-TAB BAR (HIDDEN IN EMERGENCY MODE) -->
+      <div class="ward-subtabs member-subtabs screen-only" role="tablist" aria-label="Member preparation sections">
+        <button type="button" id="member-tab-2a" role="tab" aria-controls="member-pane-2a" class="ward-subtab-btn member-subtab-btn active" data-member-sub="2a" aria-selected="true">2A. My Family Prep Worksheet<small>Fillable Tracker, Water Math &amp; Print</small></button>
+        <button type="button" id="member-tab-2b" role="tab" aria-controls="member-pane-2b" class="ward-subtab-btn member-subtab-btn" data-member-sub="2b" aria-selected="false">2B. Prep Guides &amp; 7 Hazards<small>Utah Area Guide &amp; Local Home Prep</small></button>
+        <button type="button" id="member-tab-2c" role="tab" aria-controls="member-pane-2c" class="ward-subtab-btn member-subtab-btn" data-member-sub="2c" aria-selected="false">2C. Printable Fridge Card (Form M-1)<small>2:00 AM Offline Emergency Sheet</small></button>
+      </div>
+
+      <!-- ===== SUB-TAB 2A: INTERACTIVE FAMILY PREPAREDNESS WORKSHEET (DEFAULT IN PEACETIME) ===== -->
+      <div id="member-pane-2a" role="tabpanel" aria-labelledby="member-tab-2a" class="member-subpane active" data-mode="prep">
+        <div id="family-worksheet-sheet" class="sheet-box" data-print-item="family-worksheet">
+          <div class="sheet-header">
+            <div>
+              <span class="sheet-tag teal">Personal &amp; Family Preparedness Worksheet • Saves Privately on This Device</span>
+              <h2 class="sheet-title">My Family Emergency Preparedness Plan &amp; Tracker</h2>
+            </div>
+            <span class="screen-only" style="font-size:0.8rem; color:var(--slate-700);">100% private — never sent to a server.</span>
+          </div>
+
+          <div class="card card-warn screen-only" style="padding:10px 12px; margin-bottom:12px;">
+            <strong>Cache &amp; Blackout Warning:</strong> Everything you type here saves <strong>only in this browser on this device</strong>. Phone browsers (especially iOS) can clear cached data over time, and web pages won't help if your battery dies in a blackout. <strong>Print your completed worksheet and post it on your fridge!</strong>
+            <div class="prep-toolbar">
+              <button type="button" class="btn" style="min-height:40px;" onclick="printProfile('family-worksheet')">Print My Family Worksheet</button>
+              <button type="button" class="btn btn-outline" style="min-height:40px;" onclick="exportFamilyWorksheet()">Export Local Backup (.json)</button>
+              <button type="button" class="btn btn-outline" style="min-height:40px;" onclick="document.getElementById('prep-import-file').click()">Import Backup</button>
+              <input type="file" id="prep-import-file" accept=".json,application/json" style="display:none;" aria-label="Import family preparedness JSON backup">
+              <button type="button" class="btn btn-outline" style="min-height:40px; border-color:var(--crimson); color:var(--crimson);" onclick="clearFamilyWorksheet()">Clear This Device</button>
+            </div>
+            <div id="prep-backup-msg" class="prep-msg" role="status" aria-live="polite"></div>
+          </div>
+
+          <!-- MODULE 1: HOUSEHOLD WATER & FOOD CALCULATOR -->
+          <h3 style="margin-top:4px;">1. Household Water &amp; Food Calculator (Utah Area Guide)</h3>
+          <div class="fill-grid">
+            <div class="fill-field"><label for="prep-people">Number of People in Household</label><input id="prep-people" type="number" min="0" max="50" inputmode="numeric" data-save-key="v4_prep_people" placeholder="e.g., 4"></div>
+            <div class="fill-field"><label for="prep-pets">Number of Pets (1 gal/pet/day)</label><input id="prep-pets" type="number" min="0" max="30" inputmode="numeric" data-save-key="v4_prep_pets" placeholder="e.g., 1"></div>
+            <div class="fill-field"><label for="prep-water-stored">Drinking Water Stored Right Now (Gallons)</label><input id="prep-water-stored" type="number" min="0" step="0.5" inputmode="decimal" data-save-key="v4_prep_water_stored" placeholder="e.g., 15"></div>
+            <div class="fill-field"><label for="prep-food-days">Non-Perishable Food Supply on Hand (Days — Goal: 14+)</label><input id="prep-food-days" type="number" min="0" max="365" inputmode="numeric" data-save-key="v4_prep_food_days" placeholder="e.g., 14"></div>
+            <div class="fill-field"><label for="prep-rotate-date">Next Kit &amp; Water Rotation Date (Daylight Saving)</label><input id="prep-rotate-date" type="date" data-save-key="v4_prep_rotate_date"></div>
+          </div>
+          <div id="prep-water-calc" class="water-calc-summary" aria-live="polite">
+            <div class="water-stat"><strong id="calc-water-3day">0 gal</strong><small>3-Day Minimum (1 gal/person + pets/day)</small></div>
+            <div class="water-stat"><strong id="calc-water-14day">0 gal</strong><small>14-Day Target Goal (Utah Area Guide)</small></div>
+            <div class="water-stat">
+              <strong id="calc-water-status">Enter household size above</strong>
+              <div class="progress-bar-wrap" style="margin:4px 0 0;"><div class="progress-bar-fill" id="prep-water-bar" style="background:var(--teal);"></div></div>
+            </div>
+          </div>
+
+          <!-- MODULE 2: HOME SHUTOFFS, KIT LOCATIONS & MEETING SPOTS -->
+          <h3>2. Where Things Are in Our Home (Shutoffs, Kits &amp; Meeting Spots)</h3>
+          <div class="fill-grid">
+            <div class="fill-field"><label for="prep-loc-gas">Gas Meter &amp; Non-Sparking Wrench Location (or HOA/Landlord Policy)</label><input id="prep-loc-gas" data-save-key="v4_prep_loc_gas" placeholder="e.g., West side wall, wrench zip-tied to pipe"></div>
+            <div class="fill-field"><label for="prep-loc-water">Main Indoor Culinary Water Shutoff Valve</label><input id="prep-loc-water" data-save-key="v4_prep_loc_water" placeholder="e.g., Basement utility room north wall"></div>
+            <div class="fill-field"><label for="prep-loc-heater">Water Heater Cold-Inlet Valve (40–50 gal Reserve)</label><input id="prep-loc-heater" data-save-key="v4_prep_loc_heater" placeholder="e.g., Utility room, red handle top pipe"></div>
+            <div class="fill-field"><label for="prep-loc-breaker">Main Electrical Breaker Panel</label><input id="prep-loc-breaker" data-save-key="v4_prep_loc_breaker" placeholder="e.g., Garage east wall"></div>
+            <div class="fill-field"><label for="prep-loc-kits">72-Hour Kits / Grab-and-Go Bags Location</label><input id="prep-loc-kits" data-save-key="v4_prep_loc_kits" placeholder="e.g., Front coat closet / garage shelf"></div>
+            <div class="fill-field"><label for="prep-loc-meds">Rescue Meds / Insulin Pouch / O2 Backup Battery</label><input id="prep-loc-meds" data-save-key="v4_prep_loc_meds" placeholder="e.g., Kitchen top shelf + fridge door"></div>
+            <div class="fill-field"><label for="prep-loc-docs">Waterproof Important Docs &amp; Small Cash Location</label><input id="prep-loc-docs" data-save-key="v4_prep_loc_docs" placeholder="e.g., Fireproof box in master closet"></div>
+            <div class="fill-field"><label for="prep-loc-outside">Immediate Outside-Home Meeting Spot (Fire/Gas)</label><input id="prep-loc-outside" data-save-key="v4_prep_loc_outside" placeholder="e.g., Front mailbox / neighbor tree"></div>
+            <div class="fill-field"><label for="prep-loc-rally">Neighborhood Rally / Reunification Fallback Spot</label><input id="prep-loc-rally" data-save-key="v4_prep_loc_rally" placeholder="e.g., Shay Park Pavilion / relative's home"></div>
+          </div>
+
+          <!-- MODULE 3: HOUSEHOLD CONTACTS & REUNIFICATION (SYNCED 1:1 WITH FORM M-1 BACK) -->
+          <h3>3. Household Contacts &amp; Reunification (Auto-Syncs 1:1 With Printable Form M-1)</h3>
+          <div class="fill-grid">
+            <div class="fill-field"><label for="prep-m1-ward">Our Ward &amp; Assigned FRS Channel (Ch 1–7, Tone 0)</label><input id="prep-m1-ward" data-save-key="v2_m1_ward" placeholder="e.g., Crossroads Ward — FRS Ch 7 (Tone 0)"></div>
+            <div class="fill-field"><label for="prep-m1-relay">Out-of-Area Family Relay (Name &amp; Phone)</label><input id="prep-m1-relay" data-save-key="v2_m1_relay" placeholder="Relative outside Utah Valley"></div>
+            <div class="fill-field"><label for="prep-m1-school">School / Campus / Workplace Emergency Line</label><input id="prep-m1-school" data-save-key="v2_m1_school" placeholder="Riverview Elem (385) 579-7355 / Middle-High / UVU-BYU"></div>
+            <div class="fill-field"><label for="prep-m1-skyward">Authorized School Backup Pickup (2 Local Neighbors in Skyward)</label><input id="prep-m1-skyward" data-save-key="v2_m1_skyward" placeholder="Names + phones (bring Photo ID)"></div>
+            <div class="fill-field"><label for="prep-m1-commuter">East-of-River Commuter Safe Contact (Stay-vs.-Walk Rule)</label><input id="prep-m1-commuter" data-save-key="v2_m1_commuter" placeholder="Coworker/relative east of river"></div>
+            <div class="fill-field"><label for="prep-m1-landlord">Landlord / Property Mgmt 24/7 (or Roommate Contact)</label><input id="prep-m1-landlord" data-save-key="v2_m1_landlord" placeholder="24/7 maintenance + roommate contact"></div>
+            <div class="fill-field"><label for="prep-m1-ins">Home / Renter's Insurance (Loss-of-Use Phone &amp; Policy #)</label><input id="prep-m1-ins" data-save-key="v2_m1_ins" placeholder="Carrier phone + policy #"></div>
+            <div class="fill-field"><label for="prep-m1-buddy">Ministering Companion, EQ/RS District Leader &amp; Rally Spot</label><input id="prep-m1-buddy" data-save-key="v2_m1_buddy" placeholder="Ministering companion + EQ/RS district lead"></div>
+            <div class="fill-field"><label for="prep-m1-dme">Doctor / Pharmacy / Oxygen-DME Supplier (24/7 Line)</label><input id="prep-m1-dme" data-save-key="v2_m1_dme" placeholder="Oxygen cylinder supplier &amp; pharmacy"></div>
+            <div class="fill-field"><label for="prep-m1-pets">Pediatric Rescue Meds / Pets / Special Notes</label><input id="prep-m1-pets" data-save-key="v2_m1_pets" placeholder="Inhaler/EpiPen; leash/carrier; pet water"></div>
+          </div>
+
+          <!-- MODULE 4: 72-HOUR KIT & PANTRY INVENTORY -->
+          <h3>4. 72-Hour Kit &amp; Pantry Inventory (8 Essentials + Medical/Pets)</h3>
+          <div style="font-size:0.82rem; font-weight:700; color:var(--teal);" id="kit72-count">0 of 10 complete (0%)</div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" id="kit72-bar" style="background:var(--teal);"></div></div>
+          <div class="grid-2">
+            <ul class="check-list">
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_1"><label><strong>Shelter &amp; Warmth:</strong> Sleeping bags/blankets, seasonal layers, tarp/tent, sturdy shoes by beds.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_2"><label><strong>Food &amp; Cooking:</strong> 3+ days ready-to-eat food, manual can opener, safe outdoor stove/fuel.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_3"><label><strong>Water &amp; Filter:</strong> Food-grade water containers (off concrete) + filter or unscented bleach.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_4"><label><strong>Light &amp; Power:</strong> Headlamps/flashlights, spare batteries, charged phone power bank.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_5"><label><strong>Comms:</strong> Battery/hand-crank NOAA radio + Ward FRS walkie-talkies (Ch 1–7, Tone 0).</label></li>
+            </ul>
+            <ul class="check-list">
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_6"><label><strong>Medical &amp; Hygiene:</strong> First-aid kit, 2–3 wk Rx, N95 masks, soap, double-liner toilet bags + litter.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_7"><label><strong>Small Cash:</strong> $20–$50+ in $1/$5 bills &amp; coins for offline purchases.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_8"><label><strong>Docs &amp; Comfort:</strong> Waterproof ID/insurance copies, scriptures, kids' quiet activities.</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_9"><label><strong>Medical Power / Meds (SN-1/2):</strong> O2/CPAP battery tested &amp; insulin cool-pack pouch staged (or N/A).</label></li>
+              <li><input type="checkbox" data-check-group="kit72" data-save-key="v4_prep_kit_10"><label><strong>Infants / Pets / Commuter:</strong> Formula/diapers, pet food/carrier, Jordan River car bag (or N/A).</label></li>
+            </ul>
+          </div>
+
+          <!-- MODULE 5: HOUSEHOLD READINESS CHECKLIST (TIER A & TIER B) -->
+          <h3>5. Household Readiness Checklist (Tier A Quick Wins &amp; Tier B Steady Growth)</h3>
+          <div class="grid-2">
+            <div>
+              <h4 style="margin:4px 0;">Tier A: 30-Day Quick Wins (10 Fast, $0–$20 Steps)</h4>
+              <div style="font-size:0.82rem; font-weight:700; color:var(--green);" id="quick-wins-count">0 of 10 complete</div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" id="quick-wins-bar"></div></div>
+              <ul class="check-list">
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q1"><label>Filled &amp; printed <strong>Form M-1</strong> (fridge/nightstand copy).</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q2"><label>Saved Intermountain Saratoga ER &amp; local lifelines offline.</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q3"><label>Signed up for City/County Everbridge alerts (phone or landline).</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q4"><label>Updated Member Tools address/phone (or notified Ward Clerk).</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q5"><label>Know unit shut-offs <em>or</em> Landlord/HOA 24/7 emergency policy.</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q6"><label>Sturdy shoes &amp; flashlight staged beside every bed.</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q7"><label>3-day drinking water (1 gal/person/day + pets) stored.</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q8"><label>Heavy trash bags + kitty litter on hand for "Do Not Flush."</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q9"><label>Added 2 local backup pickups in Skyward (or picked solo sick-day buddy).</label></li>
+                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q10"><label>Handed in Voluntary Neighbor Care Slip if anyone has power/med/ride needs.</label></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="margin:4px 0;">Tier B: Steady Growth (4 Longer-Term Goals, 6–12 Months)</h4>
+              <div style="font-size:0.82rem; font-weight:700; color:var(--navy-mid);" id="steady-count">0 of 4 complete</div>
+              <div class="progress-bar-wrap"><div class="progress-bar-fill" id="steady-bar" style="background:var(--navy-mid);"></div></div>
+              <ul class="check-list">
+                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s1"><label>Build gradually to 14 days of drinking water &amp; rotating everyday pantry food.</label></li>
+                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s2"><label>Build a modest cash/savings cushion (toward 1-month emergency reserve, zero debt).</label></li>
+                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s3"><label>Review homeowner/renter insurance (Loss-of-Use ALE) &amp; store ID copies offline.</label></li>
+                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s4"><label>Verify backup oxygen cylinders / CPAP battery / Commuter car or campus go-bag.</label></li>
+              </ul>
+              <div class="card card-navy" style="margin-top:12px; padding:10px 12px;">
+                <strong>Facing a Personal Storm (Job Loss, Illness, Grief, House Fire)?</strong><br>
+                Don't wait for a community disaster. Call or text your Relief Society President, Elders Quorum President, or Bishop privately, or reach <a class="phone-link" href="tel:988">988</a>, <a class="phone-link" href="tel:211">211 Utah</a>, <a href="https://jobs.utah.gov" target="_blank" rel="noopener">jobs.utah.gov</a>, or <a href="https://employment.ChurchofJesusChrist.org" target="_blank" rel="noopener">Church Employment</a>.
+              </div>
+            </div>
+          </div>
+
+          <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • My Family Preparedness Worksheet • Keep Privately on Fridge</div>
+        </div>
+      </div><!-- end #member-pane-2a -->
+
+      <!-- ===== SUB-TAB 2C: PRINTABLE 2:00 AM FRIDGE CARD (FORM M-1 — ALSO SHOWN IN EMERGENCY MODE) ===== -->
+      <div id="member-pane-2c" role="tabpanel" aria-labelledby="member-tab-2c" class="member-subpane">
       <!-- MEMBER SHEET 1 FRONT: FORM M-1 (FIRST 60 MINUTES) -->
       <div id="form-m1" class="sheet-box" data-mode="crisis" data-print-item="m1-front">
         <div class="sheet-header">
@@ -2041,8 +2259,10 @@
         <p style="margin-top:10px;"><strong>ER West of River:</strong> Intermountain Saratoga (801) 763-3500 &middot; <strong>Gas:</strong> 1-800-767-1689 &middot; <strong>RMP:</strong> 1-877-508-5088 &middot; <strong>911 for O2 &lt;2 hrs</strong></p>
       </div>
 
-      <!-- ===== PREPARATION SECTION (HIDDEN IN 1-TAP CRISIS MODE) ===== -->
-      <div data-mode="prep">
+      </div><!-- end #member-pane-2c -->
+
+      <!-- ===== SUB-TAB 2B: PREPAREDNESS GUIDES & 7 LOCAL HAZARDS (HIDDEN IN CRISIS MODE) ===== -->
+      <div id="member-pane-2b" role="tabpanel" aria-labelledby="member-tab-2b" class="member-subpane" data-mode="prep">
 
         <!-- WARM GOSPEL ENCOURAGEMENT -->
         <div class="gospel-banner">
@@ -2238,46 +2458,7 @@
           </div>
           <p style="font-size:0.84rem; margin:8px 0 0;"><button type="button" class="btn btn-outline" style="min-height:38px;" onclick="document.getElementById('tabbtn-hazards').click()">Explore Full 4-Horizon Actions &amp; 11 Disruptions in Tab 5 &rarr;</button></p>
         </div>
-
-        <!-- SPLIT STEP 8 CHECKLIST: 30-DAY QUICK WINS VS STEADY GROWTH -->
-        <div class="card">
-          <h2>Household Readiness Checklist (Saves Automatically on This Device)</h2>
-          <div class="grid-2">
-            <div>
-              <h3>Tier A: 30-Day Quick Wins (10 Fast, $0–$20 Steps)</h3>
-              <div style="font-size:0.82rem; font-weight:700; color:var(--green);" id="quick-wins-count">0 of 10 complete</div>
-              <div class="progress-bar-wrap"><div class="progress-bar-fill" id="quick-wins-bar"></div></div>
-              <ul class="check-list">
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q1"><label>Filled &amp; printed <strong>Form M-1</strong> (fridge/nightstand copy).</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q2"><label>Saved Intermountain Saratoga ER &amp; local lifelines offline.</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q3"><label>Signed up for City/County Everbridge alerts (phone or landline).</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q4"><label>Updated Member Tools address/phone (or notified Ward Clerk).</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q5"><label>Know unit shut-offs <em>or</em> Landlord/HOA 24/7 emergency policy.</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q6"><label>Sturdy shoes &amp; flashlight staged beside every bed.</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q7"><label>3-day drinking water (1 gal/person/day + pets) stored.</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q8"><label>Heavy trash bags + kitty litter on hand for "Do Not Flush."</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q9"><label>Added 2 local backup pickups in Skyward (or picked solo sick-day buddy).</label></li>
-                <li><input type="checkbox" data-check-group="quick" data-save-key="v2_chk_q10"><label>Handed in Voluntary Neighbor Care Slip if anyone has power/med/ride needs.</label></li>
-              </ul>
-            </div>
-            <div>
-              <h3>Tier B: Steady Growth (4 Longer-Term Goals, 6–12 Months)</h3>
-              <div style="font-size:0.82rem; font-weight:700; color:var(--navy-mid);" id="steady-count">0 of 4 complete</div>
-              <div class="progress-bar-wrap"><div class="progress-bar-fill" id="steady-bar" style="background:var(--navy-mid);"></div></div>
-              <ul class="check-list">
-                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s1"><label>Build gradually to 14 days of drinking water &amp; rotating everyday pantry food.</label></li>
-                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s2"><label>Build a modest cash/savings cushion (toward 1-month emergency reserve, zero debt).</label></li>
-                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s3"><label>Review homeowner/renter insurance (Loss-of-Use ALE) &amp; store ID copies offline.</label></li>
-                <li><input type="checkbox" data-check-group="steady" data-save-key="v2_chk_s4"><label>Verify backup oxygen cylinders / CPAP battery / Commuter car or campus go-bag.</label></li>
-              </ul>
-              <div class="card card-navy" style="margin-top:12px; padding:10px 12px;">
-                <strong>Facing a Personal Storm (Job Loss, Illness, Grief, House Fire)?</strong><br>
-                Don't wait for a community disaster. Call or text your Relief Society President, Elders Quorum President, or Bishop privately, or reach <a class="phone-link" href="tel:988">988</a>, <a class="phone-link" href="tel:211">211 Utah</a>, <a href="https://jobs.utah.gov" target="_blank" rel="noopener">jobs.utah.gov</a>, or <a href="https://employment.ChurchofJesusChrist.org" target="_blank" rel="noopener">Church Employment</a>.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div><!-- end #member-pane-2b -->
     </section>
 
     <!-- ========================================================== -->
@@ -4298,6 +4479,7 @@
 
       function updateCheckProgress() {
         const groups = [
+          { id: 'kit72', lbl: 'kit72-count', bar: 'kit72-bar' },
           { id: 'quick', lbl: 'quick-wins-count', bar: 'quick-wins-bar' },
           { id: 'steady', lbl: 'steady-count', bar: 'steady-bar' },
           { id: 'ward90', lbl: 'ward-launch-count', bar: 'ward-launch-bar' }
@@ -4364,7 +4546,11 @@
       }
 
       document.querySelectorAll('.role-pill').forEach(b => b.addEventListener('click', () => selectRole(b.dataset.setRole, true)));
-      document.querySelectorAll('.cohort-pill').forEach(b => b.addEventListener('click', () => { selectCohort(b.dataset.setCohort, true); switchTab('member', false); }));
+      document.querySelectorAll('.cohort-pill').forEach(b => b.addEventListener('click', () => {
+        selectCohort(b.dataset.setCohort, true);
+        switchTab('member', false);
+        if (b.dataset.setCohort !== 'all' && window.setMemberSubtab) setMemberSubtab('2b');
+      }));
 
       document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab, false));
@@ -4404,7 +4590,145 @@
         }
       });
 
-      // LocalStorage persistence for Form M-1 inputs & checklists
+      function updateWaterCalculator() {
+        const peopleEl = document.getElementById('prep-people');
+        const petsEl = document.getElementById('prep-pets');
+        const storedEl = document.getElementById('prep-water-stored');
+        const out3 = document.getElementById('calc-water-3day');
+        const out14 = document.getElementById('calc-water-14day');
+        const statusEl = document.getElementById('calc-water-status');
+        const bar = document.getElementById('prep-water-bar');
+        if (!peopleEl || !out3 || !out14 || !statusEl || !bar) return;
+        const people = Math.max(0, parseFloat(peopleEl.value) || 0);
+        const pets = Math.max(0, parseFloat(petsEl ? petsEl.value : 0) || 0);
+        const stored = Math.max(0, parseFloat(storedEl ? storedEl.value : 0) || 0);
+        const units = people + pets;
+        const min3 = Math.round(units * 3 * 10) / 10;
+        const goal14 = Math.round(units * 14 * 10) / 10;
+        out3.textContent = min3 + ' gal';
+        out14.textContent = goal14 + ' gal';
+        if (units <= 0) {
+          statusEl.textContent = 'Enter household size above';
+          bar.style.width = '0%';
+        } else {
+          const pct = Math.min(100, Math.round((stored / goal14) * 100));
+          const met3 = stored >= min3 ? '3-day min met!' : (Math.round((min3 - stored) * 10) / 10) + ' gal to 3-day min';
+          statusEl.textContent = stored + ' / ' + goal14 + ' gal (' + pct + '% — ' + met3 + ')';
+          bar.style.width = pct + '%';
+        }
+      }
+
+      const FAMILY_KEY_PREFIXES = ['v2_m1_', 'v2_chk_', 'v4_prep_'];
+      const ALLOWED_FAMILY_KEY_TYPES = new Map();
+      document.querySelectorAll('[data-save-key]').forEach(el => {
+        const k = el.dataset.saveKey;
+        if (typeof k === 'string' && FAMILY_KEY_PREFIXES.some(p => k.startsWith(p))) {
+          ALLOWED_FAMILY_KEY_TYPES.set(k, el.type === 'checkbox' ? 'checkbox' : 'value');
+        }
+      });
+      function showPrepMsg(text, ok) {
+        const el = document.getElementById('prep-backup-msg');
+        if (!el) return;
+        el.textContent = text;
+        el.className = 'prep-msg ' + (ok ? 'ok' : 'err');
+      }
+      function syncInputsForKey(key, val, isCheck) {
+        document.querySelectorAll('[data-save-key]').forEach(node => {
+          if (node.dataset.saveKey !== key) return;
+          if (isCheck || node.type === 'checkbox') node.checked = (val === '1' || val === true);
+          else node.value = (val == null ? '' : String(val));
+        });
+      }
+
+      window.exportFamilyWorksheet = function () {
+        const data = {};
+        document.querySelectorAll('[data-save-key]').forEach(el => {
+          const k = el.dataset.saveKey;
+          if (!ALLOWED_FAMILY_KEY_TYPES.has(k)) return;
+          data[k] = el.type === 'checkbox' ? (el.checked ? '1' : '0') : el.value;
+        });
+        const payload = {
+          schema: 'crossroads-family-prep-v1',
+          exportedAt: new Date().toISOString(),
+          data
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'crossroads-family-preparedness-backup.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showPrepMsg('Backup file downloaded locally (never uploaded). Store safely or print your fridge copy.', true);
+      };
+
+      window.importFamilyBackupObject = function (parsed) {
+        if (!parsed || typeof parsed !== 'object' || parsed.schema !== 'crossroads-family-prep-v1' || !parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) {
+          showPrepMsg('Could not import file: invalid or unrecognized Family Preparedness backup format. Your existing saved data was not changed.', false);
+          return false;
+        }
+        // Validate entire payload before mutating localStorage or DOM
+        const staged = [];
+        Object.keys(parsed.data).forEach(k => {
+          if (!Object.prototype.hasOwnProperty.call(parsed.data, k)) return;
+          if (!ALLOWED_FAMILY_KEY_TYPES.has(k)) return;
+          const v = parsed.data[k];
+          if (typeof v !== 'string') return;
+          const kind = ALLOWED_FAMILY_KEY_TYPES.get(k);
+          const normVal = kind === 'checkbox' ? (v === '1' ? '1' : '0') : v;
+          staged.push({ k, v: normVal, isCheck: kind === 'checkbox' });
+        });
+        if (!staged.length) {
+          showPrepMsg('Could not import file: no recognized Family Preparedness fields found. Your existing saved data was not changed.', false);
+          return false;
+        }
+        staged.forEach(item => {
+          try { localStorage.setItem(item.k, item.v); } catch (e) {}
+          syncInputsForKey(item.k, item.v, item.isCheck);
+        });
+        updateCheckProgress();
+        updateWaterCalculator();
+        showPrepMsg('Restored ' + staged.length + ' saved items from your local backup file.', true);
+        return true;
+      };
+
+      window.clearFamilyWorksheet = function () {
+        if (!window.confirm('Clear all saved Family Preparedness Worksheet, Form M-1 contact, and checklist data from this browser?')) {
+          return false;
+        }
+        ALLOWED_FAMILY_KEY_TYPES.forEach((kind, k) => {
+          try { localStorage.removeItem(k); } catch (e) {}
+          syncInputsForKey(k, kind === 'checkbox' ? '0' : '', kind === 'checkbox');
+        });
+        updateCheckProgress();
+        updateWaterCalculator();
+        showPrepMsg('All saved household worksheet and contact data cleared from this device.', true);
+        return true;
+      };
+
+      const prepImportEl = document.getElementById('prep-import-file');
+      if (prepImportEl) {
+        prepImportEl.addEventListener('change', () => {
+          const file = prepImportEl.files && prepImportEl.files[0];
+          prepImportEl.value = '';
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const parsed = JSON.parse(String(reader.result || ''));
+              importFamilyBackupObject(parsed);
+            } catch (e) {
+              showPrepMsg('Could not import file: malformed JSON. Your existing saved data was not changed.', false);
+            }
+          };
+          reader.onerror = () => showPrepMsg('Could not read the selected file.', false);
+          reader.readAsText(file);
+        });
+      }
+
+      // LocalStorage persistence & 1:1 cross-field sync for Form M-1, Prep Worksheet & checklists
       document.querySelectorAll('[data-save-key]').forEach(el => {
         const key = el.dataset.saveKey;
         try {
@@ -4412,18 +4736,41 @@
           if (el.type === 'checkbox') {
             if (val === '1') el.checked = true;
             el.addEventListener('change', () => {
-              try { localStorage.setItem(key, el.checked ? '1' : '0'); } catch (e) {}
+              const nv = el.checked ? '1' : '0';
+              try { localStorage.setItem(key, nv); } catch (e) {}
+              syncInputsForKey(key, nv, true);
               updateCheckProgress();
             });
           } else {
             if (val !== null) el.value = val;
-            el.addEventListener('input', () => {
+            const handleValueUpdate = () => {
               try { localStorage.setItem(key, el.value); } catch (e) {}
-            });
+              document.querySelectorAll('[data-save-key]').forEach(other => {
+                if (other !== el && other.dataset.saveKey === key) other.value = el.value;
+              });
+              if (key.startsWith('v4_prep_')) updateWaterCalculator();
+            };
+            el.addEventListener('input', handleValueUpdate);
+            el.addEventListener('change', handleValueUpdate);
           }
         } catch (e) {}
       });
       updateCheckProgress();
+      updateWaterCalculator();
+
+      // Wire Tab 2 3-Sub-Tab Member Switcher (2A default in Peacetime)
+      window.setMemberSubtab = function (sub) {
+        if (!['2a', '2b', '2c'].includes(sub)) sub = '2a';
+        document.querySelectorAll('.member-subtab-btn').forEach(b => {
+          const active = b.dataset.memberSub === sub;
+          b.classList.toggle('active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        document.querySelectorAll('.member-subpane').forEach(p => p.classList.toggle('active', p.id === 'member-pane-' + sub));
+      };
+      document.querySelectorAll('.member-subtab-btn').forEach(btn => {
+        btn.addEventListener('click', () => setMemberSubtab(btn.dataset.memberSub));
+      });
 
       // Wire Tab 3 3-Sub-Tab Ward Switcher
       window.setWardSubtab = function (sub) {
@@ -4512,7 +4859,7 @@
 
       // Quick Form Registry & Clickable Cross-Tab Form Jump Engine
       const FORM_REGISTRY = {
-        'M-1':    { tab: 'member', subtab: null, targetId: 'form-m1',  label: 'Form M-1',  desc: 'Household Fridge Card (First 60 Min, Green/Yellow/Red & Contacts)' },
+        'M-1':       { tab: 'member', subtab: '2c', targetId: 'form-m1',             label: 'Form M-1',       desc: 'Household Fridge Card (First 60 Min, Green/Yellow/Red & Contacts)' },
         'W-0':    { tab: 'ward',   subtab: '3a', targetId: 'form-w0',  label: 'Form W-0',  desc: 'Ward Command Quick Sheet, Succession & First 60 Minutes' },
         'W-0/0B': { tab: 'ward',   subtab: '3a', targetId: 'form-w0',  label: 'Forms W-0 & W-0B', desc: 'Ward Command Quick Sheet & Field Reference (Sheet 1)' },
         'W-0B':   { tab: 'ward',   subtab: '3a', targetId: 'form-w0b', label: 'Form W-0B', desc: 'Ward Field Reference (SN-1–8, Lifelines, Host & PPE Rules)' },
@@ -4603,6 +4950,9 @@
           setCrisisSubView((entry.tab === 'ward' || entry.tab === 'stake') ? 'command' : 'home');
         }
         switchTab(entry.tab, false);
+        if (entry.tab === 'member' && entry.subtab && window.setMemberSubtab) {
+          setMemberSubtab(entry.subtab);
+        }
         if (entry.tab === 'ward' && entry.subtab && window.setWardSubtab) {
           setWardSubtab(entry.subtab);
         }
