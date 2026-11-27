@@ -52,9 +52,30 @@ However, the walkthrough uncovered **7 blatant usability gaps**—most criticall
 
 ---
 
-## 4. Remaining Non-Blocking Recommendations (Future Backlog)
+## 4. Prioritized Post-Audit Recommendations & Backlog
 
-1. **Optional `Clear Live Emergency Board` button on Tab 4 (`#stake-live-board`):** After a drill or real event ends, a 1-tap `"Reset Live Board (Keep Annual Register)"` button (with confirmation) would let the Stake Prep Rep clear Part 0 live counts without manually backspacing 7 rows.
-2. **Optional `W-4/6` Digital Scratchpad Mode (Post-MVP):** `Form W-4/6` (Ministering District Rollup) is intentionally paper-only for offline resilience and simplicity. If Wards later want to tally Districts 1–12 on a tablet and auto-sum `WARD TOTAL → W-5 Part 0`, that could be a clean future enhancement (ensuring zero member names are entered).
-3. **Host-Aware Share Link Warning (`file://`):** If a leader opens the HTML directly from disk (`file://`) and clicks Share or Copy `#w5=` Link, display a 1-line tip reminding them to share from the hosted GitHub Pages URL (`https://nickallen100.github.io/crossroads-stake-emergency-plan/`) so links open on other phones.
-4. **Print-Only Page-Break Polish on `#form-stake-register`:** With both the Live Board and Annual Register on Stake Sheet 3, verify in browser print preview whether keeping them on 1 tight landscape/portrait sheet or splitting Live Board onto its own sheet (`stake-sheet-3a` / `stake-sheet-3b`) reads best for your Stake binders.
+### A. Quick Wins Worth Doing Next (Low Effort, High Operational Value)
+1. **1-Tap `"Reset Live Board (Keep Annual Register)"` on Tab 4 (`#stake-live-board`):** After a tabletop drill or real event ends, a confirmed reset button lets the Stake Prep Rep clear Part 0 live counts (`Total / G / Y / R / Displaced / Injuries / Urgent`) without manually backspacing 70 cells or touching the March 31 Annual Readiness Register.
+2. **Print-Preview Split Check on Stake Sheet 3 (`#form-stake-register`):** Now that Stake Sheet 3 holds both the Live Board and the Annual Register, verify in browser print preview whether keeping them on 1 tight sheet or splitting them onto `Stake Sheet 3A (Live Board)` and `Stake Sheet 3B (Annual Register)` reads best for 2:00 AM binders.
+3. **Host-Aware Share Link Guard (`file://`):** If a leader opens the HTML directly from disk (`file://`) and clicks Share or Copy `#prefill=` / `#w5=` Link, display a 1-line tip (or default to the hosted GitHub Pages URL `https://nickallen100.github.io/crossroads-stake-emergency-plan/stake_leadership_presentationV4.html`) so links open cleanly on other phones.
+4. **Stake / Ward Local JSON Backup & Restore:** Members already have `Export / Import Backup (.json)` on Tab `2A`, while Stake and Ward leaders (`W-0`, `W-5`, `S-A`, `S-B`, Tab `4B` Action List, and Stake Register) currently rely on `localStorage` + share links. Adding a local JSON backup/restore for Stake/Ward leaders protects against browser cache clears and simplifies calling transitions (while keeping `Form W-1` and `W-2/3` strictly excluded).
+
+### B. Optional Post-MVP Enhancements (If Leaders Request Them)
+1. **Digital `Form W-4/6` Tally Scratchpad (Zero Names):** `Form W-4/6` (Ministering District Rollup) is intentionally paper-only for offline resilience and simplicity. If Ward Clerks later want to tally Districts 1–12 (`Homes / Green / Yellow / Red / Unacct`) on a tablet and click **"Copy Ward Totals → Form W-5 Part 0"**, it would eliminate manual addition during a live sweep (ensuring zero member names are entered).
+2. **Spanish / Accessibility Support (`SN-8`):** Consider adding a Spanish-language `Form M-1` Fridge Card or printable `SN-8` flyer link if helpful for wards in the stake.
+3. **Minor Polish Noted in Adversarial Reviews:**
+   - Only sync `#w5-stake-phone` from `W-0` during `#prefill=` when `v4_ward_stake_sms` was actually applied (so a manually typed number isn't reset).
+   - Tighten `hh 1` ward matching in `resolveW5WardSlug` so non-standard strings like `"HH 12"` cannot match `Harvest Hills 1st`.
+
+---
+
+## 5. Recommended 10-Minute Human Verification Before Rollout
+
+All 9 GitHub issues (`#1`–`#9`, including Epic `#5`) are labeled `review` on GitHub and live on `main` (`v4.15`). Before sharing with Stake Council or Bishops:
+1. **iPhone + Android Live Test:** Open the GitHub Pages URL on one iPhone and one Android phone, add to Home Screen, enable **Airplane Mode** to verify offline PWA load, then re-enable signal and verify:
+   - Member **YELLOW** & **RED** (`Call 911` guardrail + `sms:` prefill).
+   - Cascading **Stake → Ward → Member** `#prefill=` link via text message.
+   - Ward **Live Form W-5** → `#w5=` link → Stake **Live Accountability Board** import.
+2. **Physical Print Test:** Print 1 copy each of **Fridge Card (`m1-std`)**, **15pt Senior Large Print (`m1-large`)**, **5-Sheet Ward Binder (`ward-pack`)**, **Stake Command Kit (`stake-kit`)**, and **Stake Rollout Action List (`stake-action-list`)** to verify page breaks and margins on physical paper.
+3. **Header Check:** Confirmed simplified header (`Emergency Plan & Recovery Guide` with subtitle `Saratoga Springs Utah Crossroads Stake`, commit `083c90c`).
+
