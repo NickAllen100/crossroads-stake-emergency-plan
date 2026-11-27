@@ -970,6 +970,7 @@
       }
 
       /* Profile 1: Member Fridge Card Standard (1 Double-Sided Sheet) */
+      html, html.large-text { font-size: 16px !important; }
       body.print-profile-m1-std .tab-panel,
       body.print-profile-m1-std .member-subpane,
       body.print-profile-m1-std [data-print-item] { display: none !important; }
@@ -978,6 +979,10 @@
       body.print-profile-m1-std [data-print-item="m1-front"],
       body.print-profile-m1-std [data-print-item="m1-back"] { display: block !important; }
       body.print-profile-m1-std [data-print-item="m1-back"] { break-before: page; }
+      body.print-profile-m1-std [data-print-item="m1-back"] .fill-grid { gap: 4px 10px !important; }
+      body.print-profile-m1-std [data-print-item="m1-back"] .fill-field label { font-size: 7.4pt !important; line-height: 1.15 !important; }
+      body.print-profile-m1-std [data-print-item="m1-back"] .fill-field input { font-size: 8.4pt !important; min-height: 16px !important; padding: 1px 2px !important; }
+      body.print-profile-m1-std [data-print-item="m1-back"] .cut-slip { padding: 7px 10px !important; margin-top: 8px !important; }
       body.print-profile-m1-std { font-size: 9.2pt; }
 
       /* Profile 2: Senior 15pt Large-Print Fridge Card (TRUE 15pt!) */
@@ -1074,7 +1079,62 @@
         min-width: 0 !important;
         color: #000000 !important;
       }
-      .stake-act-input::placeholder { color: transparent !important; }
+      .stake-act-input::placeholder,
+      .cell-input::placeholder,
+      .inline-input::placeholder,
+      .num-input::placeholder,
+      .cell-textarea::placeholder { color: transparent !important; }
+      .cell-input,
+      .num-input,
+      .cell-textarea {
+        border: none !important;
+        background: transparent !important;
+        color: #000000 !important;
+        padding: 0 1pt !important;
+        border-radius: 0 !important;
+        font-size: inherit !important;
+        box-shadow: none !important;
+        min-width: 0 !important;
+        resize: none !important;
+      }
+      .inline-input {
+        border: none !important;
+        border-bottom: 0.8pt solid #475569 !important;
+        background: transparent !important;
+        color: #000000 !important;
+        padding: 0 2pt !important;
+        border-radius: 0 !important;
+        font-size: inherit !important;
+        min-width: 0 !important;
+      }
+      .cell-textarea {
+        display: none !important;
+      }
+      .w5-urgent-print {
+        display: block !important;
+        min-height: 2.6em;
+        margin-top: 3pt;
+        padding: 2pt 1pt;
+        border-bottom: 0.8pt solid #475569;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 8.2pt;
+        color: #000000;
+      }
+      #stake-register-table { font-size: 6.8pt !important; table-layout: fixed; width: 100%; }
+      #stake-register-table th,
+      #stake-register-table td { padding: 2px 2px !important; text-align: center; }
+      #stake-register-table th:first-child,
+      #stake-register-table td:first-child { text-align: left; width: 16%; }
+      #stake-register-table .sn1-split .num-input { width: 18px !important; min-width: 0 !important; }
+      #stake-register-table .num-input { max-width: 28px !important; width: 100% !important; min-width: 0 !important; }
+      #form-w5 th,
+      #form-w5 td { padding: 3px 4px !important; }
+      #form-w5 .w5-pool-cell { font-size: 7pt !important; gap: 1px !important; }
+      #form-w5 .w5-pool-row .num-input { width: 22px !important; min-width: 0 !important; }
+      .num-input::-webkit-inner-spin-button,
+      .num-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+      .num-input { -moz-appearance: textfield; }
       body.print-profile-stake-action-list .tab-panel,
       body.print-profile-stake-action-list .stake-subpane,
       body.print-profile-stake-action-list [data-print-item] { display: none !important; }
@@ -1371,6 +1431,116 @@
       accent-color: var(--green);
       cursor: pointer;
     }
+
+    /* ===== V4.10 FILLABLE WARD & STAKE TEMPLATE INPUTS ===== */
+    .cell-input,
+    .cell-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 4px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      color: var(--slate-900);
+      background: #ffffff;
+    }
+    .cell-input:focus,
+    .inline-input:focus,
+    .num-input:focus,
+    .cell-textarea:focus {
+      outline: 2px solid var(--teal);
+      border-color: var(--teal);
+    }
+    .inline-input {
+      padding: 3px 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      color: var(--slate-900);
+      background: #ffffff;
+      max-width: 100%;
+    }
+    .num-input {
+      width: 100%;
+      min-width: 34px;
+      max-width: 64px;
+      box-sizing: border-box;
+      padding: 3px 4px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-family: inherit;
+      text-align: center;
+      color: var(--slate-900);
+      background: #ffffff;
+      -moz-appearance: textfield;
+    }
+    .num-input::-webkit-inner-spin-button,
+    .num-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    .sn1-split {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .sn1-split .num-input {
+      width: 2.6em;
+      min-width: 2.4em;
+      padding: 2px 2px;
+    }
+    .w5-pool-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.72rem;
+      color: var(--slate-700);
+    }
+    .w5-pool-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3px;
+    }
+    .w5-pool-row .num-input {
+      width: 2.8em;
+      min-width: 2.5em;
+      padding: 2px 3px;
+    }
+    #form-sb .cell-input { min-width: 145px; }
+    .w5-mode-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .reg-chk-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+      font-weight: 700;
+    }
+    .bldg-chk-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 10px;
+      margin-bottom: 3px;
+      cursor: pointer;
+    }
+    .reg-total-row td {
+      background: #f1f5f9;
+      font-weight: 800;
+      text-align: center;
+      color: var(--navy);
+    }
+    .reg-total-row td:first-child { text-align: left; }
 
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
@@ -2090,6 +2260,8 @@
           <!-- MODULE 3: HOUSEHOLD CONTACTS & REUNIFICATION (SYNCED 1:1 WITH FORM M-1 BACK) -->
           <h3>3. Household Contacts &amp; Reunification (Auto-Syncs 1:1 With Printable Form M-1)</h3>
           <div class="fill-grid">
+            <div class="fill-field"><label for="prep-m1-household">Our Household Name &amp; Street (Optional)</label><input id="prep-m1-household" data-save-key="v4_m1_household" placeholder="e.g., Smith Family — 412 W Aspen Hills Blvd"></div>
+            <div class="fill-field"><label for="prep-m1-leader-phone">Ministering Companion / Leader Mobile # (For 1-Tap Check-In)</label><input id="prep-m1-leader-phone" type="tel" data-save-key="v4_m1_leader_phone" placeholder="e.g., 801-555-0199"></div>
             <div class="fill-field"><label for="prep-m1-ward">Our Ward &amp; Assigned FRS Channel (Ch 1–7, Tone 0)</label><input id="prep-m1-ward" data-save-key="v2_m1_ward" placeholder="e.g., Crossroads Ward — FRS Ch 7 (Tone 0)"></div>
             <div class="fill-field"><label for="prep-m1-relay">Out-of-Area Family Relay (Name &amp; Phone)</label><input id="prep-m1-relay" data-save-key="v2_m1_relay" placeholder="Relative outside Utah Valley"></div>
             <div class="fill-field"><label for="prep-m1-school">School / Campus / Workplace Emergency Line</label><input id="prep-m1-school" data-save-key="v2_m1_school" placeholder="Riverview Elem (385) 579-7355 / Middle-High / UVU-BYU"></div>
@@ -2253,6 +2425,8 @@
         </div>
 
         <div class="fill-grid">
+          <div class="fill-field"><label for="m1-household">Our Household Name &amp; Street (Optional)</label><input id="m1-household" data-save-key="v4_m1_household" placeholder="e.g., Smith Family — 412 W Aspen Hills Blvd"></div>
+          <div class="fill-field"><label for="m1-leader-phone">Ministering Companion / Leader Mobile # (For 1-Tap Check-In)</label><input id="m1-leader-phone" type="tel" data-save-key="v4_m1_leader_phone" placeholder="e.g., 801-555-0199"></div>
           <div class="fill-field"><label for="m1-ward">Our Ward &amp; Assigned FRS Channel (Ch 1–7, Tone 0)</label><input id="m1-ward" data-save-key="v2_m1_ward" placeholder="e.g., Crossroads Ward — FRS Ch 7 (Tone 0)"></div>
           <div class="fill-field"><label for="m1-relay">Out-of-Area Family Relay (Name &amp; Phone — Texts Often Work First)</label><input id="m1-relay" data-save-key="v2_m1_relay" placeholder="Relative outside Utah Valley"></div>
           <div class="fill-field"><label for="m1-school">School / Campus / Workplace Emergency Line</label><input id="m1-school" data-save-key="v2_m1_school" placeholder="Riverview Elem (385) 579-7355 / Middle-High / UVU-BYU"></div>
@@ -2646,8 +2820,23 @@
             <span class="sheet-tag">Ward Sheet 1 (Front &amp; Back) • Forms W-0 &amp; W-0B</span>
             <h2 class="sheet-title">Ward Command Quick Sheet, Succession &amp; Field Reference</h2>
           </div>
-          <span><strong>Ward:</strong> ____________________ &nbsp; <strong>Assigned FRS Ch:</strong> ___ (Tone 0)</span>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:0.84rem;">
+            <label for="w0-ward-name"><strong>Ward:</strong></label>
+            <input id="w0-ward-name" list="crossroads-wards-list" class="inline-input" style="width:165px;" data-save-key="v4_ward_name" placeholder="e.g., Crossroads">
+            <label for="w0-frs"><strong>Assigned FRS Ch:</strong></label>
+            <input id="w0-frs" class="inline-input" style="width:52px; text-align:center;" data-save-key="v4_ward_frs" placeholder="1–7">
+            <span>(Tone 0)</span>
+          </div>
         </div>
+        <datalist id="crossroads-wards-list">
+          <option value="Aspen Hills"></option>
+          <option value="Shay Park"></option>
+          <option value="Harvest Hills 10th"></option>
+          <option value="SA 11th YSA"></option>
+          <option value="Harvest Hills 1st"></option>
+          <option value="Harvest Hills 8th"></option>
+          <option value="Crossroads"></option>
+        </datalist>
 
         <div class="grid-2">
           <div>
@@ -2666,14 +2855,16 @@
             <h3>Offline Command Roster &amp; Rally Point</h3>
             <table class="write-table" style="font-size:0.82rem;">
               <tbody>
-                <tr><th style="width:42%;">Outdoor / Home Ward Rally Point</th><td></td></tr>
-                <tr><th>Bishop / 1st / 2nd Counselors</th><td></td></tr>
-                <tr><th>Ward Clerk &amp; Exec Secretary</th><td></td></tr>
-                <tr><th>EQ Pres &amp; EQ 1st Counselor</th><td></td></tr>
-                <tr><th>Ward RS Pres &amp; RS 1st Counselor</th><td></td></tr>
-                <tr><th>Ward Welfare Specialist (<code>22.6.4</code>)</th><td></td></tr>
-                <tr><th>Ward HAM Operator / Call Sign</th><td></td></tr>
-                <tr><th>Stake Pres Cell &amp; Assigned HC</th><td></td></tr>
+                <tr><th style="width:42%;"><label for="w0-rally">Outdoor / Home Ward Rally Point</label></th><td><input id="w0-rally" class="cell-input" data-save-key="v4_ward_rally" placeholder="Address / park / home porch"></td></tr>
+                <tr><th><label for="w0-bishopric">Bishop / 1st / 2nd Counselors</label></th><td><input id="w0-bishopric" class="cell-input" data-save-key="v4_ward_bishopric" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="w0-clerk">Ward Clerk &amp; Exec Secretary</label></th><td><input id="w0-clerk" class="cell-input" data-save-key="v4_ward_clerk" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="w0-eqp">EQ Pres &amp; EQ 1st Counselor</label></th><td><input id="w0-eqp" class="cell-input" data-save-key="v4_ward_eqp" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="w0-rsp">Ward RS Pres &amp; RS 1st Counselor</label></th><td><input id="w0-rsp" class="cell-input" data-save-key="v4_ward_rsp" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="w0-spec">Ward Welfare Specialist (<code>22.6.4</code>)</label></th><td><input id="w0-spec" class="cell-input" data-save-key="v4_ward_spec" placeholder="Name &amp; mobile number"></td></tr>
+                <tr><th><label for="w0-ham">Ward HAM Operator / Call Sign</label></th><td><input id="w0-ham" class="cell-input" data-save-key="v4_ward_ham" placeholder="Name, call sign &amp; mobile #"></td></tr>
+                <tr><th><label for="w0-stake-contact">Stake Pres Cell &amp; Assigned HC</label></th><td><input id="w0-stake-contact" class="cell-input" data-save-key="v4_ward_stake_contact" placeholder="Stake Pres &amp; High Councilor phones"></td></tr>
+                <tr><th><label for="w0-stake-sms">Stake Command / Prep Rep Mobile # (W-5 SMS)</label></th><td><input id="w0-stake-sms" type="tel" class="cell-input" data-save-key="v4_ward_stake_sms" placeholder="e.g., 801-555-0100 (for W-5 updates)"></td></tr>
+                <tr><th><label for="w0-member-checkin">Default Ward Check-In Mobile # (For Members)</label></th><td><input id="w0-member-checkin" type="tel" class="cell-input" data-save-key="v4_ward_member_checkin" placeholder="Optional fallback check-in # for Form M-1"></td></tr>
               </tbody>
             </table>
 
@@ -3065,45 +3256,92 @@
             <span class="sheet-tag teal">Ward Sheet 5 • Form W-5 (ZERO MEMBER NAMES — GH 22.4.5)</span>
             <h2 class="sheet-title">Ward &rarr; Stake Anonymized Care &amp; Status Update (Strictly 1 Page)</h2>
           </div>
-          <span style="font-size:0.84rem;"><strong>Mode:</strong> [ ] Annual Audit (Mar 31) &nbsp; [ ] Live Care Update (T+60m / T+4h)</span>
+          <div style="font-size:0.82rem; display:flex; flex-wrap:wrap; align-items:center; gap:4px;" role="radiogroup" aria-label="Form W-5 report mode">
+            <strong>Mode:</strong>
+            <label class="w5-mode-label"><input type="radio" name="w5_mode" value="annual" data-save-key="v4_w5_mode"> Annual Audit (Mar 31)</label>
+            <label class="w5-mode-label"><input type="radio" name="w5_mode" value="live" data-save-key="v4_w5_mode" checked> Live Care Update (T+60m / T+4h)</label>
+          </div>
         </div>
-        <p style="font-size:0.83rem; margin:0 0 8px;">
-          <strong>Ward Name:</strong> ______________________ &nbsp; <strong>Date / Time:</strong> ____________ &nbsp; <strong>Submitted By:</strong> ________________<br>
+        <div style="font-size:0.83rem; margin:0 0 8px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+          <label for="w5-ward"><strong>Ward Name:</strong></label>
+          <input id="w5-ward" list="crossroads-wards-list" class="inline-input" style="width:155px;" data-save-key="v4_w5_ward" placeholder="e.g., Crossroads">
+          <label for="w5-datetime"><strong>Date / Time:</strong></label>
+          <input id="w5-datetime" class="inline-input" style="width:140px;" data-save-key="v4_w5_datetime" placeholder="e.g., T+60m / 14:30">
+          <label for="w5-submitted-by"><strong>Submitted By:</strong></label>
+          <input id="w5-submitted-by" class="inline-input" style="width:155px;" data-save-key="v4_w5_submitted_by" placeholder="Role / First name">
+        </div>
+        <p style="font-size:0.82rem; margin:0 0 8px;">
           <strong>One Shared Stake Listening Post:</strong> Share with <strong>Stake Command / Prep Rep Net Control</strong> (HAM <code>145.230 MHz</code>, Tactical <code>146.580 MHz</code>, Ward FRS Ch 1–7, or runner)—immediately shared live with Stake Pres, HC Tracks 1–4 &amp; Stake RS.
         </p>
 
         <h3 style="margin:4px 0;">Part 0: Live Household Accountability Summary (From Sheet W-4/6)</h3>
         <div class="table-wrap">
-          <table class="write-table" style="font-size:0.82rem;">
+          <table class="write-table" style="font-size:0.8rem;">
             <thead>
               <tr><th>Total Homes</th><th>Checked</th><th>GREEN (Safe)</th><th>YELLOW (Help)</th><th>RED (Urgent)</th><th>Unaccounted</th><th>Displaced</th><th>Acute Injuries</th></tr>
             </thead>
-            <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+            <tbody>
+              <tr>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_total" aria-label="Total Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_checked" aria-label="Checked Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_green" aria-label="GREEN Safe Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_yellow" aria-label="YELLOW Help Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_red" aria-label="RED Urgent Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_unacct" aria-label="Unaccounted Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_displaced" aria-label="Displaced Homes"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_p0_injuries" aria-label="Acute Injuries"></td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
         <h3 style="margin:6px 0 4px;">Part A: Anonymized Extra-Care Counts (<a href="#form-stake-register" class="form-ref-link" onclick="event.preventDefault(); jumpToForm('STAKE-REG');" title="Jump to Tab 4 Unified Stake Readiness Register">Matches Tab 4 Register 1:1</a> &middot; <a href="#sn-modal" class="form-ref-link" onclick="event.preventDefault(); openSNModal();" title="Open Shared SN-1–8 Extra-Care Reference Card">SN-1–8 Reference Card</a>)</h3>
         <div class="table-wrap">
-          <table class="write-table" style="font-size:0.8rem;">
+          <table class="write-table" style="font-size:0.78rem;">
             <thead>
               <tr><th>SN-1 Total (Power)</th><th>SN-1 No Aux Power</th><th>SN-2 (Meds)</th><th>SN-3 (Mobility/Ride)</th><th>SN-4 (Dialysis)</th><th>SN-5 (Solo)</th><th>SN-6 (Sensory)</th><th>SN-7 (Infant/Mom)</th><th>SN-8 (Lang/HoH)</th></tr>
             </thead>
-            <tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody>
+            <tbody>
+              <tr>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn1_tot" aria-label="SN-1 Total"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn1_noaux" aria-label="SN-1 No Aux Power"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn2" aria-label="SN-2 Meds"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn3" aria-label="SN-3 Mobility"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn4" aria-label="SN-4 Dialysis"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn5" aria-label="SN-5 Solo"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn6" aria-label="SN-6 Sensory"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn7" aria-label="SN-7 Infant or Mom"></td>
+                <td><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_sn8" aria-label="SN-8 Language or HoH"></td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
         <h3 style="margin:6px 0 4px;">Part B: Voluntary Resource Pools Available to Share / Unmet Needs (1:1 Parity With Tab 4)</h3>
         <div class="table-wrap">
-          <table class="write-table" style="font-size:0.8rem;">
+          <table class="write-table" style="font-size:0.78rem;">
             <thead>
               <tr><th>1. Power / Gen</th><th>2. Saws / Crews (PPE)</th><th>3. Plumb / Elec</th><th>4. Plow / 4x4 / Rides</th><th>5. Water Filters</th><th>6. Host Homes</th><th>7. Med / Lang / HoH</th><th>8. Coolers / Mental Hlth</th></tr>
             </thead>
             <tbody>
-              <tr><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td><td style="font-size:0.74rem; color:#475569;">Avail: ___<br>Need: ___</td></tr>
+              <tr>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool1_avail" aria-label="Pool 1 Power Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool1_need" aria-label="Pool 1 Power Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool2_avail" aria-label="Pool 2 Saws Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool2_need" aria-label="Pool 2 Saws Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool3_avail" aria-label="Pool 3 Plumb/Elec Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool3_need" aria-label="Pool 3 Plumb/Elec Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool4_avail" aria-label="Pool 4 Plow/Ride Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool4_need" aria-label="Pool 4 Plow/Ride Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool5_avail" aria-label="Pool 5 Water Filters Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool5_need" aria-label="Pool 5 Water Filters Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool6_avail" aria-label="Pool 6 Host Homes Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool6_need" aria-label="Pool 6 Host Homes Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool7_avail" aria-label="Pool 7 Med/Lang Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool7_need" aria-label="Pool 7 Med/Lang Needed"></span></div></td>
+                <td><div class="w5-pool-cell"><span class="w5-pool-row"><span>Avail:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool8_avail" aria-label="Pool 8 Coolers/MH Available"></span><span class="w5-pool-row"><span>Need:</span><input type="number" min="0" inputmode="numeric" class="num-input" data-save-key="v4_w5_pool8_need" aria-label="Pool 8 Coolers/MH Needed"></span></div></td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <p style="font-size:0.82rem; margin:6px 0 0;"><strong>Urgent Unmet Needs / Storehouse Requests (Bishop Key Required, <code>GH 22.6.1</code>) / SA 11th YSA Walk-Ins to Relay:</strong><br>________________________________________________________________________________________________________</p>
+        <div style="font-size:0.82rem; margin:6px 0 0;">
+          <label for="w5-urgent"><strong>Urgent Unmet Needs / Storehouse Requests (Bishop Key Required, <code>GH 22.6.1</code>) / SA 11th YSA Walk-Ins to Relay (Zero Member Names):</strong></label>
+          <textarea id="w5-urgent" class="cell-textarea" rows="2" style="margin-top:4px;" data-save-key="v4_w5_urgent" placeholder="e.g., Need 1 SN-1 backup battery; 2 host homes needed; zero member names"></textarea>
+          <div id="w5-urgent-print" class="print-only w5-urgent-print"></div>
+        </div>
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Ward Sheet 5 (Form W-5) • One Shared Stake Listening Post — Zero Member Names</div>
       </div>
       </div><!-- end #ward-pane-3c -->
@@ -3160,15 +3398,16 @@
             <h3>Offline Ecclesiastical &amp; Area Escalation Roster</h3>
             <table class="write-table" style="font-size:0.8rem;">
               <tbody>
-                <tr><th style="width:44%;">Stake Pres / 1st / 2nd / Clerk</th><td></td></tr>
-                <tr><th>Area Seventy &amp; Coordinating Chair</th><td></td></tr>
-                <tr><th>Church FM (24/7) &amp; WSRM</th><td></td></tr>
-                <tr><th>Church Risk Mgmt &amp; Area Comms</th><td></td></tr>
-                <tr><th>Lehi &amp; American Fork Stake Pres</th><td></td></tr>
-                <tr><th>Aspen Hills / Shay Park Bishops</th><td></td></tr>
-                <tr><th>HH 10th / SA 11th YSA Bishops</th><td></td></tr>
-                <tr><th>HH 1st / HH 8th / Crossroads Bishops</th><td></td></tr>
-                <tr><th>Riverview Branch Pres / Stake RS</th><td></td></tr>
+                <tr><th style="width:44%;"><label for="sa-stake-pres">Stake Pres / 1st / 2nd / Clerk</label></th><td><input id="sa-stake-pres" class="cell-input" data-save-key="v4_stake_pres" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="sa-prep-phone">Stake Command / Prep Rep Mobile # (W-5 Intake)</label></th><td><input id="sa-prep-phone" type="tel" class="cell-input" data-save-key="v4_stake_prep_phone" placeholder="e.g., 801-555-0100 (shared to Wards)"></td></tr>
+                <tr><th><label for="sa-area70">Area Seventy &amp; Coordinating Chair</label></th><td><input id="sa-area70" class="cell-input" data-save-key="v4_stake_area70" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="sa-fm">Church FM (24/7) &amp; WSRM</label></th><td><input id="sa-fm" class="cell-input" data-save-key="v4_stake_fm" placeholder="FM 24/7 emergency line &amp; WSRM"></td></tr>
+                <tr><th><label for="sa-risk">Church Risk Mgmt &amp; Area Comms</label></th><td><input id="sa-risk" class="cell-input" data-save-key="v4_stake_risk" placeholder="Risk Mgmt &amp; Area Comms contacts"></td></tr>
+                <tr><th><label for="sa-neighbor-stakes">Lehi &amp; American Fork Stake Pres</label></th><td><input id="sa-neighbor-stakes" class="cell-input" data-save-key="v4_stake_neighbor_stakes" placeholder="Reciprocal host-housing contacts"></td></tr>
+                <tr><th><label for="sa-bishops-1">Aspen Hills / Shay Park Bishops</label></th><td><input id="sa-bishops-1" class="cell-input" data-save-key="v4_stake_bishops_1" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="sa-bishops-2">HH 10th / SA 11th YSA Bishops</label></th><td><input id="sa-bishops-2" class="cell-input" data-save-key="v4_stake_bishops_2" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="sa-bishops-3">HH 1st / HH 8th / Crossroads Bishops</label></th><td><input id="sa-bishops-3" class="cell-input" data-save-key="v4_stake_bishops_3" placeholder="Names &amp; mobile numbers"></td></tr>
+                <tr><th><label for="sa-rv-rs">Riverview Branch Pres / Stake RS</label></th><td><input id="sa-rv-rs" class="cell-input" data-save-key="v4_stake_rv_rs" placeholder="Names &amp; mobile numbers"></td></tr>
               </tbody>
             </table>
           </div>
@@ -3204,7 +3443,7 @@
             <ul style="margin-bottom:0;">
               <li><strong>Auto-Check-In:</strong> Felt quake &ge;M4.5, cell failure &gt;15 min, Everbridge evac/shelter, or &gt;2-hr extreme-weather outage &rarr; HAMs check in at <code>:00 / :30</code>.</li>
               <li><strong>W-5 Care Update Cadence:</strong> Voice/radio check-in at <strong>T+60 min</strong>; full <code>W-5</code> at <strong>T+4 hrs</strong>; every 12 hrs thereafter. Log all 7 Wards + Riverview status + SA 11th YSA walk-in relays at our <strong>One Shared Stake Listening Post</strong> so Stake Pres, HCs &amp; Stake RS work from one live board.</li>
-              <li><strong>Shay Park 12V Mobile HAM/Lighting Kit Custodian:</strong> ________________________ (Backup: ___________________).</li>
+              <li><strong>Shay Park 12V Mobile HAM/Lighting Kit Custodian:</strong> <input id="sa-gobox-custodian" class="inline-input" style="width:170px;" data-save-key="v4_stake_gobox_custodian" aria-label="Shay Park 12V Go-Box Custodian" placeholder="Primary custodian &amp; phone"> (Backup: <input id="sa-gobox-backup" class="inline-input" style="width:150px;" data-save-key="v4_stake_gobox_backup" aria-label="Shay Park 12V Go-Box Backup" placeholder="Backup &amp; phone">).</li>
             </ul>
           </div>
         </div>
@@ -3234,22 +3473,22 @@
             <tbody>
               <tr>
                 <td><strong>Track 1: Facilities</strong><br>(Bldg 1 &amp; Bldg 2)</td>
-                <td>Lead: ________________<br>Backup (Keys): ________</td>
+                <td><label for="sb-hc1-lead" style="font-size:0.74rem; font-weight:700;">Lead:</label><input id="sb-hc1-lead" class="cell-input" style="margin-bottom:3px;" data-save-key="v4_stake_hc1_lead" aria-label="Track 1 Facilities Primary Lead and phone" placeholder="Primary HC &amp; phone"><label for="sb-hc1-backup" style="font-size:0.74rem; font-weight:700;">Backup (Keys):</label><input id="sb-hc1-backup" class="cell-input" data-save-key="v4_stake_hc1_backup" aria-label="Track 1 Facilities West-of-River Backup and keys" placeholder="West-of-river backup"></td>
                 <td><em>Trigger:</em> Shaking &gt;15s, severe storm, or SP call. Run <strong>10-Pt Building Checklist</strong> below; recommend open vs. Shay Park shift to SP (<strong>never open unilaterally</strong>); verify HVAC shutoff for Hazmat; call FM 24/7.</td>
               </tr>
               <tr>
                 <td><strong>Track 2: Care Center</strong><br>(Saratoga View)</td>
-                <td>Lead: ________________<br>Backup: ______________</td>
+                <td><label for="sb-hc2-lead" style="font-size:0.74rem; font-weight:700;">Lead:</label><input id="sb-hc2-lead" class="cell-input" style="margin-bottom:3px;" data-save-key="v4_stake_hc2_lead" aria-label="Track 2 Care Center Primary Lead and phone" placeholder="Primary HC &amp; phone"><label for="sb-hc2-backup" style="font-size:0.74rem; font-weight:700;">Backup:</label><input id="sb-hc2-backup" class="cell-input" data-save-key="v4_stake_hc2_backup" aria-label="Track 2 Care Center West-of-River Backup" placeholder="West-of-river backup"></td>
                 <td><em>Trigger:</em> Outage &gt;2h, wildfire evac, or facility alert. Verify Saratoga View status (<a class="phone-link" href="tel:+13854301020">385-430-1020</a>); mobilize <strong>2 pre-assigned adjacent Wards (Crossroads &amp; Harvest Hills 8th)</strong> for wheelchair/perimeter pairs strictly under nursing direction.</td>
               </tr>
               <tr>
                 <td><strong>Track 3: Comms &amp; Logistics</strong></td>
-                <td>Lead: ________________<br>Backup: ______________</td>
+                <td><label for="sb-hc3-lead" style="font-size:0.74rem; font-weight:700;">Lead:</label><input id="sb-hc3-lead" class="cell-input" style="margin-bottom:3px;" data-save-key="v4_stake_hc3_lead" aria-label="Track 3 Comms and Logistics Primary Lead and phone" placeholder="Primary HC &amp; phone"><label for="sb-hc3-backup" style="font-size:0.74rem; font-weight:700;">Backup:</label><input id="sb-hc3-backup" class="cell-input" data-save-key="v4_stake_hc3_backup" aria-label="Track 3 Comms and Logistics West-of-River Backup" placeholder="West-of-river backup"></td>
                 <td><em>Trigger:</em> Level 2–3 or cell failure. Support Prep Rep on Shay Park 12V Go-Box; broker cross-ward batteries, generators, plumbers, plows, and chainsaw crews from unified Tab 4 Register.</td>
               </tr>
               <tr>
                 <td><strong>Track 4: Public Safety &amp; Civil</strong> (incl. Public Works)</td>
-                <td>Lead: ________________<br>Backup: ______________</td>
+                <td><label for="sb-hc4-lead" style="font-size:0.74rem; font-weight:700;">Lead:</label><input id="sb-hc4-lead" class="cell-input" style="margin-bottom:3px;" data-save-key="v4_stake_hc4_lead" aria-label="Track 4 Public Safety and Civil Primary Lead and phone" placeholder="Primary HC &amp; phone"><label for="sb-hc4-backup" style="font-size:0.74rem; font-weight:700;">Backup:</label><input id="sb-hc4-backup" class="cell-input" data-save-key="v4_stake_hc4_backup" aria-label="Track 4 Public Safety and Civil West-of-River Backup" placeholder="West-of-river backup"></td>
                 <td><em>Trigger:</em> Everbridge evac/hazmat/water alert. Link to Saratoga Springs Fire, Police, Public Works (<a class="phone-link" href="tel:+18014042468">801-404-2468</a>), City EOC (<code>147.340 MHz</code>), and Riverview Elementary (<a class="phone-link" href="tel:+13855797355">385-579-7355</a>). Never commit Church property without SP clearance.</td>
               </tr>
             </tbody>
@@ -3258,8 +3497,24 @@
 
         <div class="card" style="padding:8px 12px; margin:8px 0; font-size:0.82rem;">
           <strong>10-Point Pass/Fail Visual Building Safety Checklist (Bldg 1 &amp; Bldg 2 — Any "FAIL" = Stay Out &amp; Shift to Shay Park):</strong><br>
-          [ ] 1. Zero rotten-egg gas odor &nbsp; [ ] 2. Exterior walls plumb (no tilt/major diagonal cracks) &nbsp; [ ] 3. Roof/steeple intact &nbsp; [ ] 4. No downed power lines near lot &nbsp; [ ] 5. Main entries/exits unobstructed &nbsp; [ ] 6. Interior ceilings/light fixtures secure &nbsp; [ ] 7. Zero active water leaks/flooding &nbsp; [ ] 8. Electrical/heat safe (no sparking/smoke) &nbsp; [ ] 9. HVAC air-handler shutoff verified (if Hazmat) &nbsp; [ ] 10. Mechanical key/fob &amp; library FRS kit accessible.<br>
-          <strong>Mechanical / Shutoff Notes (Bldg 1 / Bldg 2):</strong> Gas Valve: ____________ &middot; Main Water: ____________ &middot; HVAC Switch: ____________
+          <div style="margin:4px 0 6px;">
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_1"> 1. Zero rotten-egg gas odor</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_2"> 2. Exterior walls plumb (no tilt/major diagonal cracks)</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_3"> 3. Roof/steeple intact</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_4"> 4. No downed power lines near lot</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_5"> 5. Main entries/exits unobstructed</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_6"> 6. Interior ceilings/light fixtures secure</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_7"> 7. Zero active water leaks/flooding</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_8"> 8. Electrical/heat safe (no sparking/smoke)</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_9"> 9. HVAC air-handler shutoff verified (if Hazmat)</label>
+            <label class="bldg-chk-label"><input type="checkbox" data-save-key="v4_stake_bldg_chk_10"> 10. Mechanical key/fob &amp; library FRS kit accessible</label>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; align-items:center; gap:6px;">
+            <strong>Mechanical / Shutoff Notes (Bldg 1 / Bldg 2):</strong>
+            <label for="sb-shutoff-gas">Gas Valve:</label><input id="sb-shutoff-gas" class="inline-input" style="width:140px;" data-save-key="v4_stake_shutoff_gas" placeholder="Bldg 1 / 2 location">
+            <label for="sb-shutoff-water">Main Water:</label><input id="sb-shutoff-water" class="inline-input" style="width:140px;" data-save-key="v4_stake_shutoff_water" placeholder="Bldg 1 / 2 location">
+            <label for="sb-shutoff-hvac">HVAC Switch:</label><input id="sb-shutoff-hvac" class="inline-input" style="width:140px;" data-save-key="v4_stake_shutoff_hvac" placeholder="Bldg 1 / 2 location">
+          </div>
         </div>
 
         <hr style="border:none; border-top:2px dashed #94a3b8; margin:10px 0;">
@@ -3306,10 +3561,10 @@
             <span class="sheet-tag teal">Unified Stake Readiness Register (1:1 Form W-5 Parity • Zero Names)</span>
             <h2 class="sheet-title">Anonymized Extra-Care Tallies (Left) &amp; Voluntary Resource Pools (Right)</h2>
           </div>
-          <span style="font-size:0.82rem;"><strong>Single Compiler:</strong> Stake Prep Rep &middot; <strong>Updated:</strong> __________</span>
+          <span style="font-size:0.82rem; display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;"><strong>Single Compiler:</strong> Stake Prep Rep &middot; <label for="reg-updated"><strong>Updated:</strong></label><input id="reg-updated" class="inline-input" style="width:125px;" data-save-key="v4_reg_updated" placeholder="Date / Time"></span>
         </div>
         <div class="table-wrap">
-          <table class="write-table" style="font-size:0.76rem;">
+          <table class="write-table" id="stake-register-table" style="font-size:0.76rem;">
             <thead>
               <tr>
                 <th>Unit (FRS Ch)</th>
@@ -3330,15 +3585,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Aspen Hills (Ch 1)</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>Shay Park (Ch 2)</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>Harvest Hills 10th (Ch 3)</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>SA 11th YSA (Ch 4)</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>Harvest Hills 1st (Ch 5)</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>Harvest Hills 8th (Ch 6)*</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr><td>Crossroads (Ch 7)*</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-              <tr style="background:#fef3c7;"><td><strong>Riverview Branch</strong></td><td colspan="14"><strong>Facility Status Only (Zero Resident Medical Files):</strong> Power OK? [ ] &nbsp; Evac Needed? [ ] &nbsp; Adjacent-Ward Volunteers Needed? [ ] *(Pre-assigned pool: Crossroads &amp; Harvest Hills 8th)</td></tr>
-              <tr style="font-weight:800;"><td>STAKE TOTAL</td><td>/</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr data-reg-ward="aspen"><td>Aspen Hills (Ch 1)</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_aspen_sn1_tot" aria-label="Aspen Hills SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_aspen_sn1_noaux" aria-label="Aspen Hills SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_aspen_sn2" aria-label="Aspen Hills SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_aspen_sn3" aria-label="Aspen Hills SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_aspen_sn46" aria-label="Aspen Hills SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_aspen_sn7" aria-label="Aspen Hills SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_aspen_sn8" aria-label="Aspen Hills SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_aspen_p1" aria-label="Aspen Hills Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_aspen_p2" aria-label="Aspen Hills Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_aspen_p3" aria-label="Aspen Hills Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_aspen_p4" aria-label="Aspen Hills Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_aspen_p5" aria-label="Aspen Hills Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_aspen_p6" aria-label="Aspen Hills Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_aspen_p7" aria-label="Aspen Hills Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_aspen_p8" aria-label="Aspen Hills Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="shay"><td>Shay Park (Ch 2)</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_shay_sn1_tot" aria-label="Shay Park SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_shay_sn1_noaux" aria-label="Shay Park SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_shay_sn2" aria-label="Shay Park SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_shay_sn3" aria-label="Shay Park SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_shay_sn46" aria-label="Shay Park SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_shay_sn7" aria-label="Shay Park SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_shay_sn8" aria-label="Shay Park SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_shay_p1" aria-label="Shay Park Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_shay_p2" aria-label="Shay Park Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_shay_p3" aria-label="Shay Park Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_shay_p4" aria-label="Shay Park Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_shay_p5" aria-label="Shay Park Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_shay_p6" aria-label="Shay Park Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_shay_p7" aria-label="Shay Park Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_shay_p8" aria-label="Shay Park Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="hh10"><td>Harvest Hills 10th (Ch 3)</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_hh10_sn1_tot" aria-label="Harvest Hills 10th SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_hh10_sn1_noaux" aria-label="Harvest Hills 10th SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_hh10_sn2" aria-label="Harvest Hills 10th SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_hh10_sn3" aria-label="Harvest Hills 10th SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_hh10_sn46" aria-label="Harvest Hills 10th SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_hh10_sn7" aria-label="Harvest Hills 10th SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_hh10_sn8" aria-label="Harvest Hills 10th SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_hh10_p1" aria-label="Harvest Hills 10th Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_hh10_p2" aria-label="Harvest Hills 10th Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_hh10_p3" aria-label="Harvest Hills 10th Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_hh10_p4" aria-label="Harvest Hills 10th Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_hh10_p5" aria-label="Harvest Hills 10th Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_hh10_p6" aria-label="Harvest Hills 10th Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_hh10_p7" aria-label="Harvest Hills 10th Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_hh10_p8" aria-label="Harvest Hills 10th Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="ysa11"><td>SA 11th YSA (Ch 4)</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_ysa11_sn1_tot" aria-label="SA 11th YSA SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_ysa11_sn1_noaux" aria-label="SA 11th YSA SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_ysa11_sn2" aria-label="SA 11th YSA SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_ysa11_sn3" aria-label="SA 11th YSA SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_ysa11_sn46" aria-label="SA 11th YSA SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_ysa11_sn7" aria-label="SA 11th YSA SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_ysa11_sn8" aria-label="SA 11th YSA SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_ysa11_p1" aria-label="SA 11th YSA Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_ysa11_p2" aria-label="SA 11th YSA Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_ysa11_p3" aria-label="SA 11th YSA Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_ysa11_p4" aria-label="SA 11th YSA Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_ysa11_p5" aria-label="SA 11th YSA Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_ysa11_p6" aria-label="SA 11th YSA Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_ysa11_p7" aria-label="SA 11th YSA Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_ysa11_p8" aria-label="SA 11th YSA Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="hh1"><td>Harvest Hills 1st (Ch 5)</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_hh1_sn1_tot" aria-label="Harvest Hills 1st SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_hh1_sn1_noaux" aria-label="Harvest Hills 1st SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_hh1_sn2" aria-label="Harvest Hills 1st SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_hh1_sn3" aria-label="Harvest Hills 1st SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_hh1_sn46" aria-label="Harvest Hills 1st SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_hh1_sn7" aria-label="Harvest Hills 1st SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_hh1_sn8" aria-label="Harvest Hills 1st SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_hh1_p1" aria-label="Harvest Hills 1st Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_hh1_p2" aria-label="Harvest Hills 1st Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_hh1_p3" aria-label="Harvest Hills 1st Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_hh1_p4" aria-label="Harvest Hills 1st Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_hh1_p5" aria-label="Harvest Hills 1st Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_hh1_p6" aria-label="Harvest Hills 1st Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_hh1_p7" aria-label="Harvest Hills 1st Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_hh1_p8" aria-label="Harvest Hills 1st Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="hh8"><td>Harvest Hills 8th (Ch 6)*</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_hh8_sn1_tot" aria-label="Harvest Hills 8th SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_hh8_sn1_noaux" aria-label="Harvest Hills 8th SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_hh8_sn2" aria-label="Harvest Hills 8th SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_hh8_sn3" aria-label="Harvest Hills 8th SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_hh8_sn46" aria-label="Harvest Hills 8th SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_hh8_sn7" aria-label="Harvest Hills 8th SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_hh8_sn8" aria-label="Harvest Hills 8th SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_hh8_p1" aria-label="Harvest Hills 8th Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_hh8_p2" aria-label="Harvest Hills 8th Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_hh8_p3" aria-label="Harvest Hills 8th Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_hh8_p4" aria-label="Harvest Hills 8th Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_hh8_p5" aria-label="Harvest Hills 8th Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_hh8_p6" aria-label="Harvest Hills 8th Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_hh8_p7" aria-label="Harvest Hills 8th Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_hh8_p8" aria-label="Harvest Hills 8th Pool 8 Cool/MH"></td></tr>
+              <tr data-reg-ward="crossroads"><td>Crossroads (Ch 7)*</td><td><span class="sn1-split"><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_tot" data-save-key="v4_reg_crossroads_sn1_tot" aria-label="Crossroads SN-1 Total">/<input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn1_noaux" data-save-key="v4_reg_crossroads_sn1_noaux" aria-label="Crossroads SN-1 No Aux"></span></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn2" data-save-key="v4_reg_crossroads_sn2" aria-label="Crossroads SN-2"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn3" data-save-key="v4_reg_crossroads_sn3" aria-label="Crossroads SN-3"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn46" data-save-key="v4_reg_crossroads_sn46" aria-label="Crossroads SN-4-6"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn7" data-save-key="v4_reg_crossroads_sn7" aria-label="Crossroads SN-7"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="sn8" data-save-key="v4_reg_crossroads_sn8" aria-label="Crossroads SN-8"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p1" data-save-key="v4_reg_crossroads_p1" aria-label="Crossroads Pool 1 Power"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p2" data-save-key="v4_reg_crossroads_p2" aria-label="Crossroads Pool 2 Saws"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p3" data-save-key="v4_reg_crossroads_p3" aria-label="Crossroads Pool 3 Plumb/Elec"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p4" data-save-key="v4_reg_crossroads_p4" aria-label="Crossroads Pool 4 Plow/Ride"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p5" data-save-key="v4_reg_crossroads_p5" aria-label="Crossroads Pool 5 Filters"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p6" data-save-key="v4_reg_crossroads_p6" aria-label="Crossroads Pool 6 Hosts"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p7" data-save-key="v4_reg_crossroads_p7" aria-label="Crossroads Pool 7 Med/Lang"></td><td><input type="number" min="0" inputmode="numeric" class="num-input" data-reg-col="p8" data-save-key="v4_reg_crossroads_p8" aria-label="Crossroads Pool 8 Cool/MH"></td></tr>
+              <tr style="background:#fef3c7;"><td><strong>Riverview Branch</strong></td><td colspan="14"><strong>Facility Status Only (Zero Resident Medical Files):</strong> <label class="reg-chk-label"><input type="checkbox" data-save-key="v4_reg_rv_power"> Power OK?</label> <label class="reg-chk-label"><input type="checkbox" data-save-key="v4_reg_rv_evac"> Evac Needed?</label> <label class="reg-chk-label"><input type="checkbox" data-save-key="v4_reg_rv_vol"> Adjacent-Ward Volunteers Needed?</label> *(Pre-assigned pool: Crossroads &amp; Harvest Hills 8th)</td></tr>
+              <tr class="reg-total-row"><td>STAKE TOTAL</td><td><span id="reg-tot-sn1-tot">0</span> / <span id="reg-tot-sn1-noaux">0</span></td><td id="reg-tot-sn2">0</td><td id="reg-tot-sn3">0</td><td id="reg-tot-sn46">0</td><td id="reg-tot-sn7">0</td><td id="reg-tot-sn8">0</td><td id="reg-tot-p1">0</td><td id="reg-tot-p2">0</td><td id="reg-tot-p3">0</td><td id="reg-tot-p4">0</td><td id="reg-tot-p5">0</td><td id="reg-tot-p6">0</td><td id="reg-tot-p7">0</td><td id="reg-tot-p8">0</td></tr>
             </tbody>
           </table>
         </div>
@@ -4646,6 +4901,9 @@
         const menu = document.getElementById('print-menu');
         if (menu) menu.removeAttribute('open');
         const today = new Date().toLocaleDateString();
+        const w5Urg = document.getElementById('w5-urgent');
+        const w5UrgPr = document.getElementById('w5-urgent-print');
+        if (w5Urg && w5UrgPr) w5UrgPr.textContent = w5Urg.value || '';
         document.querySelectorAll('.print-footer-stamp').forEach(el => {
           if (!el.dataset.baseText) el.dataset.baseText = el.textContent;
           el.textContent = el.dataset.baseText + ' • Printed ' + today;
@@ -4820,7 +5078,7 @@
         }
       }
 
-      const FAMILY_KEY_PREFIXES = ['v2_m1_', 'v2_chk_', 'v4_prep_'];
+      const FAMILY_KEY_PREFIXES = ['v2_m1_', 'v4_m1_', 'v2_chk_', 'v4_prep_'];
       const ALLOWED_FAMILY_KEY_TYPES = new Map();
       document.querySelectorAll('[data-save-key]').forEach(el => {
         const k = el.dataset.saveKey;
@@ -4837,10 +5095,28 @@
       function syncInputsForKey(key, val, isCheck) {
         document.querySelectorAll('[data-save-key]').forEach(node => {
           if (node.dataset.saveKey !== key) return;
-          if (isCheck || node.type === 'checkbox') node.checked = (val === '1' || val === true);
-          else node.value = (val == null ? '' : String(val));
+          if (node.type === 'radio') {
+            node.checked = (String(val) === node.value);
+          } else if (isCheck || node.type === 'checkbox') {
+            node.checked = (val === '1' || val === true);
+          } else {
+            node.value = (val == null ? '' : String(val));
+          }
         });
       }
+
+      window.updateStakeRegisterTotals = function () {
+        const cols = ['sn1_tot', 'sn1_noaux', 'sn2', 'sn3', 'sn46', 'sn7', 'sn8', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'];
+        cols.forEach(col => {
+          let sum = 0;
+          document.querySelectorAll('#stake-register-table input[data-reg-col="' + col + '"]').forEach(inp => {
+            const n = parseInt(inp.value, 10);
+            if (Number.isFinite(n) && n > 0) sum += n;
+          });
+          const cell = document.getElementById('reg-tot-' + col.replace('_', '-'));
+          if (cell) cell.textContent = String(sum);
+        });
+      };
 
       window.exportFamilyWorksheet = function () {
         const data = {};
@@ -4930,7 +5206,7 @@
         });
       }
 
-      // LocalStorage persistence & 1:1 cross-field sync for Form M-1, Prep Worksheet & checklists
+      // LocalStorage persistence & 1:1 cross-field sync for Form M-1, Prep Worksheet, Ward & Stake forms
       document.querySelectorAll('[data-save-key]').forEach(el => {
         const key = el.dataset.saveKey;
         const val = safeGet(key);
@@ -4942,14 +5218,31 @@
             syncInputsForKey(key, nv, true);
             updateCheckProgress();
           });
+        } else if (el.type === 'radio') {
+          const validVals = Array.from(document.querySelectorAll('input[type="radio"][data-save-key="' + key + '"]')).map(r => r.value);
+          if (val !== null && validVals.includes(val)) el.checked = (el.value === val);
+          el.addEventListener('change', () => {
+            if (!el.checked) return;
+            try { localStorage.setItem(key, el.value); } catch (e) {}
+            syncInputsForKey(key, el.value, false);
+          });
         } else {
           if (val !== null) el.value = val;
+          const syncPrintMirror = () => {
+            if (el.id === 'w5-urgent') {
+              const pr = document.getElementById('w5-urgent-print');
+              if (pr) pr.textContent = el.value || '';
+            }
+          };
+          syncPrintMirror();
           const handleValueUpdate = () => {
             try { localStorage.setItem(key, el.value); } catch (e) {}
             document.querySelectorAll('[data-save-key]').forEach(other => {
               if (other !== el && other.dataset.saveKey === key) other.value = el.value;
             });
+            syncPrintMirror();
             if (key.startsWith('v4_prep_')) updateWaterCalculator();
+            if (key.startsWith('v4_reg_')) updateStakeRegisterTotals();
           };
           el.addEventListener('input', handleValueUpdate);
           el.addEventListener('change', handleValueUpdate);
@@ -4957,6 +5250,7 @@
       });
       updateCheckProgress();
       updateWaterCalculator();
+      updateStakeRegisterTotals();
 
       // Wire Tab 2 3-Sub-Tab Member Switcher (2A default in Peacetime)
       window.setMemberSubtab = function (sub) {
@@ -5257,7 +5551,7 @@
             const parent = n.parentElement;
             if (!parent) continue;
             if (SKIP_TAGS.has(parent.tagName)) continue;
-            if (parent.closest('a, button, summary, .print-footer-stamp, .gyr-strip')) continue;
+            if (parent.closest('a, button, summary, label[for], .print-footer-stamp, .gyr-strip')) continue;
             nodes.push(n);
           }
           nodes.forEach(textNode => {
