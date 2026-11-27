@@ -3686,6 +3686,7 @@
             </div>
           </div>
           <div id="w5-ward-hint" style="font-size:0.8rem; font-weight:700; color:var(--amber); margin:2px 0 6px; display:none;"></div>
+          <div id="w5-file-note" style="font-size:0.8rem; font-weight:700; color:var(--navy); background:#e0f2fe; border:1px solid #7dd3fc; border-radius:6px; padding:6px 8px; margin:4px 0 6px; display:none;">Opened from a local file — share links automatically point to the hosted Stake site so recipients can open them on their phones.</div>
           <div id="w5-summary-preview" class="status-preview-box" aria-label="Form W-5 summary preview"></div>
           <div class="comms-actions">
             <a id="w5-sms-btn" class="btn" href="#">Text Stake Command</a>
@@ -4972,6 +4973,7 @@
         <strong>Privacy Notice (<code>GH 22.4.5</code>):</strong> Share privately with family/unit only—never post leader phone numbers publicly. Data stays strictly inside the <code>#hash</code> fragment (never sent to servers), and <strong>Form W-1 &amp; W-2/3 are never included</strong>.
       </div>
       <p id="share-link-summary" style="font-size:0.85rem; margin:6px 0;"></p>
+      <div id="share-link-file-note" style="font-size:0.8rem; font-weight:700; color:var(--navy); background:#e0f2fe; border:1px solid #7dd3fc; border-radius:6px; padding:6px 8px; margin:4px 0 6px; display:none;">Opened from a local file — share links automatically point to the hosted Stake site so recipients can open them on their phones.</div>
       <label for="share-link-url" style="font-size:0.8rem; font-weight:700; color:var(--slate-700);">Generated Prefill Link:</label>
       <input id="share-link-url" class="share-url-input" type="text" readonly>
       <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
@@ -6406,7 +6408,12 @@
           try { location.hash = ''; } catch (e2) {}
         }
       }
+      const HOSTED_V4_URL = 'https://nickallen100.github.io/crossroads-stake-emergency-plan/stake_leadership_presentationV4.html';
+      function isLocalFileOrigin() {
+        return location.protocol === 'file:';
+      }
       function getCleanBaseUrl() {
+        if (isLocalFileOrigin()) return HOSTED_V4_URL;
         return location.href.split('#')[0].split('?')[0];
       }
       function getPrefillScope(scope) {
@@ -6502,7 +6509,9 @@
         const nativeBtn = document.getElementById('share-link-native-btn');
         const copyBtn = document.getElementById('share-link-copy-btn');
         const fb = document.getElementById('share-link-feedback');
+        const fileNote = document.getElementById('share-link-file-note');
         fb.textContent = '';
+        if (fileNote) fileNote.style.display = (count > 0 && isLocalFileOrigin()) ? 'block' : 'none';
 
         if (count === 0) {
           sumEl.textContent = 'No fields are filled in yet for this section. Type at least one field first, then click Share again to generate a prefill link.';
@@ -6998,7 +7007,9 @@
         const smsBtn = document.getElementById('w5-sms-btn');
         const copyLinkBtn = document.getElementById('w5-copy-link-btn');
         const nativeBtn = document.getElementById('w5-native-share-btn');
+        const fileNote = document.getElementById('w5-file-note');
         if (!prevEl) return;
+        if (fileNote) fileNote.style.display = isLocalFileOrigin() ? 'block' : 'none';
 
         if (phoneEl && (syncFromW0 || !w5StakePhoneManual)) {
           const w0Sms = getFieldValueByKey('v4_ward_stake_sms').trim();
