@@ -1704,6 +1704,51 @@
       .status-btn-row { grid-template-columns: 1fr; }
     }
 
+    /* ===== V4.13 TWO-WAY WARD W-5 & STAKE BROADCAST COMPOSERS ===== */
+    .comms-composer {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #f0f9ff;
+      border: 2px solid var(--navy-mid);
+      border-radius: 10px;
+    }
+    .comms-composer h3 { margin: 0 0 6px; color: var(--navy); font-size: 1rem; }
+    .comms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 8px;
+      margin: 8px 0;
+    }
+    .comms-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+    .comms-field select,
+    .comms-field input,
+    .comms-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 44px;
+      padding: 7px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--slate-900);
+    }
+    .comms-field textarea { min-height: 60px; resize: vertical; }
+    .comms-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
     @media screen {
       body.crisis-mode .ward-subtabs { display: none !important; }
       body.crisis-mode #ward-pane-3a { display: block !important; }
@@ -3581,6 +3626,35 @@
           <textarea id="w5-urgent" class="cell-textarea" rows="2" style="margin-top:4px;" data-save-key="v4_w5_urgent" placeholder="e.g., Need 1 SN-1 backup battery; 2 host homes needed; zero member names"></textarea>
           <div id="w5-urgent-print" class="print-only w5-urgent-print"></div>
         </div>
+
+        <!-- WARD -> STAKE FORM W-5 UPDATE & #w5= IMPORT COMPOSER (SCREEN ONLY) -->
+        <div id="w5-send-composer" class="comms-composer screen-only" role="region" aria-label="Send Form W-5 Update to Stake">
+          <h3>Send Form W-5 Update to Stake (Zero Member Names &middot; Live or Annual)</h3>
+          <div class="comms-grid">
+            <div class="comms-field">
+              <label for="w5-stake-phone">Stake Command / Prep Rep Mobile # (Auto-Filled from W-0)</label>
+              <input id="w5-stake-phone" type="tel" placeholder="e.g., 801-555-0102 (or leave blank to pick in SMS)">
+            </div>
+            <div class="comms-field" style="display:flex; flex-direction:column; justify-content:flex-end;">
+              <label for="w5-include-link" style="display:inline-flex; align-items:center; gap:6px; cursor:pointer; font-size:0.82rem; min-height:44px; margin-bottom:0;">
+                <input id="w5-include-link" type="checkbox" style="width:18px; height:18px; min-height:0;" checked> Include 1-tap <code>#w5=</code> Stake Register Import Link
+              </label>
+            </div>
+          </div>
+          <div id="w5-ward-hint" style="font-size:0.8rem; font-weight:700; color:var(--amber); margin:2px 0 6px; display:none;"></div>
+          <div id="w5-summary-preview" class="status-preview-box" aria-label="Form W-5 summary preview"></div>
+          <div class="comms-actions">
+            <a id="w5-sms-btn" class="btn" href="#">Text Stake Command</a>
+            <button type="button" id="w5-native-share-btn" class="btn btn-outline" style="display:none;" onclick="nativeShareW5Update()">Share Update</button>
+            <button type="button" id="w5-copy-summary-btn" class="btn btn-outline" onclick="copyW5Summary()">Copy Summary</button>
+            <button type="button" id="w5-copy-link-btn" class="btn btn-outline" onclick="copyW5ImportLink()">Copy #w5 Import Link</button>
+            <span id="w5-feedback" style="font-size:0.82rem; font-weight:700; color:var(--green);" role="status" aria-live="polite"></span>
+          </div>
+          <p class="status-offline-note">
+            <strong>Zero member names / Form W-1 PII included.</strong> If cell fails, read this summary verbatim over <strong>HAM 145.230 MHz / Ward FRS Ch 1–7</strong>.
+          </p>
+        </div>
+
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Ward Sheet 5 (Form W-5) • One Shared Stake Listening Post — Zero Member Names</div>
       </div>
       </div><!-- end #ward-pane-3c -->
@@ -3689,6 +3763,70 @@
             </ul>
           </div>
         </div>
+
+        <!-- STAKE -> WARDS STATUS BROADCAST COMPOSER (SCREEN ONLY) -->
+        <div id="stake-broadcast-composer" class="comms-composer screen-only" role="region" aria-label="Stake Update Broadcast Composer">
+          <h3>Send Stake Update to Wards (Structured Bulletin for SMS, Share, Email or Radio)</h3>
+          <div class="comms-grid">
+            <div class="comms-field">
+              <label for="sbcast-level">Activation Level</label>
+              <select id="sbcast-level">
+                <option value="Peacetime / Normal">Peacetime / Normal</option>
+                <option value="Level 1 Watch">Level 1 Watch</option>
+                <option value="Level 2 Partial">Level 2 Partial</option>
+                <option value="Level 3 Active">Level 3 Active</option>
+              </select>
+            </div>
+            <div class="comms-field">
+              <label for="sbcast-bldg1">Building 1 (Stake Center)</label>
+              <select id="sbcast-bldg1">
+                <option value="Uninspected">Uninspected</option>
+                <option value="Cleared Daytime Hub">Cleared Daytime Hub</option>
+                <option value="Red-Tagged / Closed">Red-Tagged / Closed</option>
+              </select>
+            </div>
+            <div class="comms-field">
+              <label for="sbcast-bldg2">Building 2 (Harvest Hills)</label>
+              <select id="sbcast-bldg2">
+                <option value="Uninspected">Uninspected</option>
+                <option value="Cleared Daytime Hub">Cleared Daytime Hub</option>
+                <option value="Red-Tagged / Closed">Red-Tagged / Closed</option>
+              </select>
+            </div>
+            <div class="comms-field">
+              <label for="sbcast-shay">Shay Park Fallback Hub</label>
+              <select id="sbcast-shay">
+                <option value="Standby">Standby</option>
+                <option value="Mobile HAM Active">Mobile HAM Active</option>
+                <option value="Primary Fallback Command">Primary Fallback Command</option>
+              </select>
+            </div>
+            <div class="comms-field">
+              <label for="sbcast-guidance">Worship / Shelter Guidance</label>
+              <select id="sbcast-guidance">
+                <option value="Normal Sunday Meetings">Normal Sunday Meetings</option>
+                <option value="Home Sacrament Authorized (GH 29.5)">Home Sacrament Authorized (GH 29.5)</option>
+                <option value="Daytime Warming Only (GH 35.5.5)">Daytime Warming Only (GH 35.5.5)</option>
+                <option value="Shelter-in-Place / Stay Home">Shelter-in-Place / Stay Home</option>
+              </select>
+            </div>
+          </div>
+          <div class="comms-field" style="margin-top:4px;">
+            <label for="sbcast-note">Key Updates, Cross-Ward Matches &amp; Requests (Zero Member PII)</label>
+            <textarea id="sbcast-note" rows="2" maxlength="320" placeholder="e.g., Home sacrament authorized; Crossroads needs 1 SN-1 battery; Shay Park net active"></textarea>
+          </div>
+          <div id="sbcast-preview" class="status-preview-box" aria-label="Stake update broadcast preview"></div>
+          <div class="comms-actions">
+            <button type="button" id="sbcast-native-share-btn" class="btn" style="display:none;" onclick="nativeShareStakeBroadcast()">Share Stake Update</button>
+            <a id="sbcast-sms-btn" class="btn" href="#">Text Ward Leaders</a>
+            <button type="button" id="sbcast-copy-btn" class="btn btn-outline" onclick="copyStakeBroadcast()">Copy Update</button>
+            <span id="sbcast-feedback" style="font-size:0.82rem; font-weight:700; color:var(--green);" role="status" aria-live="polite"></span>
+          </div>
+          <p class="status-offline-note">
+            If cell fails, relay this bulletin over <strong>HAM 145.230 MHz / Ward FRS Ch 1–7</strong>.
+          </p>
+        </div>
+
         <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 • Stake Sheet 1 (S-A: Stake Pres &amp; Net Control) • Off-Site Go-Binder</div>
       </div>
 
@@ -4782,6 +4920,25 @@
     </div>
   </div>
 
+  <div id="w5-import-modal" class="modal-backdrop screen-only" role="dialog" aria-modal="true" aria-labelledby="w5-import-title">
+    <div class="modal-dialog" style="max-width:640px;">
+      <div class="modal-head">
+        <h2 id="w5-import-title" style="margin:0; font-size:1.12rem; color:var(--navy);">Review &amp; Import Form W-5 Counts</h2>
+        <button type="button" class="btn btn-outline" style="min-height:36px;" onclick="applyPendingW5Import(false)">Cancel</button>
+      </div>
+      <div class="card card-ok" style="padding:8px 10px; margin:8px 0; font-size:0.82rem;">
+        <strong>Privacy Verified (<code>GH 22.4.5</code>):</strong> Anonymized numeric counts only — <strong>zero member names</strong> are included in this import.
+      </div>
+      <p id="w5-import-subtitle" style="font-size:0.86rem; margin:6px 0 8px; color:var(--slate-700);"></p>
+      <div id="w5-import-list" class="prefill-list" aria-label="Incoming Form W-5 counts"></div>
+      <p style="font-size:0.8rem; color:var(--slate-700); margin:4px 0 10px;">Only this Ward's row in Tab 4's Unified Stake Readiness Register will update, and <strong>STAKE TOTAL</strong> will recalculate automatically.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <button type="button" id="w5-confirm-import-btn" class="btn" style="background:var(--green);" onclick="applyPendingW5Import(true)">Import into Stake Register</button>
+        <button type="button" id="w5-cancel-import-btn" class="btn btn-outline" onclick="applyPendingW5Import(false)">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <div id="sn-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="sn-modal-title">
     <div class="modal-dialog" style="max-width:740px;">
       <div class="modal-head">
@@ -5221,6 +5378,9 @@
         if (id === 'prefill-review-modal' && typeof window.cancelPendingPrefillIfOpen === 'function') {
           window.cancelPendingPrefillIfOpen();
         }
+        if (id === 'w5-import-modal' && typeof window.cancelPendingW5IfOpen === 'function') {
+          window.cancelPendingW5IfOpen();
+        }
         if (lastFocus) lastFocus.focus();
       };
 
@@ -5521,6 +5681,7 @@
             if (!el.checked) return;
             try { localStorage.setItem(key, el.value); } catch (e) {}
             syncInputsForKey(key, el.value, false);
+            if (key === 'v4_w5_mode' && typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer();
           });
         } else {
           if (val !== null) el.value = val;
@@ -5541,6 +5702,9 @@
             if (key.startsWith('v4_reg_')) updateStakeRegisterTotals();
             if (key === 'v4_m1_household' || key === 'v4_m1_leader_phone' || key === 'v2_m1_ward') {
               if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(key === 'v4_m1_leader_phone');
+            }
+            if (key.startsWith('v4_w5_') || key === 'v4_ward_name' || key === 'v4_ward_stake_sms') {
+              if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(key === 'v4_ward_stake_sms');
             }
           };
           el.addEventListener('input', handleValueUpdate);
@@ -5850,7 +6014,7 @@
             const parent = n.parentElement;
             if (!parent) continue;
             if (SKIP_TAGS.has(parent.tagName)) continue;
-            if (parent.closest('a, button, summary, label[for], .print-footer-stamp, .gyr-strip, .status-composer')) continue;
+            if (parent.closest('a, button, summary, label[for], .print-footer-stamp, .gyr-strip, .status-composer, .comms-composer')) continue;
             nodes.push(n);
           }
           nodes.forEach(textNode => {
@@ -6355,6 +6519,7 @@
         updateWaterCalculator();
         updateStakeRegisterTotals();
         if (typeof window.refreshMemberStatusComposer === 'function') window.refreshMemberStatusComposer(true);
+        if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(true);
         if (mode === 'blanks') {
           showHashNotice('Filled ' + applied + ' blank field' + (applied === 1 ? '' : 's') + (skipped ? ' (' + skipped + ' existing kept)' : '') + ' from ' + active.cfg.title + '.', 'ok');
         } else {
@@ -6529,8 +6694,371 @@
       }
       refreshMemberStatusComposer(true);
 
+      // ===== V4.13 TWO-WAY WARD W-5 & STAKE BROADCAST ENGINE =====
+      const W5_WARD_LABELS = {
+        aspen: 'Aspen Hills',
+        shay: 'Shay Park',
+        hh10: 'Harvest Hills 10th',
+        ysa11: 'SA 11th YSA',
+        hh1: 'Harvest Hills 1st',
+        hh8: 'Harvest Hills 8th',
+        crossroads: 'Crossroads'
+      };
+      const W5_REG_COLS = ['sn1_tot', 'sn1_noaux', 'sn2', 'sn3', 'sn46', 'sn7', 'sn8', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'];
+      const W5_COL_LABELS = {
+        sn1_tot: 'SN-1 Total (Medical Power)',
+        sn1_noaux: 'SN-1 No Aux Power',
+        sn2: 'SN-2 (Refrigerated Meds)',
+        sn3: 'SN-3 (Mobility / Ride)',
+        sn46: 'SN-4–6 (Dialysis / Solo / Sensory)',
+        sn7: 'SN-7 (Infant / Mom)',
+        sn8: 'SN-8 (Language / HoH)',
+        p1: 'Pool 1: Power / Generators',
+        p2: 'Pool 2: Saws / PPE Crews',
+        p3: 'Pool 3: Plumbers / Elec',
+        p4: 'Pool 4: Plows / 4x4 / Rides',
+        p5: 'Pool 5: Gravity Water Filters',
+        p6: 'Pool 6: Willing Host Homes',
+        p7: 'Pool 7: Med / Bilingual / ASL',
+        p8: 'Pool 8: Coolers / Mental Health'
+      };
+
+      function getW5WardLabel(slug) {
+        return (typeof slug === 'string' && Object.prototype.hasOwnProperty.call(W5_WARD_LABELS, slug)) ? W5_WARD_LABELS[slug] : null;
+      }
+      function parseNonNegInt(raw) {
+        if (raw === '' || raw === null || raw === undefined) return 0;
+        const n = parseInt(String(raw), 10);
+        return (Number.isFinite(n) && n > 0) ? Math.min(n, 99999) : 0;
+      }
+      function resolveW5WardSlug(rawName) {
+        const s = String(rawName || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        if (!s) return null;
+        if (s === 'aspen' || s.includes('aspen hills')) return 'aspen';
+        if (s === 'shay' || s.includes('shay park')) return 'shay';
+        if (s === 'hh10' || s.includes('harvest hills 10') || s.includes('hh 10')) return 'hh10';
+        if (s === 'ysa11' || s.includes('sa 11') || s.includes('11th ysa') || s.includes('ysa')) return 'ysa11';
+        if (s === 'hh1' || s.includes('harvest hills 1st') || s === 'harvest hills 1' || s.includes('hh 1')) return 'hh1';
+        if (s === 'hh8' || s.includes('harvest hills 8') || s.includes('hh 8')) return 'hh8';
+        if (s === 'crossroads' || s.includes('crossroads')) return 'crossroads';
+        return null;
+      }
+      function getSelectedW5Mode() {
+        const checked = document.querySelector('input[type="radio"][data-save-key="v4_w5_mode"]:checked');
+        return (checked && checked.value === 'annual') ? 'annual' : 'live';
+      }
+
+      window.buildW5ImportPayload = function () {
+        const rawWard = getFieldValueByKey('v4_w5_ward').trim() || getFieldValueByKey('v4_ward_name').trim();
+        const slug = resolveW5WardSlug(rawWard);
+        if (!slug) return null;
+        const mode = getSelectedW5Mode();
+        const updated = (getFieldValueByKey('v4_w5_datetime').trim() || formatLocalTimeShort()).slice(0, 60);
+        const sumKeys = keys => {
+          const filled = keys.filter(k => getFieldValueByKey(k).trim() !== '');
+          if (!filled.length) return undefined;
+          return Math.min(99999, filled.reduce((acc, k) => acc + parseNonNegInt(getFieldValueByKey(k)), 0));
+        };
+        const colSources = {
+          sn1_tot: ['v4_w5_sn1_tot'], sn1_noaux: ['v4_w5_sn1_noaux'], sn2: ['v4_w5_sn2'], sn3: ['v4_w5_sn3'],
+          sn46: ['v4_w5_sn4', 'v4_w5_sn5', 'v4_w5_sn6'], sn7: ['v4_w5_sn7'], sn8: ['v4_w5_sn8'],
+          p1: ['v4_w5_pool1_avail'], p2: ['v4_w5_pool2_avail'], p3: ['v4_w5_pool3_avail'], p4: ['v4_w5_pool4_avail'],
+          p5: ['v4_w5_pool5_avail'], p6: ['v4_w5_pool6_avail'], p7: ['v4_w5_pool7_avail'], p8: ['v4_w5_pool8_avail']
+        };
+        const c = {};
+        W5_REG_COLS.forEach(col => {
+          const v = sumKeys(colSources[col]);
+          if (v !== undefined) c[col] = v;
+        });
+        return { v: 1, ward: slug, mode, updated, c };
+      };
+
+      window.buildW5ImportUrl = function () {
+        const payload = buildW5ImportPayload();
+        if (!payload) return '';
+        return getCleanBaseUrl() + '#w5=' + encodeHashPayload(payload);
+      };
+
+      window.buildW5PlainSummary = function (includeLink) {
+        const rawWard = getFieldValueByKey('v4_w5_ward').trim() || getFieldValueByKey('v4_ward_name').trim() || '(Ward not entered)';
+        const mode = getSelectedW5Mode();
+        const modeText = mode === 'annual' ? 'Annual Audit' : 'Live Care Update';
+        const dt = getFieldValueByKey('v4_w5_datetime').trim() || formatLocalTimeShort();
+        const lines = [
+          'FORM W-5 (' + modeText + ') | Ward: ' + rawWard + ' | Time: ' + dt
+        ];
+        if (mode === 'live') {
+          const p0Map = [
+            ['Total', 'v4_w5_p0_total'], ['Checked', 'v4_w5_p0_checked'],
+            ['G', 'v4_w5_p0_green'], ['Y', 'v4_w5_p0_yellow'], ['R', 'v4_w5_p0_red'],
+            ['Unacct', 'v4_w5_p0_unacct'], ['Displaced', 'v4_w5_p0_displaced'], ['Injuries', 'v4_w5_p0_injuries']
+          ];
+          const p0Parts = p0Map.filter(([, k]) => getFieldValueByKey(k).trim() !== '').map(([lbl, k]) => lbl + ':' + parseNonNegInt(getFieldValueByKey(k)));
+          if (p0Parts.length) lines.push('Part 0 Homes: ' + p0Parts.join(' '));
+        }
+        const snParts = [];
+        const sn1t = getFieldValueByKey('v4_w5_sn1_tot').trim();
+        const sn1n = getFieldValueByKey('v4_w5_sn1_noaux').trim();
+        if (sn1t !== '' || sn1n !== '') snParts.push('SN-1:' + parseNonNegInt(sn1t) + '/' + parseNonNegInt(sn1n) + ' no-aux');
+        [['SN-2', 'v4_w5_sn2'], ['SN-3', 'v4_w5_sn3'], ['SN-4', 'v4_w5_sn4'], ['SN-5', 'v4_w5_sn5'], ['SN-6', 'v4_w5_sn6'], ['SN-7', 'v4_w5_sn7'], ['SN-8', 'v4_w5_sn8']].forEach(([lbl, k]) => {
+          if (getFieldValueByKey(k).trim() !== '') snParts.push(lbl + ':' + parseNonNegInt(getFieldValueByKey(k)));
+        });
+        if (snParts.length) lines.push('Part A Extra-Care: ' + snParts.join(', '));
+
+        const poolNames = ['1.Power', '2.Saws', '3.Plumb', '4.Plow/Ride', '5.Filters', '6.Hosts', '7.Med/Lang', '8.Cool/MH'];
+        const poolParts = [];
+        for (let i = 1; i <= 8; i++) {
+          const av = getFieldValueByKey('v4_w5_pool' + i + '_avail').trim();
+          const nd = getFieldValueByKey('v4_w5_pool' + i + '_need').trim();
+          if (av !== '' || nd !== '') {
+            poolParts.push(poolNames[i - 1] + ' Avail:' + parseNonNegInt(av) + '/Need:' + parseNonNegInt(nd));
+          }
+        }
+        if (poolParts.length) lines.push('Part B Pools: ' + poolParts.join('; '));
+
+        const urgent = getFieldValueByKey('v4_w5_urgent').trim();
+        if (urgent) lines.push('Urgent Needs: ' + urgent);
+        lines.push('(Zero member names — GH 22.4.5)');
+
+        if (includeLink) {
+          const url = buildW5ImportUrl();
+          if (url) lines.push('Stake Register Import Link: ' + url);
+        }
+        return lines.join('\n');
+      };
+
+      let w5StakePhoneManual = false;
+      window.refreshW5SendComposer = function (syncFromW0) {
+        const phoneEl = document.getElementById('w5-stake-phone');
+        const incLinkEl = document.getElementById('w5-include-link');
+        const hintEl = document.getElementById('w5-ward-hint');
+        const prevEl = document.getElementById('w5-summary-preview');
+        const smsBtn = document.getElementById('w5-sms-btn');
+        const copyLinkBtn = document.getElementById('w5-copy-link-btn');
+        const nativeBtn = document.getElementById('w5-native-share-btn');
+        if (!prevEl) return;
+
+        if (phoneEl && (syncFromW0 || !w5StakePhoneManual)) {
+          const w0Sms = getFieldValueByKey('v4_ward_stake_sms').trim();
+          if (w0Sms || syncFromW0) phoneEl.value = w0Sms;
+        }
+        const importUrl = buildW5ImportUrl();
+        const incLink = !!(incLinkEl && incLinkEl.checked && importUrl);
+        if (hintEl) {
+          if (!importUrl) {
+            hintEl.style.display = 'block';
+            hintEl.textContent = 'Select or enter one of the 7 Crossroads Stake Wards above to enable 1-tap #w5 Stake Register import links.';
+          } else {
+            hintEl.style.display = 'none';
+          }
+        }
+        if (copyLinkBtn) copyLinkBtn.disabled = !importUrl;
+        if (nativeBtn) nativeBtn.style.display = (typeof navigator.share === 'function') ? 'inline-flex' : 'none';
+
+        const summary = buildW5PlainSummary(incLink);
+        prevEl.textContent = summary;
+
+        const cleanPhone = sanitizePhoneDigits(phoneEl ? phoneEl.value : '');
+        if (smsBtn) {
+          smsBtn.setAttribute('href', buildSmsUri(cleanPhone, summary));
+          smsBtn.textContent = cleanPhone ? 'Text Stake Command' : 'Text Stake Command (Pick Contact)';
+        }
+      };
+
+      window.copyW5Summary = function () {
+        refreshW5SendComposer(false);
+        const incLinkEl = document.getElementById('w5-include-link');
+        const summary = buildW5PlainSummary(!!(incLinkEl && incLinkEl.checked));
+        const fb = document.getElementById('w5-feedback');
+        copyTextToClipboard(summary).then(ok => {
+          if (fb) fb.textContent = ok ? 'Copied Form W-5 summary!' : 'Copy failed — select preview text above.';
+        });
+      };
+
+      window.copyW5ImportLink = function () {
+        const url = buildW5ImportUrl();
+        const fb = document.getElementById('w5-feedback');
+        if (!url) {
+          if (fb) fb.textContent = 'Enter a valid Crossroads Stake Ward name first.';
+          return;
+        }
+        copyTextToClipboard(url).then(ok => {
+          if (fb) fb.textContent = ok ? 'Copied #w5 Stake Register import link!' : 'Copy failed.';
+        });
+      };
+
+      window.nativeShareW5Update = function () {
+        if (typeof navigator.share !== 'function') return;
+        const incLinkEl = document.getElementById('w5-include-link');
+        const summary = buildW5PlainSummary(!!(incLinkEl && incLinkEl.checked));
+        const fb = document.getElementById('w5-feedback');
+        navigator.share({ title: 'Form W-5 Ward Status Update', text: summary }).then(() => {
+          if (fb) fb.textContent = 'Shared Form W-5 update.';
+        }).catch(() => {});
+      };
+
+      const w5StakePhoneEl = document.getElementById('w5-stake-phone');
+      const w5IncLinkEl = document.getElementById('w5-include-link');
+      const w5SmsBtnEl = document.getElementById('w5-sms-btn');
+      if (w5StakePhoneEl) {
+        w5StakePhoneEl.addEventListener('input', () => {
+          w5StakePhoneManual = true;
+          refreshW5SendComposer(false);
+        });
+      }
+      if (w5IncLinkEl) w5IncLinkEl.addEventListener('change', () => refreshW5SendComposer(false));
+      if (w5SmsBtnEl) w5SmsBtnEl.addEventListener('click', () => refreshW5SendComposer(false));
+      refreshW5SendComposer(true);
+
+      // #w5= Import Handler & Review Modal
+      let pendingW5Import = null;
+      window.cancelPendingW5IfOpen = function () {
+        if (!pendingW5Import) return;
+        pendingW5Import = null;
+        clearLocationHash();
+        showHashNotice('Form W-5 import cancelled — Stake Register was not changed.', 'info');
+      };
+
+      function handleW5Hash(rawHash) {
+        const b64 = rawHash.slice('#w5='.length);
+        clearLocationHash();
+        const parsed = decodeHashPayload(b64);
+        const wardLabel = parsed && typeof parsed === 'object' ? getW5WardLabel(parsed.ward) : null;
+        if (
+          !parsed || typeof parsed !== 'object' || parsed.v !== 1 || !wardLabel ||
+          (parsed.mode !== 'live' && parsed.mode !== 'annual') ||
+          !parsed.c || typeof parsed.c !== 'object' || Array.isArray(parsed.c)
+        ) {
+          showHashNotice('Could not import Form W-5 link — invalid payload or unrecognized Ward. Stake Register was not changed.', 'err');
+          return;
+        }
+        const sanitizedCounts = {};
+        let hasValidCount = false;
+        W5_REG_COLS.forEach(col => {
+          if (!Object.prototype.hasOwnProperty.call(parsed.c, col)) return;
+          const rawVal = parsed.c[col];
+          if (typeof rawVal === 'number' ? !Number.isInteger(rawVal) : (typeof rawVal !== 'string' || !/^\d{1,5}$/.test(rawVal))) return;
+          const num = Number(rawVal);
+          if (!Number.isFinite(num) || num < 0 || num > 99999) return;
+          sanitizedCounts[col] = num;
+          hasValidCount = true;
+        });
+        if (!hasValidCount) {
+          showHashNotice('Form W-5 import link contained no valid numeric counts. Stake Register was not changed.', 'err');
+          return;
+        }
+        const updated = typeof parsed.updated === 'string' ? parsed.updated.trim().slice(0, 60) : '';
+        pendingW5Import = { ward: parsed.ward, wardLabel, mode: parsed.mode, updated, counts: sanitizedCounts };
+
+        const subEl = document.getElementById('w5-import-subtitle');
+        const listEl = document.getElementById('w5-import-list');
+        const modeLabel = parsed.mode === 'annual' ? 'Annual Audit' : 'Live Care Update';
+        subEl.textContent = 'Ward: ' + wardLabel + ' • Mode: ' + modeLabel + (updated ? ' • Updated: ' + updated : '');
+        while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+        Object.keys(sanitizedCounts).forEach(col => {
+          const row = document.createElement('div');
+          row.className = 'prefill-item';
+          const lbl = document.createElement('div');
+          lbl.className = 'prefill-item-label';
+          lbl.textContent = Object.prototype.hasOwnProperty.call(W5_COL_LABELS, col) ? W5_COL_LABELS[col] : col;
+          const val = document.createElement('div');
+          val.className = 'prefill-item-val';
+          val.textContent = 'Incoming count: ' + sanitizedCounts[col];
+          row.appendChild(lbl);
+          row.appendChild(val);
+          listEl.appendChild(row);
+        });
+        openModal('w5-import-modal');
+      }
+
+      window.applyPendingW5Import = function (confirmImport) {
+        const active = pendingW5Import;
+        pendingW5Import = null;
+        closeModal('w5-import-modal');
+        clearLocationHash();
+        if (!active || !confirmImport) {
+          showHashNotice('Form W-5 import cancelled — Stake Register was not changed.', 'info');
+          return;
+        }
+        Object.keys(active.counts).forEach(col => {
+          const key = 'v4_reg_' + active.ward + '_' + col;
+          const strVal = String(active.counts[col]);
+          try { localStorage.setItem(key, strVal); } catch (e) {}
+          syncInputsForKey(key, strVal, false);
+        });
+        if (active.updated) {
+          try { localStorage.setItem('v4_reg_updated', active.updated); } catch (e) {}
+          syncInputsForKey('v4_reg_updated', active.updated, false);
+        }
+        updateStakeRegisterTotals();
+        showHashNotice('Imported ' + active.wardLabel + ' Form W-5 counts into the Unified Stake Readiness Register and recalculated STAKE TOTAL.', 'ok');
+      };
+
+      // Stake -> Wards Update Broadcast Composer
+      window.buildStakeBroadcastMessage = function () {
+        const getVal = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+        const level = getVal('sbcast-level') || 'Peacetime / Normal';
+        const b1 = getVal('sbcast-bldg1') || 'Uninspected';
+        const b2 = getVal('sbcast-bldg2') || 'Uninspected';
+        const shay = getVal('sbcast-shay') || 'Standby';
+        const guidance = getVal('sbcast-guidance') || 'Normal Sunday Meetings';
+        const note = getVal('sbcast-note');
+        const lines = [
+          'CROSSROADS STAKE COMMAND UPDATE (' + formatLocalTimeShort() + ')',
+          'Activation: ' + level,
+          'Sites: Bldg 1=' + b1 + ' | Bldg 2=' + b2 + ' | Shay Park=' + shay,
+          'Worship/Shelter: ' + guidance
+        ];
+        if (note) lines.push('Update/Matches: ' + note);
+        lines.push('Relay if cell fails: HAM 145.230 MHz / Ward FRS Ch 1-7');
+        return lines.join('\n');
+      };
+
+      window.refreshStakeBroadcastComposer = function () {
+        const prevEl = document.getElementById('sbcast-preview');
+        const smsBtn = document.getElementById('sbcast-sms-btn');
+        const nativeBtn = document.getElementById('sbcast-native-share-btn');
+        if (!prevEl) return;
+        const msg = buildStakeBroadcastMessage();
+        prevEl.textContent = msg;
+        if (smsBtn) smsBtn.setAttribute('href', buildSmsUri('', msg));
+        if (nativeBtn) nativeBtn.style.display = (typeof navigator.share === 'function') ? 'inline-flex' : 'none';
+      };
+
+      window.copyStakeBroadcast = function () {
+        refreshStakeBroadcastComposer();
+        const msg = buildStakeBroadcastMessage();
+        const fb = document.getElementById('sbcast-feedback');
+        copyTextToClipboard(msg).then(ok => {
+          if (fb) fb.textContent = ok ? 'Copied Stake Update bulletin!' : 'Copy failed — select preview text above.';
+        });
+      };
+
+      window.nativeShareStakeBroadcast = function () {
+        if (typeof navigator.share !== 'function') return;
+        refreshStakeBroadcastComposer();
+        const msg = buildStakeBroadcastMessage();
+        const fb = document.getElementById('sbcast-feedback');
+        navigator.share({ title: 'Crossroads Stake Command Update', text: msg }).then(() => {
+          if (fb) fb.textContent = 'Shared Stake Update bulletin.';
+        }).catch(() => {});
+      };
+
+      ['sbcast-level', 'sbcast-bldg1', 'sbcast-bldg2', 'sbcast-shay', 'sbcast-guidance', 'sbcast-note'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('change', refreshStakeBroadcastComposer);
+          el.addEventListener('input', refreshStakeBroadcastComposer);
+        }
+      });
+      const sbcastSmsEl = document.getElementById('sbcast-sms-btn');
+      if (sbcastSmsEl) sbcastSmsEl.addEventListener('click', refreshStakeBroadcastComposer);
+      refreshStakeBroadcastComposer();
+
       function handleLocationHash() {
-        if (location.hash && location.hash.startsWith('#prefill=')) {
+        if (location.hash && location.hash.startsWith('#w5=')) {
+          handleW5Hash(location.hash);
+        } else if (location.hash && location.hash.startsWith('#prefill=')) {
           handlePrefillHash(location.hash);
         } else if (location.hash === '#sn-codes-key') {
           jumpToSN();
