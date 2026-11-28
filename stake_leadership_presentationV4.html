@@ -3034,6 +3034,15 @@
         <button type="button" class="btn" onclick="printProfile('ward-pack')">Print 5-Sheet Ward Binder</button>
       </div>
 
+      <div id="ward-backup-bar" class="share-action-bar screen-only ward-nonprint" data-mode="prep" role="group" aria-label="Ward local JSON backup and calling-release clear">
+        <strong>Ward Local Backup (Excludes <code>W-1</code> &amp; <code>W-2/3</code>):</strong>
+        <button type="button" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem;" onclick="exportLeaderBackup('ward')">Export Ward Backup (.json)</button>
+        <button type="button" id="btn-ward-import" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem;" onclick="document.getElementById('ward-import-file').click()">Import Ward Backup (.json)</button>
+        <input type="file" id="ward-import-file" accept=".json,application/json" aria-label="Import Ward backup JSON file" style="display:none;">
+        <button type="button" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem; border-color:var(--crimson); color:var(--crimson);" onclick="clearLeaderTierData('ward')">Clear Ward Data (Calling Release)</button>
+        <div id="ward-backup-msg" class="prep-msg" role="status" aria-live="polite" style="width:100%;"></div>
+      </div>
+
       <!-- V4 3-SEGMENT WARD SUB-TABS (HIDDEN IN CRISIS MODE; ALL 5 SHEETS PRINT IN WARD-PACK) -->
       <div class="ward-subtabs screen-only" role="tablist" aria-label="Ward sections">
         <button type="button" class="ward-subtab-btn active" data-ward-sub="3a">3A. Ward Roles &amp; Active Response<small>Who Does What + Form W-0/0B</small></button>
@@ -3729,6 +3738,15 @@
           <p style="margin:4px 0 0; font-size:0.88rem;">Keep synchronized <strong>off-site Stake Go-Binders</strong> at home with Stake Pres, 1st/2nd Counselors, HC Comms, Stake RS Pres &amp; Stake Prep Rep (never rely solely on Building 1).</p>
         </div>
         <button type="button" class="btn" onclick="printProfile('stake-kit')">Print Stake Command Kit</button>
+      </div>
+
+      <div id="stake-backup-bar" class="share-action-bar screen-only" data-mode="prep" role="group" aria-label="Stake local JSON backup and calling-release clear">
+        <strong>Stake Local Backup (<code>S-A/S-B</code>, Action List, Register &amp; Live Board):</strong>
+        <button type="button" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem;" onclick="exportLeaderBackup('stake')">Export Stake Backup (.json)</button>
+        <button type="button" id="btn-stake-import" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem;" onclick="document.getElementById('stake-import-file').click()">Import Stake Backup (.json)</button>
+        <input type="file" id="stake-import-file" accept=".json,application/json" aria-label="Import Stake backup JSON file" style="display:none;">
+        <button type="button" class="btn btn-outline" style="min-height:44px; padding:6px 12px; font-size:0.82rem; border-color:var(--crimson); color:var(--crimson);" onclick="clearLeaderTierData('stake')">Clear Stake Data (Calling Release)</button>
+        <div id="stake-backup-msg" class="prep-msg" role="status" aria-live="polite" style="width:100%;"></div>
       </div>
 
       <!-- V4.9 2-SUB-TAB STAKE SWITCHER (HIDDEN IN EMERGENCY MODE; 4A DEFAULT) -->
@@ -5849,6 +5867,177 @@
           reader.readAsText(file);
         });
       }
+
+      // ===== V4.21 WARD & STAKE LOCAL JSON BACKUP, RESTORE & CALLING-RELEASE CLEAR =====
+      const LEADER_BACKUP_CONFIG = {
+        ward: {
+          schema: 'crossroads-ward-backup-v1',
+          filename: 'crossroads-ward-backup.json',
+          label: 'Ward',
+          prefixes: ['v4_ward_', 'v4_w5_', 'v4_w90_', 'v4_w46_'],
+          msgId: 'ward-backup-msg',
+          keys: new Map()
+        },
+        stake: {
+          schema: 'crossroads-stake-backup-v1',
+          filename: 'crossroads-stake-backup.json',
+          label: 'Stake',
+          prefixes: ['v4_stake_', 'v4_stake_act_', 'v4_reg_', 'v4_live_'],
+          msgId: 'stake-backup-msg',
+          keys: new Map()
+        }
+      };
+      function getLeaderBackupCfg(tier) {
+        return (typeof tier === 'string' && Object.prototype.hasOwnProperty.call(LEADER_BACKUP_CONFIG, tier))
+          ? LEADER_BACKUP_CONFIG[tier]
+          : null;
+      }
+      document.querySelectorAll('[data-save-key]').forEach(el => {
+        const k = el.dataset.saveKey;
+        if (typeof k !== 'string') return;
+        const kind = el.type === 'checkbox' ? 'checkbox' : (el.type === 'radio' ? 'radio' : 'value');
+        ['ward', 'stake'].forEach(tier => {
+          const cfg = LEADER_BACKUP_CONFIG[tier];
+          if (cfg.prefixes.some(p => k.startsWith(p))) {
+            cfg.keys.set(k, kind);
+          }
+        });
+      });
+      function showLeaderBackupMsg(tier, text, ok) {
+        const cfg = getLeaderBackupCfg(tier);
+        if (!cfg) return;
+        const el = document.getElementById(cfg.msgId);
+        if (!el) return;
+        el.textContent = text;
+        el.className = 'prep-msg ' + (ok ? 'ok' : 'err');
+      }
+      window.buildLeaderBackupPayload = function (tier) {
+        const cfg = getLeaderBackupCfg(tier);
+        if (!cfg) return null;
+        const data = {};
+        cfg.keys.forEach((kind, k) => {
+          if (kind === 'radio') {
+            const checked = Array.from(document.querySelectorAll('input[type="radio"][data-save-key]')).find(r => r.dataset.saveKey === k && r.checked);
+            if (checked) data[k] = checked.value;
+          } else {
+            const el = Array.from(document.querySelectorAll('[data-save-key]')).find(n => n.dataset.saveKey === k);
+            if (!el) return;
+            data[k] = kind === 'checkbox' ? (el.checked ? '1' : '0') : String(el.value || '');
+          }
+        });
+        return { schema: cfg.schema, exportedAt: new Date().toISOString(), data };
+      };
+      window.exportLeaderBackup = function (tier) {
+        const cfg = getLeaderBackupCfg(tier);
+        if (!cfg) return;
+        const payload = buildLeaderBackupPayload(tier);
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = cfg.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showLeaderBackupMsg(tier, cfg.label + ' backup downloaded locally (never uploaded; Form W-1 & W-2/3 excluded).', true);
+      };
+      window.importLeaderBackupObject = function (tier, parsed) {
+        const cfg = getLeaderBackupCfg(tier);
+        if (!cfg) return false;
+        if (!parsed || typeof parsed !== 'object' || parsed.schema !== cfg.schema || !parsed.data || typeof parsed.data !== 'object' || Array.isArray(parsed.data)) {
+          showLeaderBackupMsg(tier, 'Could not import file: expected a valid ' + cfg.label + ' backup (' + cfg.schema + '). Existing data was not changed.', false);
+          return false;
+        }
+        const staged = [];
+        Object.keys(parsed.data).forEach(k => {
+          if (!Object.prototype.hasOwnProperty.call(parsed.data, k)) return;
+          if (!cfg.keys.has(k)) return;
+          const v = parsed.data[k];
+          if (typeof v !== 'string') return;
+          const kind = cfg.keys.get(k);
+          if (kind === 'radio') {
+            const validVals = Array.from(document.querySelectorAll('input[type="radio"][data-save-key]')).filter(r => r.dataset.saveKey === k).map(r => r.value);
+            if (!validVals.includes(v)) return;
+            staged.push({ k, v, isCheck: false });
+          } else {
+            const normVal = kind === 'checkbox' ? (v === '1' ? '1' : '0') : v;
+            staged.push({ k, v: normVal, isCheck: kind === 'checkbox' });
+          }
+        });
+        if (!staged.length) {
+          showLeaderBackupMsg(tier, 'Could not import file: no recognized ' + cfg.label + ' fields found. Existing data was not changed.', false);
+          return false;
+        }
+        staged.forEach(item => {
+          try { localStorage.setItem(item.k, item.v); } catch (e) {}
+          syncInputsForKey(item.k, item.v, item.isCheck);
+        });
+        updateCheckProgress();
+        if (tier === 'ward') {
+          const w5Urg = document.getElementById('w5-urgent');
+          const w5UrgPr = document.getElementById('w5-urgent-print');
+          if (w5Urg && w5UrgPr) w5UrgPr.textContent = w5Urg.value || '';
+          updateW46Totals();
+          if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(true);
+        } else if (tier === 'stake') {
+          updateStakeRegisterTotals();
+          updateStakeLiveTotals();
+        }
+        showLeaderBackupMsg(tier, 'Restored ' + staged.length + ' ' + cfg.label + ' items from local backup.', true);
+        return true;
+      };
+      window.clearLeaderTierData = function (tier) {
+        const cfg = getLeaderBackupCfg(tier);
+        if (!cfg) return false;
+        if (!window.confirm('Clear all saved ' + cfg.label + ' data from this browser (calling-release wipe)? Other roles\' saved data will remain untouched.')) {
+          return false;
+        }
+        cfg.keys.forEach((kind, k) => {
+          try { localStorage.removeItem(k); } catch (e) {}
+          if (kind === 'radio' && k === 'v4_w5_mode') {
+            syncInputsForKey(k, 'live', false);
+          } else {
+            syncInputsForKey(k, kind === 'checkbox' ? '0' : '', kind === 'checkbox');
+          }
+        });
+        updateCheckProgress();
+        if (tier === 'ward') {
+          const w5UrgPr = document.getElementById('w5-urgent-print');
+          const w5Fb = document.getElementById('w5-feedback');
+          const w46Fb = document.getElementById('w46-feedback');
+          if (w5UrgPr) w5UrgPr.textContent = '';
+          if (w5Fb) w5Fb.textContent = '';
+          if (w46Fb) w46Fb.textContent = '';
+          updateW46Totals();
+          if (typeof window.refreshW5SendComposer === 'function') window.refreshW5SendComposer(true);
+        } else if (tier === 'stake') {
+          updateStakeRegisterTotals();
+          updateStakeLiveTotals();
+        }
+        showLeaderBackupMsg(tier, 'All saved ' + cfg.label + ' data cleared from this device.', true);
+        return true;
+      };
+      [['ward', 'ward-import-file'], ['stake', 'stake-import-file']].forEach(([tier, inputId]) => {
+        const fileEl = document.getElementById(inputId);
+        if (!fileEl) return;
+        fileEl.addEventListener('change', () => {
+          const file = fileEl.files && fileEl.files[0];
+          fileEl.value = '';
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const parsed = JSON.parse(String(reader.result || ''));
+              importLeaderBackupObject(tier, parsed);
+            } catch (e) {
+              showLeaderBackupMsg(tier, 'Could not import file: malformed JSON. Existing data was not changed.', false);
+            }
+          };
+          reader.onerror = () => showLeaderBackupMsg(tier, 'Could not read the selected file.', false);
+          reader.readAsText(file);
+        });
+      });
 
       // LocalStorage persistence & 1:1 cross-field sync for Form M-1, Prep Worksheet, Ward & Stake forms
       document.querySelectorAll('[data-save-key]').forEach(el => {
