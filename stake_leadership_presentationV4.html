@@ -1012,6 +1012,49 @@
       body.print-profile-m1-large .gyr-strip { grid-template-columns: 1fr !important; }
       body.print-profile-m1-large .sheet-box { border-width: 2.5pt !important; }
 
+      /* Profile 2C: Spanish Form M-1 Fridge Card & SN-8 Bilingual / Large-Print Flyer (Issue #15) */
+      #m1-es-front,
+      #m1-es-back,
+      #sn8-flyer-sheet { display: none !important; }
+      body.print-profile-m1-es .tab-panel,
+      body.print-profile-m1-es .member-subpane,
+      body.print-profile-m1-es [data-print-item] { display: none !important; }
+      body.print-profile-m1-es #panel-member,
+      body.print-profile-m1-es #member-pane-2c,
+      body.print-profile-m1-es #m1-es-front,
+      body.print-profile-m1-es #m1-es-back { display: block !important; }
+      body.print-profile-m1-es #m1-es-back { break-before: page; page-break-before: always; }
+      body.print-profile-m1-es { font-size: 8.8pt; }
+      .es-val-line {
+        display: block;
+        min-height: 15pt;
+        border-bottom: 0.8pt solid #475569;
+        padding: 1pt 2pt;
+        font-size: 8.6pt;
+        color: #000000;
+        word-break: break-word;
+      }
+      body.print-profile-sn8-flyer .tab-panel,
+      body.print-profile-sn8-flyer .member-subpane,
+      body.print-profile-sn8-flyer [data-print-item] { display: none !important; }
+      body.print-profile-sn8-flyer #panel-member,
+      body.print-profile-sn8-flyer #member-pane-2c,
+      body.print-profile-sn8-flyer #sn8-flyer-sheet { display: block !important; }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet,
+      body.print-profile-sn8-flyer #sn8-flyer-sheet p,
+      body.print-profile-sn8-flyer #sn8-flyer-sheet li,
+      body.print-profile-sn8-flyer #sn8-flyer-sheet .gyr-box,
+      body.print-profile-sn8-flyer #sn8-flyer-sheet .gyr-box strong {
+        font-size: 15pt !important;
+        line-height: 1.28 !important;
+        color: #000000 !important;
+      }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet h2 { font-size: 18pt !important; margin: 0 0 6pt !important; color: #000000 !important; }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet h3 { font-size: 15.5pt !important; margin: 8pt 0 4pt !important; color: #000000 !important; }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet .gyr-strip { grid-template-columns: 1fr !important; gap: 5pt !important; }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet .gyr-box { border: 2pt solid #000000 !important; padding: 5pt 8pt !important; }
+      body.print-profile-sn8-flyer #sn8-flyer-sheet { border-width: 2.5pt !important; }
+
       /* Profile 2B: Filled Family Preparedness Worksheet (Issue #3) */
       body.print-profile-family-worksheet .tab-panel,
       body.print-profile-family-worksheet .member-subpane,
@@ -2069,6 +2112,14 @@
             <strong>Senior 15pt Large-Print Fridge Card</strong>
             <span>True 15pt high-contrast print + Page 2 Meds &amp; Allergies Card</span>
           </button>
+          <button type="button" onclick="printProfile('m1-es')">
+            <strong>Tarjeta de Emergencia en Espa&ntilde;ol (Form M-1 ES)</strong>
+            <span>1 hoja frente y vuelta en espa&ntilde;ol con sus contactos guardados</span>
+          </button>
+          <button type="button" onclick="printProfile('sn8-flyer')">
+            <strong>SN-8 Bilingual / Large-Print Flyer (EN / ES)</strong>
+            <span>1-page 15pt+ door-knock &amp; lifeline handout (911, ER, Green/Yellow/Red)</span>
+          </button>
           <button type="button" data-leader-only="true" onclick="printProfile('ward-pack')">
             <strong>Self-Contained Ward Binder (5 Sheets)</strong>
             <span>W-0/0B, W-1, W-2/3, W-4/6, W-5 (0–60m crisis binder only)</span>
@@ -2609,6 +2660,8 @@
           <div class="screen-only" style="display:flex; gap:6px; flex-wrap:wrap;">
             <button type="button" class="btn" onclick="printProfile('m1-std')">Print Fridge Card (1 Sheet)</button>
             <button type="button" class="btn btn-outline" onclick="printProfile('m1-large')">Print 15pt Senior Large Print</button>
+            <button type="button" class="btn btn-outline" onclick="printProfile('m1-es')">Espa&ntilde;ol (Form M-1 ES)</button>
+            <button type="button" class="btn btn-outline" onclick="printProfile('sn8-flyer')">SN-8 Bilingual Flyer</button>
           </div>
         </div>
 
@@ -2817,6 +2870,110 @@
           </tbody>
         </table>
         <p style="margin-top:10px;"><strong>ER West of River:</strong> Intermountain Saratoga (801) 763-3500 &middot; <strong>Gas:</strong> 1-800-767-1689 &middot; <strong>RMP:</strong> 1-877-508-5088 &middot; <strong>911 for O2 &lt;2 hrs</strong></p>
+      </div>
+
+      <!-- PRINT-ONLY SPANISH FORM M-1 FRIDGE CARD (FRONT & BACK — 1 SHEET, SYNCED CONTACTS) -->
+      <div id="m1-es-front" class="sheet-box print-only" lang="es" data-print-item="m1-es-front">
+        <div class="sheet-header">
+          <div>
+            <span class="sheet-tag red">Hoja Familiar 1 (Frente) &bull; Form M-1 en Espa&ntilde;ol</span>
+            <h2 class="sheet-title">Emergencia Ahora Mismo: Primeros 60 Minutos (Tarjeta para el Refrigerador)</h2>
+          </div>
+        </div>
+        <div class="card card-danger" style="padding:8px 10px; margin-bottom:8px;">
+          <strong>EL CELULAR Y EL INTERNET FALLAN EN APAGONES &mdash; GUARDE ESTA HOJA EN SU REFRIGERADOR.</strong>
+          Si usa concentrador de ox&iacute;geno con <strong>menos de 2 horas de bater&iacute;a</strong>, dolor de pecho, lesi&oacute;n grave u olor a gas adentro: <strong>LLAME AL 911 DE INMEDIATO</strong> &mdash; no espere a que pase su barrio.
+        </div>
+        <div class="grid-2">
+          <div>
+            <h3>1. Refugiarse o Evacuar (4 Reglas Inmediatas)</h3>
+            <ul>
+              <li><strong>Terremoto:</strong> Ag&aacute;chese, C&uacute;brase y Suj&eacute;tese. Qu&eacute;dese en casa salvo da&ntilde;o estructural o fuga de gas.</li>
+              <li><strong>Incendio Forestal (Lake Mountain):</strong> Evacue hacia el <strong>NORTE rumbo a SR-73</strong> en 15 min. <strong>Adultos mayores o sin auto:</strong> salgan temprano antes de oscurecer.</li>
+              <li><strong>Fuga Qu&iacute;mica (SR-68 / Redwood Rd):</strong> <strong>SELLE ADENTRO</strong> de inmediato. Apague calefacci&oacute;n/A/C y ventiladores; toallas h&uacute;medas bajo puertas. <strong>No maneje a Riverview Elementary.</strong></li>
+              <li><strong>Helada / Apag&oacute;n Invernal:</strong> Re&uacute;nanse en <strong>1 habitaci&oacute;n interior</strong>. Generadores a 20+ pies afuera (nunca estufas de gas/carb&oacute;n adentro). Proteja la insulina del fr&iacute;o extremo.</li>
+            </ul>
+            <div class="card card-warn" style="padding:7px 10px; margin-top:6px;">
+              <strong>NO LO INTENTE SOLO (Adultos Mayores):</strong> Sin escaleras a oscuras ni v&aacute;lvulas exteriores de gas/agua de noche; no maneje de noche o con nieve; nunca use calentadores de combustible en interiores.
+            </div>
+          </div>
+          <div>
+            <h3>2. Primeros 60 Minutos (Sin Internet)</h3>
+            <ol>
+              <li><strong>Zapatos y Luz Primero:</strong> P&oacute;ngase zapatos resistentes, tome linterna, lentes, aud&iacute;fonos y medicinas de rescate (inhalador, EpiPen, insulina, ox&iacute;geno).</li>
+              <li><strong>Seguridad de Gas:</strong> Cierre el gas <strong>SOLO</strong> si huele a huevo podrido, oye silbido o el medidor gira r&aacute;pido. <em>Si alquila apartamento:</em> no busque llaves del edificio; salga contra el viento y llame al 911 / Enbridge afuera.</li>
+              <li><strong>Agua y &ldquo;NO JALE EL INODORO&rdquo;:</strong> Despu&eacute;s de un terremoto o corte de agua, <strong>no jale la palanca</strong>. Forre el inodoro seco con <strong>dos bolsas gruesas de basura</strong> + arena para gato.</li>
+              <li><strong>Se&ntilde;alice su Ventana y Revise al Vecino:</strong> Coloque papel o tela <strong>VERDE / AMARILLO / ROJO</strong> en la ventana frontal o env&iacute;e un texto a su compa&ntilde;ero ministrante.</li>
+              <li><strong>No Maneje a la Capilla Primero (<code>GH 35.5.5</code>):</strong> Las capillas permanecen cerradas hasta ser inspeccionadas y autorizadas por la Presidencia de Estaca. Escuche 5 min a la hora en punto (<code>:00</code>) en su canal FRS de barrio (<strong>Barrios 1&ndash;7 = FRS Ch 1&ndash;7, Tono 0</strong>).</li>
+            </ol>
+          </div>
+        </div>
+        <div class="gyr-strip">
+          <div class="gyr-box gyr-green"><strong>VERDE &mdash; ESTAMOS BIEN</strong>Todos a salvo; agua y abrigo para 48+ hrs. Ponga verde en la ventana o env&iacute;e texto &ldquo;VERDE / GREEN&rdquo;.</div>
+          <div class="gyr-box gyr-yellow"><strong>AMARILLO &mdash; NECESITAMOS AYUDA</strong>Sin peligro inmediato, pero necesitamos agua, calor, insulina fr&iacute;a o transporte. Ponga amarillo en la ventana.</div>
+          <div class="gyr-box gyr-red"><strong>ROJO &mdash; PELIGRO URGENTE / 911</strong>Emergencia m&eacute;dica, ox&iacute;geno &lt;2h, incendio o gas. <strong>Llame al 911 primero</strong> y ponga rojo en la ventana.</div>
+        </div>
+        <div class="print-footer-stamp print-only">Estaca Crossroads EOP V4 &bull; Hoja Familiar 1 (Frente &bull; Form M-1 ES) &bull; Guardar en el Refrigerador</div>
+      </div>
+
+      <div id="m1-es-back" class="sheet-box print-only" lang="es" data-print-item="m1-es-back">
+        <div class="sheet-header">
+          <div>
+            <span class="sheet-tag teal">Hoja Familiar 1 (Reverso) &bull; Contactos del Hogar y Tel&eacute;fonos Locales</span>
+            <h2 class="sheet-title">Contactos Familiares, Punto de Reuni&oacute;n y Tel&eacute;fonos de Emergencia</h2>
+          </div>
+        </div>
+        <div class="fill-grid" style="gap:4px 10px;">
+          <div class="fill-field"><label>Nuestro Hogar y Direcci&oacute;n (Opcional)</label><span id="m1-es-val-household" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Celular del Compa&ntilde;ero Ministrante / L&iacute;der de Barrio</label><span id="m1-es-val-leader-phone" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Nuestro Barrio y Canal de Radio FRS (Ch 1&ndash;7, Tono 0)</label><span id="m1-es-val-ward" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Familiar de Contacto Fuera del Valle de Utah</label><span id="m1-es-val-relay" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Escuela / Trabajo (Tel&eacute;fono de Emergencia)</label><span id="m1-es-val-school" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Vecinos Autorizados para Recoger Hijos (Skyward)</label><span id="m1-es-val-skyward" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Contacto Seguro al Este del R&iacute;o Jordan (Trabajo)</label><span id="m1-es-val-commuter" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Propietario / Administraci&oacute;n 24/7 (o Compa&ntilde;ero de Casa)</label><span id="m1-es-val-landlord" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Seguro de Casa / Inquilino (Tel&eacute;fono y P&oacute;liza)</label><span id="m1-es-val-ins" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Compa&ntilde;ero Ministrante, L&iacute;der de Distrito y Punto de Reuni&oacute;n</label><span id="m1-es-val-buddy" class="es-val-line"></span></div>
+          <div class="fill-field"><label>M&eacute;dico / Farmacia / Proveedor de Ox&iacute;geno (24/7)</label><span id="m1-es-val-dme" class="es-val-line"></span></div>
+          <div class="fill-field"><label>Medicinas Pedi&aacute;tricas / Mascotas / Notas Especiales</label><span id="m1-es-val-pets" class="es-val-line"></span></div>
+        </div>
+        <div class="card" style="margin-top:10px; padding:8px 12px;">
+          <h3 style="margin-top:0;">Tel&eacute;fonos Locales Verificados (Sin Internet)</h3>
+          <ul style="font-size:0.84rem; margin-bottom:0;">
+            <li><strong>Emergencias (Polic&iacute;a / Bomberos / Ambulancia):</strong> 911</li>
+            <li><strong>Sala de Emergencias (Oeste del R&iacute;o):</strong> Intermountain Saratoga Springs (801) 763-3500 (392 W Medical Dr)</li>
+            <li><strong>Emergencias Pedi&aacute;tricas:</strong> Primary Children's Miller Campus (385) 531-1200</li>
+            <li><strong>Control de Envenenamiento:</strong> 1-800-222-1222 &middot; <strong>Fuga de Gas (Enbridge):</strong> 1-800-767-1689</li>
+            <li><strong>Electricidad (Rocky Mountain Power):</strong> 1-877-508-5088 &middot; <strong>Agua Municipal Urgente:</strong> (801) 404-2468</li>
+            <li><strong>L&iacute;nea de Crisis / Salud Mental:</strong> Llame o env&iacute;e texto al 988 &middot; <strong>Violencia Dom&eacute;stica Utah:</strong> 1-800-897-5465</li>
+            <li><strong>Almac&eacute;n del Obispo / Centro de Almacenamiento:</strong> (801) 436-8205 (142 W Medical Dr)</li>
+          </ul>
+        </div>
+        <div class="print-footer-stamp print-only">Estaca Crossroads EOP V4 &bull; Hoja Familiar 1 (Reverso &bull; Form M-1 ES) &bull; Solo en su Dispositivo</div>
+      </div>
+
+      <!-- PRINT-ONLY 1-PAGE 15PT+ SN-8 BILINGUAL / LARGE-PRINT DOOR-KNOCK FLYER -->
+      <div id="sn8-flyer-sheet" class="sheet-box print-only" data-print-item="sn8-flyer">
+        <div class="sheet-header">
+          <div>
+            <span class="sheet-tag teal">SN-8 Large-Print Bilingual Flyer &bull; Volante Biling&uuml;e Letra Grande (15pt+)</span>
+            <h2 class="sheet-title">Emergency Help &amp; Window Guide / Ayuda de Emergencia</h2>
+          </div>
+        </div>
+        <p style="margin:0 0 6pt;"><strong>CALL 911 FIRST for life danger, fire, gas smell, or oxygen &lt;2 hrs.</strong><br><em lang="es">LLAME AL 911 PRIMERO por peligro de vida, incendio, gas u ox&iacute;geno &lt;2 hrs.</em></p>
+        <ul style="margin:0 0 8pt;">
+          <li><strong>ER / Emergencias (West of River):</strong> (801) 763-3500 (392 W Medical Dr)</li>
+          <li><strong>Gas Leak / Fuga de Gas:</strong> 1-800-767-1689 &middot; <strong>Power / Luz:</strong> 1-877-508-5088</li>
+          <li><strong>Crisis / Apoyo Emocional (24/7):</strong> 988 &middot; <strong>Poison / Veneno:</strong> 1-800-222-1222</li>
+        </ul>
+        <div class="gyr-strip">
+          <div class="gyr-box gyr-green"><strong>GREEN / VERDE &mdash; SAFE / ESTAMOS BIEN</strong>Put GREEN paper/cloth in front window. / <span lang="es">Ponga VERDE en la ventana frontal.</span></div>
+          <div class="gyr-box gyr-yellow"><strong>YELLOW / AMARILLO &mdash; NEED HELP / NECESITAMOS AYUDA</strong>Water, heat, meds, or ride needed. / <span lang="es">Necesitamos agua, calor, medicina o transporte.</span></div>
+          <div class="gyr-box gyr-red"><strong>RED / ROJO &mdash; URGENT / PELIGRO URGENTE</strong>Call 911 FIRST, then post RED in window. / <span lang="es">Llame al 911 PRIMERO y ponga ROJO.</span></div>
+        </div>
+        <p style="margin:8pt 0 4pt;"><strong>Our Ward &amp; Walkie-Talkie / Nuestro Barrio y Radio FRS (Ch 1&ndash;7, Tone 0):</strong> ___________________________</p>
+        <p style="margin:4pt 0 0;"><strong>Do NOT drive to the chapel until cleared by Stake leaders.</strong><br><em lang="es">No maneje a la capilla sin aviso de los l&iacute;deres de estaca (GH 35.5.5).</em></p>
+        <div class="print-footer-stamp print-only">Crossroads Stake EOP V4 &bull; SN-8 Large-Print Bilingual Flyer (EN / ES)</div>
       </div>
 
       </div><!-- end #member-pane-2c -->
@@ -5457,6 +5614,30 @@
         }
       };
 
+      window.syncSpanishM1PrintMirrors = function () {
+        const map = {
+          'm1-es-val-household': 'v4_m1_household',
+          'm1-es-val-leader-phone': 'v4_m1_leader_phone',
+          'm1-es-val-ward': 'v2_m1_ward',
+          'm1-es-val-relay': 'v2_m1_relay',
+          'm1-es-val-school': 'v2_m1_school',
+          'm1-es-val-skyward': 'v2_m1_skyward',
+          'm1-es-val-commuter': 'v2_m1_commuter',
+          'm1-es-val-landlord': 'v2_m1_landlord',
+          'm1-es-val-ins': 'v2_m1_ins',
+          'm1-es-val-buddy': 'v2_m1_buddy',
+          'm1-es-val-dme': 'v2_m1_dme',
+          'm1-es-val-pets': 'v2_m1_pets'
+        };
+        Object.keys(map).forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const src = Array.from(document.querySelectorAll('[data-save-key]')).find(n => n.dataset.saveKey === map[id]);
+          const val = src ? String(src.value || '') : (safeGet(map[id]) || '');
+          el.textContent = val;
+        });
+      };
+
       window.printProfile = function (profile) {
         const menu = document.getElementById('print-menu');
         if (menu) menu.removeAttribute('open');
@@ -5464,6 +5645,7 @@
         const w5Urg = document.getElementById('w5-urgent');
         const w5UrgPr = document.getElementById('w5-urgent-print');
         if (w5Urg && w5UrgPr) w5UrgPr.textContent = w5Urg.value || '';
+        if (typeof window.syncSpanishM1PrintMirrors === 'function') window.syncSpanishM1PrintMirrors();
         document.querySelectorAll('.print-footer-stamp').forEach(el => {
           if (!el.dataset.baseText) el.dataset.baseText = el.textContent;
           el.textContent = el.dataset.baseText + ' • Printed ' + today;
