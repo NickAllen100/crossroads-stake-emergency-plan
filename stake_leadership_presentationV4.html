@@ -188,40 +188,7 @@
     .util-btn:hover { background: #334155; }
     .util-btn.active { background: #fef3c7; color: #0f172a; border-color: #f59e0b; }
 
-    /* Print Dropdown */
-    .print-menu { position: relative; }
-    .print-menu summary { list-style: none; }
-    .print-menu summary::-webkit-details-marker { display: none; }
-    .print-dropdown {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 6px);
-      width: 310px;
-      max-width: 92vw;
-      background: var(--white);
-      color: var(--slate-900);
-      border: 2px solid var(--navy);
-      border-radius: var(--radius);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
-      padding: 8px;
-      z-index: 950;
-    }
-    .print-dropdown button {
-      width: 100%;
-      text-align: left;
-      padding: 10px 12px;
-      min-height: 44px;
-      border: 1px solid transparent;
-      border-radius: 7px;
-      background: transparent;
-      color: var(--slate-900);
-      font-size: 0.88rem;
-      cursor: pointer;
-      display: block;
-    }
-    .print-dropdown button:hover { background: var(--navy-light); border-color: var(--navy-mid); }
-    .print-dropdown button strong { display: block; color: var(--navy); }
-    .print-dropdown button span { font-size: 0.78rem; color: var(--slate-700); }
+    /* Print Kit uses the shared .modal-backdrop / .forms-index-* modal styles (mobile-safe) */
 
     /* ===== HERO & ROLE SWITCHER ===== */
     .site-header {
@@ -2096,47 +2063,7 @@
     <button id="btn-crisis-exit" class="crisis-bar-exit" type="button" onclick="setCrisisMode(false)">Exit Emergency Mode</button>
 
     <div class="utility-group">
-      <details class="print-menu" id="print-menu">
-        <summary class="util-btn" role="button" tabindex="0">Print Kit &#9662;</summary>
-        <div class="print-dropdown">
-          <button type="button" onclick="printProfile('family-worksheet')">
-            <strong>My Family Preparedness Worksheet</strong>
-            <span>Your filled-in water/food tracker, home shutoffs, contacts &amp; checklists</span>
-          </button>
-          <button type="button" onclick="printProfile('m1-std')">
-            <strong>Member Fridge Card (Form M-1)</strong>
-            <span>1 double-sided sheet (9.5pt) — First 60 Min + Contacts + Care Slip</span>
-          </button>
-          <button type="button" onclick="printProfile('m1-large')">
-            <strong>Senior 15pt Large-Print Fridge Card</strong>
-            <span>True 15pt high-contrast print + Page 2 Meds &amp; Allergies Card</span>
-          </button>
-          <button type="button" onclick="printProfile('m1-es')">
-            <strong>Tarjeta de Emergencia en Espa&ntilde;ol (Form M-1 ES)</strong>
-            <span>1 hoja frente y vuelta en espa&ntilde;ol con sus contactos guardados</span>
-          </button>
-          <button type="button" onclick="printProfile('sn8-flyer')">
-            <strong>SN-8 Bilingual / Large-Print Flyer (EN / ES)</strong>
-            <span>1-page 15pt+ door-knock &amp; lifeline handout (911, ER, Green/Yellow/Red)</span>
-          </button>
-          <button type="button" data-leader-only="true" onclick="printProfile('ward-pack')">
-            <strong>Self-Contained Ward Binder (5 Sheets)</strong>
-            <span>W-0/0B, W-1, W-2/3, W-4/6, W-5 (0–60m crisis binder only)</span>
-          </button>
-          <button type="button" data-leader-only="true" onclick="printProfile('stake-kit')">
-            <strong>Stake Command Kit (2 Sheets + Directory)</strong>
-            <span>Sheets S-A &amp; S-B + Unified Register + 2-Col Directory</span>
-          </button>
-          <button type="button" data-leader-only="true" onclick="printProfile('stake-action-list')">
-            <strong>Stake Rollout Action List &amp; Cadence</strong>
-            <span>12-item Stake Council rollout checklist, owners, due dates &amp; maintenance calendar</span>
-          </button>
-          <button type="button" onclick="printProfile('full')">
-            <strong>Full Reference &amp; Recovery Archive (All 5 Tabs)</strong>
-            <span>Complete 4-Horizon, 11-Disruption &amp; Ministering manual</span>
-          </button>
-        </div>
-      </details>
+      <button type="button" id="btn-print-kit" class="util-btn" onclick="openModal('print-modal')">Print Kit</button>
       <button type="button" id="btn-large-text" class="util-btn" aria-pressed="false">A+ Larger Text</button>
       <button type="button" class="util-btn" onclick="openModal('forms-modal')">Forms Index</button>
       <button type="button" class="util-btn" onclick="openModal('glossary-modal')">Plain-English Guide</button>
@@ -5051,6 +4978,79 @@
   </main>
 
   <!-- ===== MODALS (WITH FOCUS TRAP & ESC CLOSE) ===== -->
+  <div id="print-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="print-modal-title">
+    <div class="modal-dialog">
+      <div class="modal-head">
+        <h2 id="print-modal-title" style="margin:0; font-size:1.15rem; color:var(--navy);">Print Kit (Choose What to Print or Save as PDF)</h2>
+        <button type="button" class="btn btn-outline" style="min-height:38px;" onclick="closeModal('print-modal')">Close</button>
+      </div>
+      <p style="font-size:0.84rem; color:var(--slate-700); margin:0 0 10px;">Each option formats cleanly for paper or PDF—your saved household or unit fields are included automatically.</p>
+
+      <div class="forms-index-group">
+        <h3>Home &amp; Family</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" onclick="printProfile('family-worksheet')">
+            <span class="fi-code">Prep Sheet</span>
+            <span class="fi-desc"><strong>My Family Preparedness Worksheet</strong><small>Your filled-in water/food tracker, home shutoffs, contacts &amp; checklists</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="printProfile('m1-std')">
+            <span class="fi-code">Form M-1</span>
+            <span class="fi-desc"><strong>Member Fridge Card (1 Sheet)</strong><small>Double-sided (9.5pt) — First 60 Min + Contacts + Neighbor Care Slip</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="printProfile('m1-large')">
+            <span class="fi-code">15pt Large</span>
+            <span class="fi-desc"><strong>Senior 15pt Large-Print Fridge Card</strong><small>True 15pt high-contrast print + Page 2 Meds &amp; Allergies Card</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="printProfile('m1-es')">
+            <span class="fi-code">Espa&ntilde;ol</span>
+            <span class="fi-desc"><strong lang="es">Tarjeta de Emergencia en Espa&ntilde;ol (Form M-1 ES)</strong><small lang="es">1 hoja frente y vuelta en espa&ntilde;ol con sus contactos guardados</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" onclick="printProfile('sn8-flyer')">
+            <span class="fi-code">SN-8 Flyer</span>
+            <span class="fi-desc"><strong>SN-8 Bilingual / Large-Print Flyer (EN / ES)</strong><small>1-page 15pt+ door-knock &amp; lifeline handout (911, ER, Green/Yellow/Red)</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="forms-index-group" data-leader-only="true">
+        <h3>Ward &amp; Stake Leadership</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" data-leader-only="true" onclick="printProfile('ward-pack')">
+            <span class="fi-code">Ward Pack</span>
+            <span class="fi-desc"><strong>Self-Contained Ward Binder (5 Sheets)</strong><small>W-0/0B, W-1, W-2/3, W-4/6, W-5 (0–60m crisis binder only)</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" data-leader-only="true" onclick="printProfile('stake-kit')">
+            <span class="fi-code">Stake Kit</span>
+            <span class="fi-desc"><strong>Stake Command Kit (2 Sheets + Directory)</strong><small>Sheets S-A &amp; S-B + Unified Register + 2-Col Directory</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+          <button type="button" class="forms-index-item" data-leader-only="true" onclick="printProfile('stake-action-list')">
+            <span class="fi-code">Tab 4B</span>
+            <span class="fi-desc"><strong>Stake Rollout Action List &amp; Cadence</strong><small>12-item Stake Council rollout checklist, owners, due dates &amp; maintenance calendar</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="forms-index-group" style="margin-bottom:0;">
+        <h3>Complete Archive</h3>
+        <div class="forms-index-list">
+          <button type="button" class="forms-index-item" onclick="printProfile('full')">
+            <span class="fi-code">All Tabs</span>
+            <span class="fi-desc"><strong>Full Reference &amp; Recovery Archive (All 5 Tabs)</strong><small>Complete 4-Horizon, 11-Disruption &amp; Ministering manual</small></span>
+            <span class="fi-go">Print &rarr;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="forms-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="forms-title">
     <div class="modal-dialog">
       <div class="modal-head">
@@ -5638,8 +5638,7 @@
       };
 
       window.printProfile = function (profile) {
-        const menu = document.getElementById('print-menu');
-        if (menu) menu.removeAttribute('open');
+        if (typeof window.closeModal === 'function') window.closeModal('print-modal');
         const today = new Date().toLocaleDateString();
         const w5Urg = document.getElementById('w5-urgent');
         const w5UrgPr = document.getElementById('w5-urgent-print');
@@ -5784,11 +5783,6 @@
         const openModals = document.querySelectorAll('.modal-backdrop.open');
         if (openModals.length) {
           openModals.forEach(m => closeModal(m.id));
-          return;
-        }
-        const pm = document.getElementById('print-menu');
-        if (pm && pm.hasAttribute('open')) {
-          pm.removeAttribute('open');
           return;
         }
         const rp = document.getElementById('role-picker-panel');
